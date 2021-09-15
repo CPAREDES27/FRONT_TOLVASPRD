@@ -1,0 +1,69 @@
+_schema-version: "3.2"
+ID: tolvas
+version: 0.0.1
+modules:
+- name: tolvas-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: tolvas-destination-service
+    parameters:
+      content-target: true
+  - name: tolvas_html_repo_host
+    parameters:
+      service-key:
+        name: tolvas_html_repo_host-key
+  - name: uaa_tolvas
+    parameters:
+      service-key:
+        name: uaa_tolvas-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: bussinesssolution_tolvas_html_repo_host
+          ServiceInstanceName: tolvas-html5-app-host-service
+          ServiceKeyName: tolvas_html_repo_host-key
+          sap.cloud.service: bussinesssolution
+        - Authentication: OAuth2UserTokenExchange
+          Name: bussinesssolution_uaa_tolvas
+          ServiceInstanceName: tolvas-xsuaa-service
+          ServiceKeyName: uaa_tolvas-key
+          sap.cloud.service: bussinesssolution
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+- name: registrotolvas
+  type: html5
+  path: registrotolvas
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: tolvas-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      version: 1.0.0
+    service: destination
+    service-name: tolvas-destination-service
+    service-plan: lite
+- name: tolvas_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: tolvas-html5-app-host-service
+    service-plan: app-host
+- name: uaa_tolvas
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: tolvas-xsuaa-service
+    service-plan: application
+parameters:
+  deploy_mode: html5-repo
