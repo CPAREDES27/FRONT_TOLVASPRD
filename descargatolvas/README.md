@@ -1,7 +1,7 @@
 ## Application Details
 |               |
 | ------------- |
-|**Generation Date and Time**<br>Wed Sep 15 2021 04:05:14 GMT+0000 (Coordinated Universal Time)|
+|**Generation Date and Time**<br>Thu Sep 16 2021 05:41:31 GMT+0000 (Coordinated Universal Time)|
 |**App Generator**<br>@sap/generator-fiori|
 |**App Generator Version**<br>1.3.2|
 |**Generation Platform**<br>SAP Business Application Studio|
@@ -9,7 +9,7 @@
 |**Service Type**<br>None|
 |**Service URL**<br>N/A
 |**Module Name**<br>descargatolvas|
-|**Application Title**<br>Descarga de Tolvas|
+|**Application Title**<br>Descarga por Tolvas|
 |**Namespace**<br>com.tasa.tolvas|
 |**UI5 Theme**<br>sap_fiori_3|
 |**UI5 Version**<br>Latest|

@@ -1,13 +1,17 @@
 sap.ui.define(["sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
-	"./BusquedaDeEmpresas",
-	"./utilities",
+//	"./BusquedaDeEmpresas",
+	//"./utilities",
 	"sap/ui/core/routing/History"
 ],
 	/**
 	 * @param {typeof sap.ui.core.mvc.Controller} Controller
 	 */
-    function(BaseController, MessageBox, BusquedaDeEmpresas, Utilities, History) {
+    function(BaseController, 
+        MessageBox, 
+//        BusquedaDeEmpresas, 
+//        Utilities, 
+        History) {
 	"use strict";
 
 	return BaseController.extend("com.tasa.tolvas.registrotolvas.controller.Main", {
@@ -44,7 +48,34 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					parameters: oParams
 				};
 				this.getView().bindObject(oPath);
-			}
+            }
+            
+            let oReq = {
+                "dominios": [
+                    {
+                        "domname": "UBICPLANTA",
+                        "status": "A"
+                    },
+                    {
+                        "domname": "ZINPRP",
+                        "status": "A"
+                    },
+                    {
+                        "domname": "ZDO_TIPOMAREA",
+                        "status": "A"
+                    }
+                ]
+            };
+
+            fetch('https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/dominios/Listar', {
+                method: 'POST', // or 'PUT'
+                body: JSON.stringify(oReq), // data can be `string` or {object}!
+                headers:{
+                    'Content-Type': 'application/json'
+                }
+                })
+                .then(response => response.json())
+                .then(data => console.log(data));
 
 		},
 		_onInputValueHelpRequest: function(oEvent) {
@@ -150,7 +181,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		},
 		onInit: function() {
 			this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			this.oRouter.getTarget("RegistroTolvas").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
+			//this.oRouter.getTarget("RouteMain").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
 			var oView = this.getView();
 			oView.addEventDelegate({
 				onBeforeShow: function() {
@@ -164,7 +195,30 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						}
 					}
 				}.bind(this)
-			});
+            });
+            
+            let oReq = {
+                "dominios": [
+                    {
+                        "domname": "UBICPLANTA",
+                        "status": "A"
+                    },
+                    {
+                        "domname": "ZINPRP",
+                        "status": "A"
+                    },
+                    {
+                        "domname": "ZDO_TIPOMAREA",
+                        "status": "A"
+                    }
+                ]
+            };
+            fetch('https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/dominios/Listar', {
+                method: 'POST', // or 'PUT'
+                body: JSON.stringify(oReq), // data can be `string` or {object}!
+                })
+                .then(response => response.json())
+                .then(data => console.log(data));
 
 		}
 	});

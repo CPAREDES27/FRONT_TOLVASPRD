@@ -1,14 +1,23 @@
 sap.ui.define(["sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
-    "./BusquedaDeEmpresas", 
-    "./BusquedaDeCentros", 
-    "./BusquedaDeDescargaTolvas", 
-    "./BusquedaDeUbicacionTecnica", 
-    "./BusquedaDeEquipamientos", 
-    "./BusquedaDeEquipos",
-	"./utilities",
+//    "./BusquedaDeEmpresas", 
+//    "./BusquedaDeCentros", 
+//    "./BusquedaDeDescargaTolvas", 
+//    "./BusquedaDeUbicacionTecnica", 
+//    "./BusquedaDeEquipamientos", 
+//    "./BusquedaDeEquipos",
+//	"./utilities",
 	"sap/ui/core/routing/History"
-], function(BaseController, MessageBox, BusquedaDeEmpresas, BusquedaDeCentros, BusquedaDeDescargaTolvas, BusquedaDeUbicacionTecnica, BusquedaDeEquipamientos, BusquedaDeEquipos, Utilities, History) {
+], function(BaseController, 
+    MessageBox, 
+//    BusquedaDeEmpresas, 
+//    BusquedaDeCentros, 
+//    BusquedaDeDescargaTolvas, 
+//    BusquedaDeUbicacionTecnica, 
+//    BusquedaDeEquipamientos, 
+ //   BusquedaDeEquipos, 
+ //   Utilities, 
+    History) {
 	"use strict";
 
 	return BaseController.extend("com.tasa.tolvas.registrotolvas.controller.EdicionRegistroTolva", {

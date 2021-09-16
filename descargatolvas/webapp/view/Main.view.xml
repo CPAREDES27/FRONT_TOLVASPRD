@@ -9,8 +9,7 @@
 	<Shell id="shell">
 		<App id="app">
 			<pages>
-				<!-- <Page id="page" title="{i18n>title}"> -->
-				<Page id="page" showHeader="true" title="Descarga por Tolvas" showFooter="true" showNavButton="false">
+				<Page id="page" title="{i18n>title}">
                     <content>
                         <form:Form width="100%" editable="true" visible="true">
                             <form:title>

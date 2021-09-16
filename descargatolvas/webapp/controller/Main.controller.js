@@ -1,17 +1,22 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
-	"./BusquedaDeIngresoDescargaManuals",
-	"./utilities",
+//	"./BusquedaDeIngresoDescargaManuals",
+//	"./utilities",
 	"sap/ui/core/routing/History"
 ],
-	/**
-	 * @param {typeof sap.ui.core.mvc.Controller} Controller
-	 */
-    function(BaseController, MessageBox, BusquedaDeIngresoDescargaManuals, Utilities, History) {
-	"use strict";
+/**
+ * @param {typeof sap.ui.core.mvc.Controller} Controller
+ */
+function(
+    BaseController, 
+    MessageBox, 
+//	BusquedaDeIngresoDescargaManuals, 
+//  Utilities, 
+    History) {
+    "use strict";
 
-	return BaseController.extend("com.tasa.tolvas.descargatolvas.controller.DescargaTolvas", {
+    return BaseController.extend("com.tasa.tolvas.descargatolvas.controller.Main", {
 		handleRouteMatched: function(oEvent) {
 			var sAppId = "App60f18d59421c8929c54cd9bf";
 

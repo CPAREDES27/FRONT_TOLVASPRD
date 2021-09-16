@@ -1,10 +1,16 @@
 sap.ui.define(["sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
-    "./BusquedaDeIngresoDescargaManuals", 
-    "./BusquedaDeDescargaTolvas",
-	"./utilities",
+//  "./BusquedaDeIngresoDescargaManuals", 
+//  "./BusquedaDeDescargaTolvas",
+//	"./utilities",
 	"sap/ui/core/routing/History"
-], function(BaseController, MessageBox, BusquedaDeIngresoDescargaManuals, BusquedaDeDescargaTolvas, Utilities, History) {
+], function(
+    BaseController,
+    MessageBox,
+//    BusquedaDeIngresoDescargaManuals,
+//    BusquedaDeDescargaTolvas,
+//    Utilities,
+    History) {
 	"use strict";
 
 	return BaseController.extend("com.tasa.tolvas.descargatolvas.controller.NuevaDescargaTolva", {

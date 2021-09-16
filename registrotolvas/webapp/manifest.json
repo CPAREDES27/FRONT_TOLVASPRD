@@ -18,7 +18,7 @@
                         "parameters": {},
                         "additionalParameters": "allowed"
                     },
-                    "semanticObject": "registrotolvas",
+                    "semanticObject": "RegistroTolvas",
                     "action": "display",
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",
@@ -79,46 +79,56 @@
             ]
         },
         "routing": {
-        "config": {
-            "routerClass": "sap.m.routing.Router",
-            "viewType": "XML",
-            "async": true,
-            "viewPath": "com.tasa.tolvas.registrotolvas.view",
-            "controlAggregation": "pages",
-            "controlId": "app",
-            "clearControlAggregation": false
-        },
-        "routes": [
-            {
-            "name": "RouteMain",
-            "pattern": "RouteMain",
-            "target": ["TargetMain"]
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "com.tasa.tolvas.registrotolvas.view",
+                "controlAggregation": "pages",
+                "controlId": "app",
+                "clearControlAggregation": false
             },
-            {
-                "pattern": "MasterPage1/EdicionRegistroTolva",
-                "name": "EdicionRegistroTolva",
-                "target": [
-                    "MasterPage1",
-                    "EdicionRegistroTolva"
-                ]
-            }
-        ],
-        "targets": {
-            "TargetMain": {
-            "viewType": "XML",
-            "transition": "slide",
-            "clearControlAggregation": false,
-            "viewId": "Main",
-            "viewName": "Main"
-            },
-            "EdicionRegistroTolva": {
-                "controlAggregation": "detailPages",
-                "viewName": "EdicionRegistroTolva",
-                "viewId": "EdicionRegistroTolva",
-                "viewLevel": 2,
-                "transition": "slide"
+            "routes": [
+                {
+                    "name": "RouteMain",
+                    "pattern": "RouteMain",
+                    "target": ["TargetMain"]
+                },
+                {
+                    "pattern": "EdicionRegistroTolva",
+                    "name": "EdicionRegistroTolva",
+                    "target": [
+                        "EdicionRegistroTolva"
+                    ]
+                },
+                {
+                    "pattern": "",
+                    "name": "default",
+                    "target": [
+                        "Main"
+                    ]
+                }
+            ],
+            "targets": {
+                "TargetMain": {
+                "viewType": "XML",
+                "transition": "slide",
+                "clearControlAggregation": false,
+                "viewId": "Main",
+                "viewName": "Main"
+                },
+                "EdicionRegistroTolva": {
+                    "controlAggregation": "EdicionRegistroTolva",
+                    "viewName": "EdicionRegistroTolva",
+                    "viewId": "EdicionRegistroTolva",
+                    "viewLevel": 2,
+                    "transition": "slide"
+                }
             }
         }
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "bussinesssolution"
     }
-  }
 }

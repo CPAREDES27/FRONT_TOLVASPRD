@@ -1,7 +1,7 @@
 ## Application Details
 |               |
 | ------------- |
-|**Generation Date and Time**<br>Wed Sep 15 2021 00:56:16 GMT+0000 (Coordinated Universal Time)|
+|**Generation Date and Time**<br>Wed Sep 15 2021 22:29:09 GMT+0000 (Coordinated Universal Time)|
 |**App Generator**<br>@sap/generator-fiori|
 |**App Generator Version**<br>1.3.2|
 |**Generation Platform**<br>SAP Business Application Studio|
@@ -9,7 +9,7 @@
 |**Service Type**<br>None|
 |**Service URL**<br>N/A
 |**Module Name**<br>registrotolvas|
-|**Application Title**<br>Reporte de Tolvas|
+|**Application Title**<br>Registro por Tolvas|
 |**Namespace**<br>com.tasa.tolvas|
 |**UI5 Theme**<br>sap_fiori_3|
 |**UI5 Version**<br>Latest|

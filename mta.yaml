@@ -32,9 +32,79 @@ modules:
         existing_destinations_policy: ignore
   build-parameters:
     no-source: true
-- name: registrotolvas
+- name: tolvas-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: tolvas_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - comappproject1.zip
+      name: comappproject1
+      target-path: resources/
+    - artifacts:
+      - comtasatolvasregistrotolvas.zip
+      name: comtasatolvasregistrotolvas
+      target-path: resources/
+    - artifacts:
+      - comtasatolvasingresodescargamanual.zip
+      name: comtasatolvasingresodescargamanual
+      target-path: resources/
+    - artifacts:
+      - comtasatolvasdescargatolvas.zip
+      name: comtasatolvasdescargatolvas
+      target-path: resources/
+    - artifacts:
+      - comtasatolvascalculoderechopesca.zip
+      name: comtasatolvascalculoderechopesca
+      target-path: resources/
+- name: comappproject1
+  type: html5
+  path: project1
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comtasatolvasregistrotolvas
   type: html5
   path: registrotolvas
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comtasatolvasingresodescargamanual
+  type: html5
+  path: ingresodescargamanual
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comtasatolvasdescargatolvas
+  type: html5
+  path: descargatolvas
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comtasatolvascalculoderechopesca
+  type: html5
+  path: calculoderechopesca
   build-parameters:
     build-result: dist
     builder: custom
@@ -48,6 +118,15 @@ resources:
   parameters:
     config:
       HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
       version: 1.0.0
     service: destination
     service-name: tolvas-destination-service

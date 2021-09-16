@@ -92,7 +92,9 @@
                 {
                     "name": "RouteMain",
                     "pattern": "RouteMain",
-                    "target": ["TargetMain"]
+                    "target": [
+                        "TargetMain"
+                    ]
                 },
                 {
                     "pattern": "RouteMain/DescargaTolvas",
@@ -104,11 +106,11 @@
             ],
             "targets": {
                 "TargetMain": {
-                "viewType": "XML",
-                "transition": "slide",
-                "clearControlAggregation": false,
-                "viewId": "Main",
-                "viewName": "Main"
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Main",
+                    "viewName": "Main"
                 },
                 "DescargaTolvas": {
                     "controlAggregation": "detailPages",
@@ -119,5 +121,9 @@
                 }
             }
         }
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "bussinesssolution"
     }
 }
