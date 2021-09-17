@@ -76,8 +76,19 @@ sap.ui.define([
                 var oBindingContext = oEvent.getSource().getBindingContext();
 
                 return new Promise(function(fnResolve) {
-
                     this.doNavigate("DeclaracionJuradaPagoDerechosPesca", oBindingContext, fnResolve, "");
+                }.bind(this)).catch(function(err) {
+                    if (err !== undefined) {
+                        MessageBox.error(err.message);
+                    }
+                });
+            },
+            _onNuevaDeclaracionJuradaPress: function(oEvent) {
+                var oBindingContext = oEvent.getSource().getBindingContext();
+
+                return new Promise(function(fnResolve) {
+
+                    this.doNavigate("NuevaDeclaracionJurada", oBindingContext, fnResolve, "");
                 }.bind(this)).catch(function(err) {
                     if (err !== undefined) {
                         MessageBox.error(err.message);
@@ -141,7 +152,7 @@ sap.ui.define([
             },
             onInit: function() {
                 this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                this.oRouter.getTarget("RegistroTolvas").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
+                this.oRouter.getTarget("TargetMain").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
                 var oView = this.getView();
                 oView.addEventDelegate({
                     onBeforeShow: function() {

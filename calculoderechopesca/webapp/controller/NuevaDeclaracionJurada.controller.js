@@ -1,20 +1,18 @@
 sap.ui.define(["sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
 //	"./BusquedaDeEmpresas",
-	//"./utilities",
-	"sap/ui/core/routing/History"
-],
-	/**
-	 * @param {typeof sap.ui.core.mvc.Controller} Controller
-	 */
-    function(BaseController, 
-        MessageBox, 
-//        BusquedaDeEmpresas, 
-//        Utilities, 
-        History) {
+	"./utilities",
+    "sap/ui/core/routing/History",
+	"sap/ui/model/json/JSONModel"
+], function(BaseController, 
+    MessageBox, 
+//  BusquedaDeEmpresas, 
+    Utilities, 
+    History,
+    JSONModel) {
 	"use strict";
 
-	return BaseController.extend("com.tasa.tolvas.registrotolvas.controller.Main", {
+	return BaseController.extend("com.tasa.tolvas.calculoderechopesca.controller.NuevaDeclaracionJurada", {
 		handleRouteMatched: function(oEvent) {
 			var sAppId = "App60f18d59421c8929c54cd9bf";
 
@@ -50,54 +48,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				this.getView().bindObject(oPath);
             }
             
-		},
-		_onInputValueHelpRequest: function(oEvent) {
-
-			var sDialogName = "BusquedaDeEmpresas";
-			this.mDialogs = this.mDialogs || {};
-			var oDialog = this.mDialogs[sDialogName];
-			if (!oDialog) {
-				oDialog = new BusquedaDeEmpresas(this.getView());
-				this.mDialogs[sDialogName] = oDialog;
-
-				// For navigation.
-				oDialog.setRouter(this.oRouter);
-			}
-
-			var context = oEvent.getSource().getBindingContext();
-			oDialog._oControl.setBindingContext(context);
-
-			oDialog.open();
+            Utilities.getDataFromRFC("MONEDA")
+                .then(data => {
+                    this.getView().setModel(new JSONModel(data[0].data), "MonedaSetModel")
+                });
 
 		},
-		_onButtonPress: function(oEvent) {
-
-			var oBindingContext = oEvent.getSource().getBindingContext();
-
-			return new Promise(function(fnResolve) {
-
-				this.doNavigate("EdicionRegistroTolva", oBindingContext, fnResolve, "");
-			}.bind(this)).catch(function(err) {
-				if (err !== undefined) {
-					MessageBox.error(err.message);
-				}
-			});
-
-		},
-
-		_onButtonPress1: function(oEvent) {
-			var oBindingContext = oEvent.getSource().getBindingContext();
-
-			return new Promise(function(fnResolve) {
-
-				this.doNavigate("EdicionRegistroTolva", oBindingContext, fnResolve, "");
-			}.bind(this)).catch(function(err) {
-				if (err !== undefined) {
-					MessageBox.error(err.message);
-				}
-			});
-		},
-
 		doNavigate: function(sRouteName, oBindingContext, fnPromiseResolve, sViaRelation) {
 			var sPath = (oBindingContext) ? oBindingContext.getPath() : null;
 			var oModel = (oBindingContext) ? oBindingContext.getModel() : null;
@@ -154,7 +110,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		},
 		onInit: function() {
 			this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			//this.oRouter.getTarget("RouteMain").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
+			this.oRouter.getTarget("TargetNuevaDeclaracionJurada").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
 			var oView = this.getView();
 			oView.addEventDelegate({
 				onBeforeShow: function() {
@@ -168,7 +124,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						}
 					}
 				}.bind(this)
-            });
+			});
+
 		}
 	});
 }, /* bExport= */ true);

@@ -13,6 +13,13 @@
                             <!-- <form:title>
                                 <core:Title text="Datos de selección" level="Auto"/>
                             </form:title> -->
+                            <form:toolbar>
+                                <Toolbar>
+                                    <Title text="Ingresar datos"/>
+                                    <ToolbarSpacer />
+                                    <Button icon="sap-icon://settings" text="Nueva Declaración Jurada" press="_onNuevaDeclaracionJuradaPress"/>
+                                </Toolbar>
+                            </form:toolbar>
                             <form:formContainers>
                                 <form:FormContainer visible="true">
                                     <form:formElements>

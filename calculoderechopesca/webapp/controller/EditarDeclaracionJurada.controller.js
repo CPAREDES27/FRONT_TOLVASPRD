@@ -1,20 +1,17 @@
+
 sap.ui.define(["sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
 //	"./BusquedaDeEmpresas",
-	//"./utilities",
+	"./utilities",
 	"sap/ui/core/routing/History"
-],
-	/**
-	 * @param {typeof sap.ui.core.mvc.Controller} Controller
-	 */
-    function(BaseController, 
-        MessageBox, 
-//        BusquedaDeEmpresas, 
-//        Utilities, 
-        History) {
+], function(BaseController, 
+    MessageBox, 
+//    BusquedaDeEmpresas, 
+    Utilities, 
+    History) {
 	"use strict";
 
-	return BaseController.extend("com.tasa.tolvas.registrotolvas.controller.Main", {
+	return BaseController.extend("com.tasa.tolvas.calculoderechopesca.controller.EditarDeclaracionJurada", {
 		handleRouteMatched: function(oEvent) {
 			var sAppId = "App60f18d59421c8929c54cd9bf";
 
@@ -49,7 +46,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				};
 				this.getView().bindObject(oPath);
             }
-            
 		},
 		_onInputValueHelpRequest: function(oEvent) {
 
@@ -70,13 +66,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			oDialog.open();
 
 		},
-		_onButtonPress: function(oEvent) {
+		_onButtonLiberar: function(oEvent) {
 
 			var oBindingContext = oEvent.getSource().getBindingContext();
 
 			return new Promise(function(fnResolve) {
 
-				this.doNavigate("EdicionRegistroTolva", oBindingContext, fnResolve, "");
+				this.doNavigate("TargetLiberarDeclaracionJurada", oBindingContext, fnResolve, "");
 			}.bind(this)).catch(function(err) {
 				if (err !== undefined) {
 					MessageBox.error(err.message);
@@ -85,12 +81,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		},
 
-		_onButtonPress1: function(oEvent) {
+		_onButtonEditar: function(oEvent) {
 			var oBindingContext = oEvent.getSource().getBindingContext();
 
 			return new Promise(function(fnResolve) {
 
-				this.doNavigate("EdicionRegistroTolva", oBindingContext, fnResolve, "");
+				this.doNavigate("TargetEditarDeclaracionJurada", oBindingContext, fnResolve, "");
 			}.bind(this)).catch(function(err) {
 				if (err !== undefined) {
 					MessageBox.error(err.message);
@@ -154,7 +150,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		},
 		onInit: function() {
 			this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			//this.oRouter.getTarget("RouteMain").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
+			this.oRouter.getTarget("TargetEditarDeclaracionJurada").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
 			var oView = this.getView();
 			oView.addEventDelegate({
 				onBeforeShow: function() {
@@ -168,7 +164,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						}
 					}
 				}.bind(this)
-            });
+			});
+
 		}
 	});
 }, /* bExport= */ true);

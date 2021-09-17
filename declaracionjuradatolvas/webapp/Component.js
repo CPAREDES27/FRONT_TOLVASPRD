@@ -1,14 +1,11 @@
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
-	"com/tasa/tolvas/calculoderechopesca/model/models"
+	"com/tasa/tolvas/declaracionjuradatolvas/model/models"
 ], function (UIComponent, Device, models) {
 	"use strict";
 
-	let navigationWithContext = {
-
-	};
-	return UIComponent.extend("com.tasa.tolvas.calculoderechopesca.Component", {
+	return UIComponent.extend("com.tasa.tolvas.declaracionjuradatolvas.Component", {
 
 		metadata: {
 			manifest: "json"
@@ -28,11 +25,6 @@ sap.ui.define([
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
-		},
-
-		getNavigationPropertyForNavigationWithContext: function(sEntityNameSet, targetPageName) {
-			var entityNavigations = navigationWithContext[sEntityNameSet];
-			return entityNavigations == null ? null : entityNavigations[targetPageName];
 		}
 	});
 });

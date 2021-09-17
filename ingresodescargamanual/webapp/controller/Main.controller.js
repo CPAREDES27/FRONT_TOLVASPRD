@@ -1,8 +1,11 @@
 sap.ui.define(["sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
-	"./utilities",
+//	"./utilities",
 	"sap/ui/core/routing/History"
-], function(BaseController, MessageBox, Utilities, History) {
+], function(BaseController, 
+    MessageBox,
+//    Utilities, 
+    History) {
 	"use strict";
 
 	return BaseController.extend("com.tasa.tolvas.ingresodescargamanual.controller.IngresoDescargaManual", {
@@ -44,7 +47,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		},
 		onInit: function() {
 			this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			this.oRouter.getTarget("IngresoDescargaManual").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
+			this.oRouter.getTarget("TargetMain").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
 			var oView = this.getView();
 			oView.addEventDelegate({
 				onBeforeShow: function() {

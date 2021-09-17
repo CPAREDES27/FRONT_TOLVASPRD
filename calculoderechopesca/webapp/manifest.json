@@ -95,6 +95,41 @@
                     "target": [
                         "TargetMain"
                     ]
+                },
+                {
+                    "name": "default",
+                    "pattern": "RouteMain",
+                    "target": [
+                        "TargetMain"
+                    ]
+                },
+                {
+                    "name": "DeclaracionJuradaPagoDerechosPesca",
+                    "pattern": "DeclaracionJuradaPagoDerechosPesca",
+                    "target": [
+                        "TargetDeclaracionJuradaPagoDerechosPesca"
+                    ]
+                },
+                {
+                    "name": "EditarDeclaracionJurada",
+                    "pattern": "EditarDeclaracionJurada",
+                    "target": [
+                        "TargetEditarDeclaracionJurada"
+                    ]
+                },
+                {
+                    "name": "LiberarDeclaracionJurada",
+                    "pattern": "LiberarDeclaracionJurada",
+                    "target": [
+                        "TargetLiberarDeclaracionJurada"
+                    ]
+                },
+                {
+                    "name": "NuevaDeclaracionJurada",
+                    "pattern": "NuevaDeclaracionJurada",
+                    "target": [
+                        "TargetNuevaDeclaracionJurada"
+                    ]
                 }
             ],
             "targets": {
@@ -104,6 +139,34 @@
                     "clearControlAggregation": false,
                     "viewId": "Main",
                     "viewName": "Main"
+                },
+                "TargetDeclaracionJuradaPagoDerechosPesca": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "DeclaracionJuradaPagoDerechosPesca",
+                    "viewName": "DeclaracionJuradaPagoDerechosPesca"
+                },
+                "TargetEditarDeclaracionJurada": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "EditarDeclaracionJurada",
+                    "viewName": "EditarDeclaracionJurada"
+                },
+                "TargetLiberarDeclaracionJurada": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "LiberarDeclaracionJurada",
+                    "viewName": "LiberarDeclaracionJurada"
+                },
+                "TargetNuevaDeclaracionJurada": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "NuevaDeclaracionJurada",
+                    "viewName": "NuevaDeclaracionJurada"
                 }
             }
         }
