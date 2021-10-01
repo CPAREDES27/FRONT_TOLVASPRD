@@ -43,10 +43,6 @@ modules:
     build-result: resources
     requires:
     - artifacts:
-      - comappproject1.zip
-      name: comappproject1
-      target-path: resources/
-    - artifacts:
       - comtasatolvasregistrotolvas.zip
       name: comtasatolvasregistrotolvas
       target-path: resources/
@@ -66,16 +62,10 @@ modules:
       - comtasatolvasdeclaracionjuradatolvas.zip
       name: comtasatolvasdeclaracionjuradatolvas
       target-path: resources/
-- name: comappproject1
-  type: html5
-  path: project1
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
+    - artifacts:
+      - comtasatolvaslibrarymarea.zip
+      name: comtasatolvaslibrarymarea
+      target-path: resources/
 - name: comtasatolvasregistrotolvas
   type: html5
   path: registrotolvas
@@ -119,6 +109,16 @@ modules:
 - name: comtasatolvasdeclaracionjuradatolvas
   type: html5
   path: declaracionjuradatolvas
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comtasatolvaslibrarymarea
+  type: html5
+  path: librarymarea
   build-parameters:
     build-result: dist
     builder: custom

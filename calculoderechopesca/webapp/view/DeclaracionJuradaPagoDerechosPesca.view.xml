@@ -1,8 +1,16 @@
 
-<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.tasa.tolvas.calculoderechopesca.controller.DeclaracionJuradaPagoDerechosPesca" xmlns="sap.m" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core">
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.tasa.tolvas.calculoderechopesca.controller.DeclaracionJuradaPagoDerechosPesca" 
+    xmlns="sap.m" 
+    xmlns:form="sap.ui.layout.form" 
+    xmlns:core="sap.ui.core"
+    xmlns:t="sap.ui.table">
     <Page showHeader="true" title="Cálculo Derecho de Pesca" showFooter="true" showNavButton="false">
         <content>
-            <form:Form width="100%" editable="true" visible="true">
+            <!-- <form:Form width="100%" editable="true" visible="{
+                    path: 'DeclaracionJuradaModel>/ESCAC',
+                    formatter: 'com.tasa.tolvas.calculoderechopesca.controller.formatter.showFormDeclaracionJurada'
+                }"> -->
+            <form:Form width="100%" editable="true">
                 <form:title>
                     <core:Title text="Revisar datos" level="Auto"/>
                 </form:title>
@@ -14,7 +22,7 @@
                                     <Label text="Ejercicio" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Text text="2021" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{DeclaracionJuradaModel>/MJAHR}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -22,7 +30,7 @@
                                     <Label text="Periodo" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Text text="04" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{DeclaracionJuradaModel>/RDPCA}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -30,7 +38,16 @@
                                     <Label text="Fecha Contable" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Text text="01/04/2020" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{
+                                        path: 'DeclaracionJuradaModel>/FHCTB',
+                                        type: 'sap.ui.model.type.Date',
+                                        formatOptions: {
+                                            pattern: 'dd/MM/yyyy',
+                                            source: {
+                                                pattern: 'yyyyMMdd'
+                                            }
+                                        }
+                                    }" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -38,7 +55,7 @@
                                     <Label text="Estado Cálculo" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Text text="Creado" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{DeclaracionJuradaModel>/ESCAC}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:fields>
                             </form:FormElement>
                         </form:formElements>
@@ -50,7 +67,7 @@
                                     <Label text="Autor Cálculo" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Text text="FGARCIA" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{DeclaracionJuradaModel>/ATCAC}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -58,7 +75,16 @@
                                     <Label text="Fecha Cálculo" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Text text="03/09/2021" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{
+                                        path: 'DeclaracionJuradaModel>/FHCAC',
+                                        type: 'sap.ui.model.type.Date',
+                                        formatOptions: {
+                                            pattern: 'dd/MM/yyyy',
+                                            source: {
+                                                pattern: 'yyyyMMdd'
+                                            }
+                                        }
+                                    }" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -66,15 +92,24 @@
                                     <Label text="Hora Cálculo" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Text text="12:22" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{
+                                        path: 'DeclaracionJuradaModel>/HRCAC',
+                                        type: 'sap.ui.model.type.Time',
+                                        formatOptions: {
+                                            pattern: 'HH:mm',
+                                            source: {
+                                                pattern: 'HHmmss'
+                                            }
+                                        }
+                                    }" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
                                 <form:label>
-                                    <Label text="Valor" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Label text="Valor UIT" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Text text="14.0000" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{DeclaracionJuradaModel>/VAUIT}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:fields>
                             </form:FormElement>
                         </form:formElements>
@@ -86,7 +121,7 @@
                                     <Label text="Moneda" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Text text="000002" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{DeclaracionJuradaModel>/CDMND}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -94,7 +129,7 @@
                                     <Label text="Precio Harina" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Text text="155.000" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{DeclaracionJuradaModel>/PRARI}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -102,7 +137,7 @@
                                     <Label text="Valor Fob" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Text text="14.000" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{DeclaracionJuradaModel>/VAFOB}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:fields>
                             </form:FormElement>
                         </form:formElements>
@@ -114,7 +149,14 @@
                                     <Label text="Tipo Cambio" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Text text="4.100" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{
+                                        path: 'DeclaracionJuradaModel>/TPCAM',
+                                        type: 'sap.ui.model.type.Float',
+                                        formatOptions: {
+                                            maxFractionDigits: 3,
+                                            decimalSeparator: '.'
+                                        }
+                                    }" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -122,7 +164,7 @@
                                     <Label text="Factor Deduc" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Text text="17.0000" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{DeclaracionJuradaModel>/FACTO}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -130,7 +172,7 @@
                                     <Label text="Equivalente UIT" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Text text="16.000" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{DeclaracionJuradaModel>/EQUIT}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:fields>
                             </form:FormElement>
                         </form:formElements>
@@ -141,171 +183,245 @@
 				    	singleContainerFullSize="false"/>
                 </form:layout>
             </form:Form>
-            <!-- <Button text="Buscar" type="Default" icon="sap-icon://search" iconFirst="true" width="50%" enabled="true" visible="true" iconDensityAware="false" class="sapUiResponsiveMargin"/> -->
-            <Table width="auto" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin">
-                <infoToolbar>
-                    <Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
-                        <content>
-                            <Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                        </content>
-                    </Toolbar>
-                </infoToolbar>
-                <headerToolbar>
-                    <OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
-                        <content>
-                            <!-- <Title text="Lista de embarcaciones" titleStyle="Auto" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
-                            <ToolbarSpacer width=""/>
-                            <SearchField placeholder="Búsqueda rápida" showSearchButton="true" visible="true" width="auto"/>
-                            <Button text="Nuevo" type="Default" icon="sap-icon://add" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onButtonPress"/>
-                            <OverflowToolbarButton text="Sort" type="Transparent" icon="sap-icon://sort" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
-                            <OverflowToolbarButton text="Filter" type="Transparent" icon="sap-icon://filter" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/> -->
-                        </content>
-                    </OverflowToolbar>
-                </headerToolbar>
-                <columns>
-                    <Column width="2rem" hAlign="Left" vAlign="Middle" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                        <header>
-                            <Text text="N°" width="auto" maxLines="1" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                        </header>
-                        <footer/>
-                    </Column>
-                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                        <header>
-                            <Text text="Código Pago" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                        </header>
-                        <footer/>
-                    </Column>
-                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                        <header>
-                            <Text text="Embarcación" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                        </header>
-                        <footer/>
-                    </Column>
-                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                        <header>
-                            <Text text="Matrícula" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                        </header>
-                        <footer/>
-                    </Column>
-                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                        <header>
-                            <Text text="Pesca CHI" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                        </header>
-                        <footer/>
-                    </Column>
-                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                        <header>
-                            <Text text="Jurel/Caballa" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                        </header>
-                        <footer/>
-                    </Column>
-                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                        <header>
-                            <Text text="Otros" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                        </header>
-                        <footer/>
-                    </Column>
-                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                        <header>
-                            <!-- <Text text="Captura Total" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/> -->
-                            <Text text="S/." width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                        </header>
-                        <footer/>
-                    </Column>
-                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                        <header>
-                            <Text text="S/." width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                        </header>
-                        <footer/>
-                    </Column>
-                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                        <header>
-                            <Text text="S/." width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                        </header>
-                        <footer/>
-                    </Column>
-                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                        <header>
-                            <Text text="S/." width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                        </header>
-                        <footer/>
-                    </Column>
-                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                        <header>
-                            <Text text="S/." width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                        </header>
-                        <footer/>
-                    </Column>
-                </columns>
-                <items>
-                    <ColumnListItem type="Active">
-                        <cells>
-                            <Text text="1" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="00000000000062" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="000001049" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="TASA 414" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="PS-10414-PM" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="512.820" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text=".000" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text=".000" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="45,625.595" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="7,756.351" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="750.000" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="45.000" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="37,119.244" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                        </cells>
-                    </ColumnListItem>
-                    <!-- <ColumnListItem type="Active">
-                        <cells>
-                            <Text text="0000000002" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="TASA 43" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="CO-21913-PM" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="TECNOLOGICA DE ALIMENTOS S.A." width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="RED DE CERCO" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="Operativo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                        </cells>
-                    </ColumnListItem>
-                    <ColumnListItem type="Active">
-                        <cells>
-                            <Text text="0000000003" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="TASA 44" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="CO-22057-PM" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="TECNOLOGICA DE ALIMENTOS S.A." width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="RED DE CERCO" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="Operativo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                        </cells>
-                    </ColumnListItem>
-                    <ColumnListItem type="Active">
-                        <cells>
-                            <Text text="0000000004" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="TASA 45" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="CO-22029-PM" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="TECNOLOGICA DE ALIMENTOS S.A." width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="RED DE CERCO" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="Operativo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                        </cells>
-                    </ColumnListItem>
-                    <ColumnListItem type="Active">
-                        <cells>
-                            <Text text="0000000005" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="TASA 55" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="CO-22326-PM" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="TECNOLOGICA DE ALIMENTOS S.A." width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="RED DE CERCO" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Text text="Operativo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                        </cells>
-                    </ColumnListItem> -->
-                </items>
-            </Table>
+
+            <t:Table
+				ariaLabelledBy="title"
+				rows="{PescaModel>/}"
+				visibleRowCount="3"
+				enableColumnFreeze="true"
+                selectionMode="None"
+				showColumnVisibilityMenu="true">
+				<t:extension>
+					<!-- <OverflowToolbar style="Clear">
+						<Title id="title" text="Contacts"/>
+					</OverflowToolbar> -->
+				</t:extension>
+				<t:columns>
+					<t:Column
+						width="4rem" hAlign="End" >
+						<t:multiLabels>
+							<Label visible="false" />
+							<Label visible="false" />
+						    <Label text="N°" textAlign="End" width="100%"/>
+						</t:multiLabels>
+						<t:template>
+							<Text text="{
+                                path: 'PescaModel>NRPOS',
+                                type: 'sap.ui.model.type.Integer',
+                                formatOptions: {
+                                    groupingSeparator: ',',
+                                    source: {
+                                        pattern: '0000'
+                                    }
+                                }
+                            }"/>
+						</t:template>
+					</t:Column>
+					<!-- <t:Column
+						width="auto"
+						sortProperty="supplier"
+						filterProperty="supplier"> -->
+					<t:Column
+						width="auto" hAlign="Begin">
+						<t:multiLabels>
+							<Label visible="false" />
+							<Label visible="false" />
+						    <Label text="CódigoPago" textAlign="Begin" width="100%"/>
+						</t:multiLabels>
+						<t:template>
+							<Label text="{PescaModel>CDPAG}" design="{PescaModel>labelDesign}" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						width="auto" hAlign="Begin" >
+						<t:multiLabels>
+							<Label visible="false" />
+							<Label visible="false" />
+					    	<Label text="Embarcación" textAlign="Begin" width="100%"/>
+						</t:multiLabels>
+						<t:template>
+							<Text text="{PescaModel>NMEMB}" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						width="auto" hAlign="Begin" >
+						<t:multiLabels>
+							<Label visible="false" />
+							<Label visible="false" />
+						    <Label text="Matrícula" textAlign="Begin" width="100%"/>
+						</t:multiLabels>
+						<t:template>
+							<Text text="{PescaModel>MREMB}"/>
+						</t:template>
+					</t:Column>
+					<t:Column
+						width="auto"
+						headerSpan="3" hAlign="End">
+						<t:multiLabels>
+							<Label text="Captura total declarada (TM)" textAlign="Center" width="100%"/>
+							<Label visible="false" />
+							<Label text="Pesca CHI" textAlign="End" width="100%"/>
+						</t:multiLabels>
+						<t:template>
+							<Label text="{
+                                path: 'PescaModel>PSCHI',
+                                type: 'sap.ui.model.type.Float',
+                                formatOptions: {
+                                    decimals: 3,
+                                    groupingSeparator: ',',
+                                    decimalSeparator: '.'
+                                }
+                            }" design="{PescaModel>labelDesign}" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						width="auto" 
+						headerSpan="2,2" hAlign="End">
+						<t:multiLabels>
+							<Label text="Captura total declarada (TM)"/>
+							<Label text="Pesca CHD" textAlign="Center" width="100%"/>
+							<Label text="Jurel/Caballa" textAlign="End" width="100%"/>
+						</t:multiLabels>
+						<t:template>
+							<Label text="{
+                                path: 'PescaModel>PSOTR',
+                                type: 'sap.ui.model.type.Float',
+                                formatOptions: {
+                                    decimals: 3,
+                                    groupingSeparator: ',',
+                                    decimalSeparator: '.'
+                                }
+                            }" design="{PescaModel>labelDesign}" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						width="auto" hAlign="End" >
+						<t:multiLabels>
+							<Label text="Captura total declarada (TM)"/>
+							<Label text="Pesca CHD" textAlign="Center" width="100%"/>
+							<Label text="Otros" textAlign="End" width="100%"/>
+						</t:multiLabels>
+						<t:template>
+							<Label text="{
+                                path: 'PescaModel>JURCA',
+                                type: 'sap.ui.model.type.Float',
+                                formatOptions: {
+                                    decimals: 3,
+                                    groupingSeparator: ',',
+                                    decimalSeparator: '.'
+                                }
+                            }" design="{PescaModel>labelDesign}" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						width="auto" hAlign="End" >
+						<t:multiLabels>
+							<Label text="Monto a Pagar" />
+							<Label text="Captura Total" textAlign="End"/>
+							<Label text="S/." textAlign="End" width="100%"/>
+						</t:multiLabels>
+						<t:template>
+							<Label text="{
+                                path: 'PescaModel>MNPAG',
+                                type: 'sap.ui.model.type.Float',
+                                formatOptions: {
+                                    decimals: 3,
+                                    groupingSeparator: ',',
+                                    decimalSeparator: '.'
+                                }
+                            }" design="{PescaModel>labelDesign}" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						width="auto" hAlign="End" >
+						<t:multiLabels>
+							<Label visible="false" />
+							<Label text="Deducciones1" textAlign="End"/>
+							<Label text="S/." textAlign="End" width="100%"/>
+						</t:multiLabels>
+						<t:template>
+							<Label text="{
+                                path: 'PescaModel>DEDUC',
+                                type: 'sap.ui.model.type.Float',
+                                formatOptions: {
+                                    decimals: 3,
+                                    groupingSeparator: ',',
+                                    decimalSeparator: '.'
+                                }
+                            }" design="{PescaModel>labelDesign}" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						width="auto" hAlign="End" >
+						<t:multiLabels>
+							<Label visible="false" />
+							<Label text="Deducciones2" textAlign="End"/>
+							<Label text="S/." textAlign="End" width="100%"/>
+						</t:multiLabels>
+						<t:template>
+							<Label text="{
+                                path: 'PescaModel>DEDUA',
+                                type: 'sap.ui.model.type.Float',
+                                formatOptions: {
+                                    decimals: 3,
+                                    groupingSeparator: ',',
+                                    decimalSeparator: '.'
+                                }
+                            }" design="{PescaModel>labelDesign}" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						width="auto" hAlign="End" >
+						<t:multiLabels>
+							<Label visible="false" />
+							<Label text="Intereses" textAlign="End"/>
+							<Label text="S/." textAlign="End" width="100%"/>
+						</t:multiLabels>
+						<t:template>
+							<Label text="{
+                                path: 'PescaModel>INTER',
+                                type: 'sap.ui.model.type.Float',
+                                formatOptions: {
+                                    decimals: 3,
+                                    groupingSeparator: ',',
+                                    decimalSeparator: '.'
+                                }
+                            }" design="{PescaModel>labelDesign}" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						width="auto" hAlign="End" >
+						<t:multiLabels>
+							<Label visible="false" />
+							<Label text="Subtotal" textAlign="End"/>
+							<Label text="S/." textAlign="End" width="100%"/>
+						</t:multiLabels>
+						<t:template>
+							<Label text="{
+                                path: 'PescaModel>SUBTO',
+                                type: 'sap.ui.model.type.Float',
+                                formatOptions: {
+                                    decimals: 3,
+                                    groupingSeparator: ',',
+                                    decimalSeparator: '.'
+                                }
+                            }" design="{PescaModel>labelDesign}" />
+						</t:template>
+					</t:Column>
+				</t:columns>
+                <!-- <t:footer>
+                    <Text text="ten"/>
+                </t:footer> -->
+			</t:Table>
         </content>
         <footer>
             <OverflowToolbar width="100%" height="46px" design="Auto" enabled="true" visible="true">
                 <content>
                     <ToolbarSpacer width=""/>
                     <Button text="Liberar" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onButtonLiberar"/>
-                    <Button text="Cerrar" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
-                    <Button text="Editar" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onButtonEditar"/>
-                    <Button text="Eliminar" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+                    <Button text="Cerrar" type="Reject" icon="sap-icon://decline" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+                    <Button text="Editar" type="Accept" icon="sap-icon://edit" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onButtonEditar"/>
+                    <Button text="Eliminar" type="Reject" icon="sap-icon://delete" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onButtonEliminar"/>
                 </content>
             </OverflowToolbar>
         </footer>

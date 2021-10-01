@@ -2,6 +2,7 @@
     controllerName="com.tasa.tolvas.calculoderechopesca.controller.EditarDeclaracionJurada" 
     xmlns="sap.m" 
     xmlns:form="sap.ui.layout.form" 
+    xmlns:layout="sap.ui.layout"
     xmlns:core="sap.ui.core">
     <Page showHeader="true" title="Cálculo Derecho de Pesca" showFooter="true" showNavButton="false">
         <content>
@@ -46,18 +47,34 @@
                             </form:FormElement>
                             <form:FormElement visible="true">
                                 <form:label>
-                                    <Label text="Precio de harina" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Label text="Precio de harina" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true">
+                                        <layoutData>
+                                            <layout:GridData span="XL2 L2 M2 S12" />
+                                        </layoutData>
+                                    </Label>
                                 </form:label>
                                 <form:fields>
-                                    <Text text="155.000" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="155.000" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true">
+                                        <layoutData>
+                                            <layout:GridData span="XL4 L4 M4 S12" />
+                                        </layoutData>
+                                    </Text>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
                                 <form:label>
-                                    <Label text="Moneda del precio" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Label text="Moneda del precio" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true">
+                                        <layoutData>
+                                            <layout:GridData span="XL2 L2 M2 S12" />
+                                        </layoutData>
+                                    </Label>
                                 </form:label>
                                 <form:fields>
-                                    <Text text="- DOLARES AMERICANOS" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="- DOLARES AMERICANOS" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true">
+                                        <layoutData>
+                                            <layout:GridData span="XL4 L4 M4 S12" />
+                                        </layoutData>
+                                    </Text>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -104,7 +121,7 @@
                     </form:FormContainer>
                 </form:formContainers>
                 <form:layout>
-                    <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
+                    <form:ResponsiveGridLayout adjustLabelSpan="false" labelSpanXL="2" labelSpanL="2" labelSpanM="2" labelSpanS="12"/>
                 </form:layout>
             </form:Form>
             <!-- <Button text="Buscar" type="Default" icon="sap-icon://search" iconFirst="true" width="50%" enabled="true" visible="true" iconDensityAware="false" class="sapUiResponsiveMargin"/> -->

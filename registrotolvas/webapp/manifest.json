@@ -64,6 +64,9 @@
             "cozy": true
         },
         "models": {
+            "passModel": {
+                "type": "sap.ui.model.json.JSONModel"
+            },
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
@@ -92,37 +95,30 @@
                 {
                     "name": "RouteMain",
                     "pattern": "RouteMain",
-                    "target": ["TargetMain"]
+                    "target": [
+                        "TargetMain"
+                    ]
                 },
                 {
                     "pattern": "EdicionRegistroTolva",
                     "name": "EdicionRegistroTolva",
                     "target": [
-                        "EdicionRegistroTolva"
-                    ]
-                },
-                {
-                    "pattern": "",
-                    "name": "default",
-                    "target": [
-                        "Main"
+                        "TargetEdicionRegistroTolva"
                     ]
                 }
             ],
             "targets": {
                 "TargetMain": {
-                "viewType": "XML",
-                "transition": "slide",
-                "clearControlAggregation": false,
-                "viewId": "Main",
-                "viewName": "Main"
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "viewName": "Main"
                 },
-                "EdicionRegistroTolva": {
-                    "controlAggregation": "EdicionRegistroTolva",
-                    "viewName": "EdicionRegistroTolva",
+                "TargetEdicionRegistroTolva": {
+                    "viewType": "XML",
+	        		"viewLevel": 2,
+                    "transition": "slide",
                     "viewId": "EdicionRegistroTolva",
-                    "viewLevel": 2,
-                    "transition": "slide"
+                    "viewName": "EdicionRegistroTolva"
                 }
             }
         }

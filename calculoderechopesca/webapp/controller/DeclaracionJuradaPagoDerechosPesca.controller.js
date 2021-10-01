@@ -1,12 +1,16 @@
 sap.ui.define(["sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
 //	"./BusquedaDeEmpresas",
-//	"./utilities",
+	'./formatter',
+	"./utilities",
+    "sap/ui/model/json/JSONModel",
 	"sap/ui/core/routing/History"
 ], function(BaseController, 
     MessageBox, 
 //    BusquedaDeEmpresas, 
- //   Utilities, 
+    Formatter,
+    Utilities, 
+    JSONModel,
     History) {
 	"use strict";
 
@@ -44,7 +48,90 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					parameters: oParams
 				};
 				this.getView().bindObject(oPath);
-			}
+            }
+            
+
+            let oView = this.getView(),
+                oModel = oView.getModel("FormSearchModel"),
+                aOption = [],
+                sMJAHR = oModel.getProperty("/Form/0/Ejercicio").trim(),
+                sRDPCA = oModel.getProperty("/Form/0/Periodo").trim(),
+                iRowCount = oModel.getProperty("/Form/0/CantidadFilas"),
+                sTableName = "ZFLDPS",
+                aField = ["MJAHR", "RDPCA", "FHCTB", "ESCAC", "FHCAC", "HRCAC", "ATCAC", "VAFOB", "PRARI", "EQUIT", "VAUIT", "FACTO", "CDMND", "TPCAM"],
+                sOrder = "";
+                
+            if (!Utilities.isEmpty(sMJAHR)){
+                aOption.push(
+                    {
+                        "control": "INPUT",
+                        "key": "MJAHR",
+                        "valueLow": sMJAHR,
+                        "valueHigh": "",
+                        "Longitud": "10"
+                    }
+                );
+            }
+            if (!Utilities.isEmpty(sRDPCA)){
+                aOption.push(
+                    {
+                        "control": "INPUT",
+                        "key": "RDPCA",
+                        "valueLow": sRDPCA,
+                        "valueHigh": "",
+                        "Longitud": "10"
+                    }
+                );
+            }
+
+            Utilities.getDataFromReadTable(sTableName, aOption, aField, sOrder, iRowCount)
+                .then(data => {
+                    oView.setModel(new JSONModel(data[0]), "DeclaracionJuradaModel");
+                });
+
+            sTableName = "ZV_FLDC1";
+            aField = ["MJAHR", "RDPCA", "NRPOS", "CDPAG", "CDEMB", "CDMMA", "PSCHI", "PSOTR", "JURCA", "MNPAG", "DEDUC", "DEDUA", "INTER", "SUBTO", "NMEMB", "MREMB", "CDEMP", "MANDT"];
+            Utilities.getDataFromReadTable(sTableName, aOption, aField, sOrder, iRowCount)
+                .then(data => {
+                    let fPescaCHI =0,
+                        fJurelCaballa = 0,
+                        fOtros = 0,
+                        fCapturaTotal = 0,
+                        fDeducciones1 = 0,
+                        fDeducciones2 = 0,
+                        fIntereses = 0,
+                        fSubtotales = 0;
+                    data.forEach(element => {
+                        fPescaCHI += parseFloat(element.PSCHI);
+                        fJurelCaballa += parseFloat(element.PSOTR);
+                        fOtros += parseFloat(element.JURCA);
+                        fCapturaTotal += parseFloat(element.MNPAG);
+                        fDeducciones1 += parseFloat(element.DEDUC);
+                        fDeducciones2 += parseFloat(element.DEDUA);
+                        fIntereses += parseFloat(element.INTER);
+                        fSubtotales += parseFloat(element.SUBTO);
+                    });
+
+                    data.push(
+                        {
+                            "NRPOS" : "",
+                            "CDPAG" : "Totales",
+                            "NMEMB" : "",
+                            "MREMB" : "",
+                            "PSCHI" : fPescaCHI,
+                            "PSOTR" : fJurelCaballa,
+                            "JURCA" : fOtros,
+                            "MNPAG" : fCapturaTotal,
+                            "DEDUC" : fDeducciones1,
+                            "DEDUA" : fDeducciones2,
+                            "INTER" : fIntereses,
+                            "SUBTO" : fSubtotales,
+                            "labelDesign" : sap.m.LabelDesign.Bold
+                        }
+                    )
+
+                    oView.setModel(new JSONModel(data), "PescaModel");
+                });
 
 		},
 		_onInputValueHelpRequest: function(oEvent) {
@@ -67,17 +154,54 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		},
 		_onButtonLiberar: function(oEvent) {
+			// var oBindingContext = oEvent.getSource().getBindingContext();
 
-			var oBindingContext = oEvent.getSource().getBindingContext();
+			// return new Promise(function(fnResolve) {
 
-			return new Promise(function(fnResolve) {
+			// 	this.doNavigate("", oBindingContext, fnResolve, "");
+			// }.bind(this)).catch(function(err) {
+			// 	if (err !== undefined) {
+			// 		MessageBox.error(err.message);
+			// 	}
+            // });
+            
+            
+            MessageBox.confirm("¿Desea liberar el derecho de pesca?", {
+                title: "Liberar derecho de pesca",                                     // default
+                onClose: function(){
+                    let oModel = this.getView().getModel("DeclaracionJuradaModel");
+                    let sEjercicio = oModel.getProperty("/MJAHR");
+                    let sPeriodo = oModel.getProperty("/RDPCA");
 
-				this.doNavigate("LiberarDeclaracionJurada", oBindingContext, fnResolve, "");
-			}.bind(this)).catch(function(err) {
-				if (err !== undefined) {
-					MessageBox.error(err.message);
-				}
-			});
+                    let oReq = [
+                        {
+                            "cmopt": `MJAHR = '${sEjercicio}' AND RDPCA = '${sPeriodo}'`,
+                            "cmset": `ESCAC = 'L'`,
+                            "nmtab": "ZFLDPS"
+                        }
+                    ];
+                    Utilities.updateFieldTableRFC(oReq)
+                        .then( resp => {
+                            MessageBox.success("El derecho de pesca se ha liberado satisfactoriamente", {
+                                title: "Exito",                                     // default
+                                onClose: function(){
+                                    this.oRouter.navTo("");
+                                }.bind(this),                                      // default
+                                styleClass: "",                                     // default
+                                actions: sap.m.MessageBox.Action.OK,                // default
+                                emphasizedAction: MessageBox.Action.OK,             // default
+                                initialFocus: MessageBox.Action.OK,                 // default
+                                textDirection: sap.ui.core.TextDirection.Inherit    // default
+                            });
+                        });
+                    this.oRouter.navTo("");
+                }.bind(this),                                      // default
+                styleClass: "",                                     // default
+                actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+                emphasizedAction: MessageBox.Action.OK,             // default
+                initialFocus: MessageBox.Action.OK,                 // default
+                textDirection: sap.ui.core.TextDirection.Inherit    // default
+            });
 
 		},
 
@@ -86,7 +210,20 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			return new Promise(function(fnResolve) {
 
-				this.doNavigate("EditarDeclaracionJurada", oBindingContext, fnResolve, "");
+				this.doNavigate("", oBindingContext, fnResolve, "");
+			}.bind(this)).catch(function(err) {
+				if (err !== undefined) {
+					MessageBox.error(err.message);
+				}
+			});
+		},
+
+		_onButtonEliminar: function(oEvent) {
+			var oBindingContext = oEvent.getSource().getBindingContext();
+
+			return new Promise(function(fnResolve) {
+
+				this.doNavigate("", oBindingContext, fnResolve, "");
 			}.bind(this)).catch(function(err) {
 				if (err !== undefined) {
 					MessageBox.error(err.message);

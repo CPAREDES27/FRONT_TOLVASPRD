@@ -42,9 +42,68 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					parameters: oParams
 				};
 				this.getView().bindObject(oPath);
-			}
+            }
+            
+            this.loadComboBalanza();
+            this.loadPuntoDescarga();
 
-		},
+        },
+        
+        loadComboBalanza: function() {
+            let oView = this.getView();
+            let oReq = {
+                "fields": [ 
+                    "CDBAL",
+                    "DSBAL",
+                    "INBAL"
+                ],
+                "p_option": [
+                    {
+                        "wa": "ESREG = 'S'"
+                    },
+                    {
+                        "wa": "AND CDPTA = '0012'"
+                    }
+                ],
+                "p_user": "FGARCIA",
+                "rowcount": "200"
+            }
+            let url = "https://flota-approuterqas.cfapps.us10.hana.ondemand.com/api/tolvas/registrotolvas_listar";
+            return fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(oReq)
+                })
+                .then(response => response.json())
+                // .then(data => console.log(data));
+                .then(data => {
+                    oView.setModel(new JSONModel(data.data), "RegistroTolvasModel");
+                });
+        },
+        
+        loadPuntoDescarga: function() {
+            let oView = this.getView();
+            let oReq = {
+                "fields": [ ],
+                "p_option": [
+                    {
+                        "wa": "CDPTA LIKE '0012'"
+                    }
+                ],
+                "p_user": "FGARCIA",
+                "rowcount": "200"
+            }
+            let url = "https://flota-approuterqas.cfapps.us10.hana.ondemand.com/api/tolvas/registrotolvas_listar";
+            return fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(oReq)
+                })
+                .then(response => response.json())
+                // .then(data => console.log(data));
+                .then(data => {
+                    oView.setModel(new JSONModel(data.data), "RegistroTolvasModel");
+                });
+        },
+
 		onInit: function() {
 			this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			this.oRouter.getTarget("TargetMain").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));

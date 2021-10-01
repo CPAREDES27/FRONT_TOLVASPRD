@@ -46,10 +46,9 @@
     "sap.ui5": {
         "flexEnabled": false,
         "rootView": {
-            "viewName": "com.tasa.tolvas.descargatolvas.view.Main",
+            "viewName": "com.tasa.tolvas.descargatolvas.view.App",
             "type": "XML",
-            "async": true,
-            "id": "Main"
+            "async": true
         },
         "dependencies": {
             "minUI5Version": "1.94.0",
@@ -86,7 +85,8 @@
                 "viewPath": "com.tasa.tolvas.descargatolvas.view",
                 "controlAggregation": "pages",
                 "controlId": "app",
-                "clearControlAggregation": false
+                "clearControlAggregation": false,
+                "transition": "slide"
             },
             "routes": [
                 {
@@ -96,6 +96,13 @@
                         "TargetMain"
                     ]
                 },
+				{
+					"pattern": "",
+					"name": "default",
+					"target": [
+						"TargetMain"
+					]
+				},
                 {
                     "pattern": "RouteMain/DescargaTolvas",
                     "name": "DescargaTolvas",
@@ -108,14 +115,11 @@
                 "TargetMain": {
                     "viewType": "XML",
                     "transition": "slide",
-                    "clearControlAggregation": false,
-                    "viewId": "Main",
                     "viewName": "Main"
                 },
                 "DescargaTolvas": {
                     "controlAggregation": "detailPages",
                     "viewName": "DescargaTolvas",
-                    "viewId": "DescargaTolvas",
                     "viewLevel": 2,
                     "transition": "slide"
                 }

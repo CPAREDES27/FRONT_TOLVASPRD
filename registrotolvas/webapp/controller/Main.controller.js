@@ -1,8 +1,9 @@
 sap.ui.define(["sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
 //	"./BusquedaDeEmpresas",
-	//"./utilities",
-	"sap/ui/core/routing/History"
+	"./utilities",
+    "sap/ui/core/routing/History",
+    "sap/ui/model/json/JSONModel"
 ],
 	/**
 	 * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -10,8 +11,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     function(BaseController, 
         MessageBox, 
 //        BusquedaDeEmpresas, 
-//        Utilities, 
-        History) {
+        Utilities, 
+        History,
+        JSONModel) {
 	"use strict";
 
 	return BaseController.extend("com.tasa.tolvas.registrotolvas.controller.Main", {
@@ -49,8 +51,121 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				};
 				this.getView().bindObject(oPath);
             }
+
+            this.requestListaRegistroTolvas();
+                        
+        },
+        
+        requestListaRegistroTolvas: function(){
+            let sTableName = "",
+                oView = this.getView(),
+                oModel = oView.getModel("FormSearchModel"),
+                aField = [],
+                aOption = [],
+                sCDPTA = oModel.getProperty("/SupplierCollection/0/CentroCodigo").trim(),
+                sFIDES = oModel.getProperty("/SupplierCollection/0/FechaInicioDescarga").trim(),
+                sHIDES = oModel.getProperty("/SupplierCollection/0/HoraInicioDescarga").trim(),
+                iRowCount = oModel.getProperty("/SupplierCollection/0/CantidadFilas"),
+                sOrder = "";
+
+            aField = [];
+
+            if (!Utilities.isEmpty(sCDPTA)){
+                aOption.push(
+                    {
+                        "wa": `CDPTA LIKE '${sCDPTA}'`
+                    }
+                )
+            }
+            if (!Utilities.isEmpty(sFIDES)){
+                aOption.push(
+                    {
+                        "wa": `FIDES LIKE '${sFIDES}'`
+                    }
+                )
+            }
+            if (!Utilities.isEmpty(sHIDES)){
+                aOption.push(
+                    {
+                        "wa": `HIDES LIKE '${sHIDES}'`
+                    }
+                )
+            }
+
             
-		},
+            oView.getModel("FormSearchModel").setProperty("/busyIndicatorTableDescargaTolvas", true);
+            Utilities.getDataFromRegistroTolvas(aOption, aField, iRowCount.toString())
+                .then(data => {
+                    let oResp1 = data;
+
+                    let aWERKS = [];
+                    let aCDPTA = [];
+                    // let iIndex = 0;
+                    oResp1.forEach(element => {
+                        if (aCDPTA.findIndex((elem) => elem === element.CDPTA) === -1){
+                            aCDPTA.push(element.CDPTA);
+                        }
+                    });
+                    // console.log(aCDPTA);
+                    sTableName = "ZFLPTA";
+                    aField = ["WERKS"];
+                    // aOption = [],
+                    let aAjax = []
+                    aCDPTA.forEach(element => {
+                        // aOption = [
+                        //     {
+                        //         "wa": `CDPTA LIKE '${element}'`
+                        //     }
+                        // ];
+                        aOption = [
+                            {
+                                "control": "INPUT",
+                                "key": "CDPTA",
+                                "valueLow": element,
+                                "valueHigh": "",
+                                "Longitud": "10"
+                            }
+                        ];
+
+                        aAjax.push(Utilities.getDataFromReadTable(sTableName, aOption, aField, sOrder, iRowCount)
+                            .then(data => {
+                                // let oResp2 = data;
+                                aWERKS.push(data[0].WERKS);
+                                // console.log(oResp2);
+                            }));
+                    });
+                    let sIndexFound = 0;
+                    $.when.apply(undefined, aAjax).then(resp => {
+                        // oResp1.forEach((element, index) => {
+                        //     if(element.NRMAR === 0){
+                        //         oResp1.splice(index, 1);
+                        //     } else {
+                        //         sIndexFound = aCDPTA.findIndex((elem) => elem === element.CDPTA);
+                        //         if (sIndexFound !== -1){
+                        //             element.WERKS = aWERKS[sIndexFound];
+                        //         }
+                        //     }
+                        // });
+
+                        let element = null;
+                        for(let index = 0; index<oResp1.length; index++){
+                            element = oResp1[index];
+                            if(element.NRMAR > 0){
+                                oResp1.splice(index, 1);
+                                index--;
+                            } else {
+                                sIndexFound = aCDPTA.findIndex((elem) => elem === element.CDPTA);
+                                if (sIndexFound !== -1){
+                                    element.WERKS = aWERKS[sIndexFound];
+                                }
+                            }
+                        }
+                        oView.setModel(new JSONModel(oResp1), "RegistroTolvasModel");
+                        oView.getModel("FormSearchModel").setProperty("/busyIndicatorTableDescargaTolvas", false);
+                    })
+                });
+        },
+
 		_onInputValueHelpRequest: function(oEvent) {
 
 			var sDialogName = "BusquedaDeEmpresas";
@@ -86,10 +201,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		},
 
 		_onButtonPress1: function(oEvent) {
-			var oBindingContext = oEvent.getSource().getBindingContext();
-
+			var oBindingContext = oEvent.getSource().getBindingContext("RegistroTolvasModel");
 			return new Promise(function(fnResolve) {
-
 				this.doNavigate("EdicionRegistroTolva", oBindingContext, fnResolve, "");
 			}.bind(this)).catch(function(err) {
 				if (err !== undefined) {
@@ -100,61 +213,17 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		doNavigate: function(sRouteName, oBindingContext, fnPromiseResolve, sViaRelation) {
 			var sPath = (oBindingContext) ? oBindingContext.getPath() : null;
-			var oModel = (oBindingContext) ? oBindingContext.getModel() : null;
+            var oModel = (oBindingContext) ? oBindingContext.getModel() : null;
+            this.getOwnerComponent().getModel("passModel").setProperty("/data", oModel.getProperty(sPath));
 
-			var sEntityNameSet;
-			if (sPath !== null && sPath !== "") {
-				if (sPath.substring(0, 1) === "/") {
-					sPath = sPath.substring(1);
-				}
-				sEntityNameSet = sPath.split("(")[0];
-			}
-			var sNavigationPropertyName;
-			var sMasterContext = this.sMasterContext ? this.sMasterContext : sPath;
-
-			if (sEntityNameSet !== null) {
-				sNavigationPropertyName = sViaRelation || this.getOwnerComponent().getNavigationPropertyForNavigationWithContext(sEntityNameSet, sRouteName);
-			}
-			if (sNavigationPropertyName !== null && sNavigationPropertyName !== undefined) {
-				if (sNavigationPropertyName === "") {
-					this.oRouter.navTo(sRouteName, {
-						context: sPath,
-						masterContext: sMasterContext
-					}, false);
-				} else {
-					oModel.createBindingContext(sNavigationPropertyName, oBindingContext, null, function(bindingContext) {
-						if (bindingContext) {
-							sPath = bindingContext.getPath();
-							if (sPath.substring(0, 1) === "/") {
-								sPath = sPath.substring(1);
-							}
-						} else {
-							sPath = "undefined";
-						}
-
-						// If the navigation is a 1-n, sPath would be "undefined" as this is not supported in Build
-						if (sPath === "undefined") {
-							this.oRouter.navTo(sRouteName);
-						} else {
-							this.oRouter.navTo(sRouteName, {
-								context: sPath,
-								masterContext: sMasterContext
-							}, false);
-						}
-					}.bind(this));
-				}
-			} else {
-				this.oRouter.navTo(sRouteName);
-			}
-
+            this.oRouter.navTo(sRouteName);
 			if (typeof fnPromiseResolve === "function") {
 				fnPromiseResolve();
 			}
-
 		},
 		onInit: function() {
 			this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			//this.oRouter.getTarget("RouteMain").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
+			this.oRouter.getTarget("TargetMain").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
 			var oView = this.getView();
 			oView.addEventDelegate({
 				onBeforeShow: function() {
@@ -169,6 +238,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					}
 				}.bind(this)
             });
+            // this.requestListaRegistroTolvas();
+
+            
+            let oModel = new JSONModel(sap.ui.require.toUrl("com/tasa/tolvas/registrotolvas/mock/formFiltrosRegistro.json"));
+            this.getView().setModel(oModel, "FormSearchModel");
 		}
 	});
 }, /* bExport= */ true);

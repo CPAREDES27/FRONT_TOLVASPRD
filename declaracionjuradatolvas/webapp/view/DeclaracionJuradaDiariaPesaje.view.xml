@@ -1,0 +1,277 @@
+<mvc:View
+    controllerName="com.tasa.tolvas.declaracionjuradatolvas.controller.DeclaracionJuradaDiariaPesaje"
+    displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns="sap.m"
+>
+    <Page showHeader="true" showFooter="true" showNavButton="false" title="{i18n>title}">
+        <content>
+            <form:Form width="100%" editable="true" visible="true">
+                <form:title>
+                    <core:Title text="DECLARACIÓN JURADA DIARIA DE REPORTE DE PESAJE POR TOLVA O BALANZA" level="Auto"/>
+                </form:title>
+                <form:formContainers>
+                    <form:FormContainer visible="true">
+                        <form:formElements>
+                            <form:FormElement visible="true">
+                                <form:label>
+                                    <Label text="Razón social" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                </form:label>
+                                <form:fields>
+                                    <Text text="{TolvaModel>/Propietario}" visible="true" width="auto" />
+                                </form:fields>
+                            </form:FormElement>
+                            <form:FormElement visible="true">
+                                <form:label>
+                                    <Label text="Ubicación de la planta" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                </form:label>
+                                <form:fields>
+                                    <Input value="{TolvaModel>/UbicacionPlanta}" type="Text" enabled="false" visible="true" width="auto" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onInputValueHelpRequest"/>
+                                </form:fields>
+                            </form:FormElement>
+                            <form:FormElement visible="true">
+                                <form:label>
+                                    <Label text="Planta" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                </form:label>
+                                <form:fields>
+                                    <Text text="{TolvaModel>/CentroPlanta} {TolvaModel>/DescripcionPlanta}" visible="true" width="auto" />
+                                </form:fields>
+                            </form:FormElement>
+
+                        </form:formElements>
+                        <form:title/>
+                    </form:FormContainer>
+
+                    <form:FormContainer visible="true">
+                        <form:formElements>
+                            <form:FormElement visible="true">
+                                <form:label>
+                                    <Label text="Tolva N°" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                </form:label>
+                                <form:fields>
+                                    <Text text="{TolvaModel>/Tolva}" visible="true" width="auto" />
+                                </form:fields>
+                            </form:FormElement>
+                            <form:FormElement visible="true">
+                                <form:label>
+                                    <Label text="Balanza N°" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                </form:label>
+                                <form:fields>
+                                    <Text text="{TolvaModel>/Tolva}" visible="true" width="auto" />
+                                </form:fields>
+                            </form:FormElement>
+                            <form:FormElement visible="true">
+                                <form:label>
+                                    <Label text="Fecha (dia-mes-año)" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                </form:label>
+                                <form:fields>
+                                    <Text text="{TolvaModel>/Fecha}" visible="true" width="auto" />
+                                </form:fields>
+                            </form:FormElement>
+                            <!-- <form:FormElement visible="true">
+                                <form:label>
+                                    <Label text="Estado" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                </form:label>
+                                <form:fields>
+                                    <ComboBox editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
+                                        <items>
+                                            <core:Item text="Item" enabled="true" key="Item"/>
+                                            <core:Item text="Item" enabled="true" key="Item"/>
+                                            <core:Item text="Item" enabled="true" key="Item"/>
+                                        </items>
+                                    </ComboBox>
+                                </form:fields>
+                            </form:FormElement> -->
+                        </form:formElements>
+                        <form:title/>
+                    </form:FormContainer>
+                </form:formContainers>
+                <form:layout>
+                    <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
+                </form:layout>
+            </form:Form>
+            <Table items="{TolvaModel>/reporte}" width="auto" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin">
+                <infoToolbar>
+                    <!-- <Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+                        <content>
+                            <Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        </content>
+                    </Toolbar> -->
+                </infoToolbar>
+                <headerToolbar>
+                    <!-- <OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+                        <content>
+                            <Label text="Empresa"/>
+                            <ComboBox editable="true" enabled="true" visible="true" width="auto" valueState="None" items="{EmpresaSetModel>/}">
+                                <items>
+                                    <core:Item key="{EmpresaSetModel>id}" text="{EmpresaSetModel>descripcion}"/>
+                                </items>
+                            </ComboBox>
+                        </content>
+                    </OverflowToolbar> -->
+                </headerToolbar>
+                <columns>
+                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                        <header>
+                            <Text text="Tolva N°" width="auto" maxLines="1" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        </header>
+                        <footer/>
+                    </Column>
+                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                        <header>
+                            <Text text="Nro. descarga" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        </header>
+                        <footer/>
+                    </Column>
+                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                        <header>
+                            <Text text="Nombre embarcación" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        </header>
+                        <footer/>
+                    </Column>
+                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                        <header>
+                            <Text text="Matrícula" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        </header>
+                        <footer/>
+                    </Column>
+                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                        <header>
+                            <Text text="Especie (*)" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        </header>
+                        <footer/>
+                    </Column>
+                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                        <header>
+                            <Text text="Destino recurso (**)" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        </header>
+                        <footer/>
+                    </Column>
+                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                        <header>
+                            <Text text="Cant. pesadas" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        </header>
+                        <footer/>
+                    </Column>
+                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                        <header>
+                            <!-- <Text text="Captura Total" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/> -->
+                            <Text text="Cant. descarga" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        </header>
+                        <footer/>
+                    </Column>
+                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                        <header>
+                            <Text text="Hora inicio" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        </header>
+                        <footer/>
+                    </Column>
+                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                        <header>
+                            <Text text="Hora fin" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        </header>
+                        <footer/>
+                    </Column>
+                    <Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                        <header>
+                            <!-- <Text text="S/." width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/> -->
+                        </header>
+                        <footer/>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem type="Active">
+                        <cells>
+                            <Text text="{TolvaModel>INBAL}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                            <Text text="{TolvaModel>TICKE}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                            <Text text="{TolvaModel>CDEMB}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                            <Text text="{TolvaModel>NMEMB}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                            <ComboBox editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%" items="{EspeciesModel>/}">
+                                <items>
+                                    <core:Item key="{EspeciesModel>id}" text="{EspeciesModel>descripcion}"/>
+                                </items>
+                            </ComboBox>
+                            <ComboBox editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%" items="{DestinosModel>/}">
+                                <items>
+                                    <core:Item key="{DestinosModel>id}" text="{DestinosModel>descripcion}"/>
+                                </items>
+                            </ComboBox>
+                            <Text text="{TolvaModel>CNTOL}" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                            <Text text="{TolvaModel>CNPDS}" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                            <Text text="{TolvaModel>HIDES}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                            <Text text="{TolvaModel>HFDES}" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                            <Button text="Eliminar" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+            <layout:VerticalLayout
+				width="100%"
+				class="gridWrapper">
+                <layout:Grid
+                        containerQuery="true"
+                        defaultSpan="XL4 L4 M6 S12">
+                    <Label text="Observación" >
+                        <layoutData>
+                            <layout:GridData
+                                span="XL1 L1 M3" />
+                        </layoutData>
+                    </Label>
+                    <TextArea  width="100%">
+                        <layoutData>
+                            <layout:GridData
+                                span="XL11 L11 M9" />
+                        </layoutData>
+                    </TextArea>
+                    <List headerText="ESPECIES (*)">
+                        <layoutData>
+                            <layout:GridData
+                                linebreakL="true"
+                                linebreakM="true"
+                                linebreakS="true" />
+                        </layoutData>
+                        <StandardListItem
+                            title="01 Anchoveta"/>
+                            <!-- counter="{Quantity}" -->
+                        <StandardListItem title="02 Sardina"/>
+                        <StandardListItem title="03 Jurel"/>
+                        <StandardListItem title="04 Caballa"/>
+                        <StandardListItem title="05 Samasa"/>
+                        <StandardListItem title="06 Camotillo"/>
+                        <StandardListItem title="07 Merluza"/>
+                        <StandardListItem title="08 Otros (Especificar en observaciones)"/>
+                        <StandardListItem title="(a) Especificar el Tipo de Instrumento de Pesaje"/>
+                    </List>
+
+                    <List
+                        headerText="DESTINO DEL RECURSO (**)">
+                        <StandardListItem
+                            title="01 Harina y aceite"/>
+                        <StandardListItem title="02 Enlatado"/>
+                        <StandardListItem title="03 Congelado"/>
+                        <StandardListItem title="04 Curado"/>
+                        <StandardListItem title="05 Otros (Especificar en obervaciones)"/>
+                    </List>
+                </layout:Grid>
+            </layout:VerticalLayout>
+
+            
+            
+        </content>
+        <footer>
+            <OverflowToolbar width="100%" height="46px" design="Auto" enabled="true" visible="true">
+                <content>
+                    <ToolbarSpacer width=""/>
+                    <Button text="Imprimir" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+                    <Button text="Exportar Excel" type="Reject" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+                </content>
+            </OverflowToolbar>
+        </footer>
+        <headerContent/>
+        <subHeader/>
+        <customHeader/>
+    </Page>
+</mvc:View>

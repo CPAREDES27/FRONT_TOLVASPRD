@@ -5,6 +5,9 @@ sap.ui.define([
 ], function (UIComponent, Device, models) {
 	"use strict";
 
+	let navigationWithContext = {
+
+	};
 	return UIComponent.extend("com.tasa.tolvas.declaracionjuradatolvas.Component", {
 
 		metadata: {
@@ -25,6 +28,11 @@ sap.ui.define([
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
+		},
+
+		getNavigationPropertyForNavigationWithContext: function(sEntityNameSet, targetPageName) {
+			var entityNavigations = navigationWithContext[sEntityNameSet];
+			return entityNavigations == null ? null : entityNavigations[targetPageName];
 		}
 	});
 });

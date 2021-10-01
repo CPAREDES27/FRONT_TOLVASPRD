@@ -1,15 +1,17 @@
 <mvc:View
     controllerName="com.tasa.tolvas.calculoderechopesca.controller.Main"
-    xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
-    xmlns="sap.m" xmlns:form="sap.ui.layout.form" 
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:form="sap.ui.layout.form" 
+    xmlns:layout="sap.ui.layout"
     xmlns:core="sap.ui.core">
 	<Shell id="shell">
 		<App id="app">
 			<pages>
 				<Page id="page" title="{i18n>title}" showFooter="true" showNavButton="false">
                     <content>
-                        <form:Form width="100%" editable="true" visible="true">
+                        <form:Form width="100%" editable="true" visible="true" binding="{FormSearchModel>/Form/0/}">
                             <!-- <form:title>
                                 <core:Title text="Datos de selección" level="Auto"/>
                             </form:title> -->
@@ -28,7 +30,11 @@
                                                 <Label text="Ejercicio" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                <Input type="Text" value="{FormSearchModel>Ejercicio}" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0">
+                                                    <layoutData>
+                                                        <layout:GridData span="XL5 L5 M5 S12" />
+                                                    </layoutData>
+                                                </Input>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -36,7 +42,11 @@
                                                 <Label text="Periodo" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                <Input type="Text" value="{FormSearchModel>Periodo}" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0">
+                                                    <layoutData>
+                                                        <layout:GridData span="XL5 L5 M5 S12" />
+                                                    </layoutData>
+                                                </Input>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">

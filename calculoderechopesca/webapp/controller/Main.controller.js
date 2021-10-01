@@ -2,7 +2,7 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
 //	"./BusquedaDeEmpresas",
-//	"./utilities",
+	"./utilities",
 	"sap/ui/core/routing/History"
 ],
 	/**
@@ -12,7 +12,7 @@ sap.ui.define([
         BaseController,
         MessageBox, 
 //        BusquedaDeEmpresas,
-//        Utilities,
+        Utilities,
         History) {
         "use strict";
 

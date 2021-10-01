@@ -1,8 +1,9 @@
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
+    "sap/ui/model/json/JSONModel",
 	"com/tasa/tolvas/calculoderechopesca/model/models"
-], function (UIComponent, Device, models) {
+], function (UIComponent, Device, JSONModel, models) {
 	"use strict";
 
 	let navigationWithContext = {
@@ -27,7 +28,11 @@ sap.ui.define([
 			this.getRouter().initialize();
 
 			// set the device model
-			this.setModel(models.createDeviceModel(), "device");
+            this.setModel(models.createDeviceModel(), "device");
+            
+            
+            let oModel = new JSONModel(sap.ui.require.toUrl("com/tasa/tolvas/calculoderechopesca/mock/formBusquedaDerecho.json"));
+            this.setModel(oModel, "FormSearchModel");
 		},
 
 		getNavigationPropertyForNavigationWithContext: function(sEntityNameSet, targetPageName) {

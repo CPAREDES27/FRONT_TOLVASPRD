@@ -95,15 +95,36 @@
                     "target": [
                         "TargetMain"
                     ]
-                }
+                },
+                {
+                    "pattern": "DeclaracionJuradaDiaria",
+                    "name": "DeclaracionJuradaDiaria",
+                    "target": [
+                        "TargetDeclaracionJuradaDiaria"
+                    ]
+                },
+				{
+					"pattern": "",
+					"name": "default",
+					"target": [
+						"TargetMain"
+					]
+				}
             ],
             "targets": {
                 "TargetMain": {
                     "viewType": "XML",
                     "transition": "slide",
                     "clearControlAggregation": false,
-                    "viewId": "Main",
                     "viewName": "Main"
+                },
+                "TargetDeclaracionJuradaDiaria": {
+                    "viewType": "XML",
+                    "clearControlAggregation": false,
+                    "viewName": "DeclaracionJuradaDiariaPesaje",
+                    "viewId": "DeclaracionJuradaDiariaPesaje",
+                    "viewLevel": 2,
+                    "transition": "slide"
                 }
             }
         }

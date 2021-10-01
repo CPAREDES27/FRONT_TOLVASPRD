@@ -2,8 +2,11 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
 //	"./BusquedaDeIngresoDescargaManuals",
-//	"./utilities",
-	"sap/ui/core/routing/History"
+	"./utilities",
+	"sap/ui/core/Core",
+    "sap/ui/core/routing/History",
+	'./formatter',
+    "sap/ui/model/json/JSONModel"
 ],
 /**
  * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -12,8 +15,11 @@ function(
     BaseController, 
     MessageBox, 
 //	BusquedaDeIngresoDescargaManuals, 
-//  Utilities, 
-    History) {
+    Utilities,
+    Core,
+    History,
+    Formatter,
+    JSONModel) {
     "use strict";
 
     return BaseController.extend("com.tasa.tolvas.descargatolvas.controller.Main", {
@@ -50,42 +56,132 @@ function(
 					parameters: oParams
 				};
 				this.getView().bindObject(oPath);
-			}
-
+            }
+            
+            
+            let oModel = new JSONModel(sap.ui.require.toUrl("com/tasa/tolvas/descargatolvas/mock/formFiltrosRegistro.json"));
+            this.getView().setModel(oModel, "FormSearchModel");
+            // this._onButtonSearchPress();
 		},
-		_onInputValueHelpRequest: function(oEvent) {
+		// _onInputValueHelpRequest: function(oEvent) {
 
-			var sDialogName = "BusquedaDeIngresoDescargaManuals";
-			this.mDialogs = this.mDialogs || {};
-			var oDialog = this.mDialogs[sDialogName];
-			if (!oDialog) {
-				oDialog = new BusquedaDeIngresoDescargaManuals(this.getView());
-				this.mDialogs[sDialogName] = oDialog;
+		// 	var sDialogName = "BusquedaDeIngresoDescargaManuals";
+		// 	this.mDialogs = this.mDialogs || {};
+		// 	var oDialog = this.mDialogs[sDialogName];
+		// 	if (!oDialog) {
+		// 		oDialog = new BusquedaDeIngresoDescargaManuals(this.getView());
+		// 		this.mDialogs[sDialogName] = oDialog;
 
-				// For navigation.
-				oDialog.setRouter(this.oRouter);
-			}
+		// 		// For navigation.
+		// 		oDialog.setRouter(this.oRouter);
+		// 	}
 
-			var context = oEvent.getSource().getBindingContext();
-			oDialog._oControl.setBindingContext(context);
+		// 	var context = oEvent.getSource().getBindingContext();
+		// 	oDialog._oControl.setBindingContext(context);
 
-			oDialog.open();
+		// 	oDialog.open();
 
-		},
-		_onButtonPress: function(oEvent) {
+		// },
+		// _onButtonPress: function(oEvent) {
+		// 	var oBindingContext = oEvent.getSource().getBindingContext();
+		// 	return new Promise(function(fnResolve) {
+		// 		this.doNavigate("NuevaDescargaTolva", oBindingContext, fnResolve, "");
+		// 	}.bind(this)).catch(function(err) {
+		// 		if (err !== undefined) {
+		// 			MessageBox.error(err.message);
+		// 		}
+		// 	});
+        // },
 
-			var oBindingContext = oEvent.getSource().getBindingContext();
+        _onButtonSearchPress: function(oEvent){
+            let sTableName = "",
+                iRowCount = 200,
+                aField = null,
+                aOption = null,
+                sCentro = "TVEG",
+                sFecha = "20210706",
+                sOrder = "FHERR DESCENDING HRERR DESCENDING CMIN ASCENDING",
+                oView = this.getView();
 
-			return new Promise(function(fnResolve) {
+            sTableName = "ZV_FLOG";
+            aField = [
+                "CDMEN", "CMIN", "DSMEN", "TPROG", "MREMB", 
+                "NMEMB", "NRDES", "FECCONMOV", "PESACUMOD", "DOC_MFBF", 
+                "DOC_MB1B", "DOC_MIGO",	"NROLOTE", "NROPEDI", "FIDES", 
+                "HIDES", "WERKS", "DSPTA", "CDSPC", "DSSPC"];
+            aOption = [
+                {
+                    "wa": `INDTR = 'P'`
+                },
+                {
+                    "wa": `AND CDTPC = 'I'`
+                },
+                {
+                    "wa": `AND ESREG = 'S'`
+                },
+                {
+                    "wa": `AND (TPROG = 'G' OR (TPROG = 'A' AND CMIN = 'E'))`
+                },
+                {
+                    "wa": `AND (WERKS LIKE 'TCNO')`
+                },
+                {
+                    "wa": `AND (FECCONMOV BETWEEN '20210401' AND '20210831')`
+                }
+            ];
 
-				this.doNavigate("NuevaDescargaTolva", oBindingContext, fnResolve, "");
-			}.bind(this)).catch(function(err) {
-				if (err !== undefined) {
-					MessageBox.error(err.message);
-				}
-			});
+            oView.getModel("FormSearchModel").setProperty("/busyIndicatorTableDescargaTolvas", true);
+            Utilities.getDataFromReadTable(sTableName, aOption, aField, sOrder, iRowCount)
+                .then(data => {
+                    let oResp = data;
+                    // let sBalanza = '';
+                    // oResp2.forEach((element, index) => {
+                    //     console.log(element);
+                    //     if (index === 0){
+                    //         sBalanza += element.INBAL;
+                    //     } else {
+                    //         sBalanza += ', ' + element.INBAL;
+                    //     }
+                    // })
+                    oView.getModel("FormSearchModel").setProperty("/busyIndicatorTableDescargaTolvas", false);                    
+                    oView.setModel( new JSONModel({
+                        "data": oResp
+                    }), "DescargaTolvaModel")
+                });
+        },
 
-		},
+        onValidationError: function(oEvent){
+            const oInput = oEvent.getSource();
+            oInput.setValueState("Error");
+            oInput.setValueStateText(oEvent.getParameter("message"));
+        },
+
+        onPressRow: function(oEvent) {
+            // var oNextUIState = this.getOwnerComponent().getHelper().getNextUIState(1),
+            //     productPath = oEvent.getSource().getBindingContext("products").getPath(),
+            //     product = productPath.split("/").slice(-1).pop();
+                
+            // this.oRouter.navTo("detail", {layout: oNextUIState.layout, product: product});
+            let productPath = oEvent.getSource().getBindingContext("DescargaTolvaModel").getPath(),            
+                oModel = this.getOwnerComponent().getModel(),
+                oNextUIState;
+
+            this.byId("PageDetailDescargaTolva").bindElement("DescargaTolvaModel>" + productPath);
+            this.getOwnerComponent().getHelper().then(function(oHelper) {
+                oNextUIState = oHelper.getNextUIState(1);
+                oModel.setProperty("/layout", oNextUIState.layout);
+            });
+        },
+
+        handleClose:function(oEvent) {
+            let oModel = this.getOwnerComponent().getModel(),
+                oNextUIState;
+            this.getOwnerComponent().getHelper().then(function(oHelper) {
+                oNextUIState = oHelper.getNextUIState(0);
+                oModel.setProperty("/layout", oNextUIState.layout);
+            });
+        },
+
 		doNavigate: function(sRouteName, oBindingContext, fnPromiseResolve, sViaRelation) {
 			var sPath = (oBindingContext) ? oBindingContext.getPath() : null;
 			var oModel = (oBindingContext) ? oBindingContext.getModel() : null;
@@ -140,23 +236,28 @@ function(
 			}
 
 		},
-		_onButtonPress1: function(oEvent) {
+		// _onButtonPress1: function(oEvent) {
 
-			var oBindingContext = oEvent.getSource().getBindingContext();
+		// 	var oBindingContext = oEvent.getSource().getBindingContext();
 
-			return new Promise(function(fnResolve) {
+		// 	return new Promise(function(fnResolve) {
 
-				this.doNavigate("NuevaDescargaTolva", oBindingContext, fnResolve, "");
-			}.bind(this)).catch(function(err) {
-				if (err !== undefined) {
-					MessageBox.error(err.message);
-				}
-			});
+		// 		this.doNavigate("NuevaDescargaTolva", oBindingContext, fnResolve, "");
+		// 	}.bind(this)).catch(function(err) {
+		// 		if (err !== undefined) {
+		// 			MessageBox.error(err.message);
+		// 		}
+		// 	});
 
-		},
+		// },
 		onInit: function() {
-			this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			this.oRouter.getTarget("DescargaTolvas").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
+            // console.log(this.createId("fcl"))
+			this.oRouter = this.getOwnerComponent().getRouter();//sap.ui.core.UIComponent.getRouterFor(this);
+            this.oRouter.getTarget("TargetMain").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
+            
+			// this.oRouter.attachRouteMatched(this.handleRouteMatched, this);
+            // this.oRouter.getRoute("default").attachPatternMatched(this.handleRouteMatched, this);
+            
 			var oView = this.getView();
 			oView.addEventDelegate({
 				onBeforeShow: function() {
@@ -170,8 +271,44 @@ function(
 						}
 					}
 				}.bind(this)
-			});
+            });
 
-		}
+            
+            // var oChildContainer = this.byId("myChildContainer");
+			// this.getOwnerComponent().runAsOwner(function () {
+			// 	sap.ui.component({
+			// 		name: "com.tasa.tolvas.librarymarea", //Our child component
+			// 		id: "MyChildComponent",
+			// 		manifestFirst: true,
+			// 		async: true
+			// 	}).then(function (component) {
+			// 		// set the component when it is successfully loaded
+			// 		oChildContainer.setComponent(component);
+			// 	}.bind(this));
+			// }.bind(this));
+            this.bus = Core.getEventBus();
+            // this.getView().attachAfterInit(function(oEvent) {
+            //     console.log("aqui")
+            // }, this);
+            this.loadComboClaseMensaje();
+        },
+
+        // afterInit: function(oEvent){
+        //     // this.bus.publish("flexible", "Master");
+            
+        //         console.log("aqui")
+        // }
+
+        loadComboClaseMensaje: function(){
+            Utilities.getDataFromDominios(["ZCLMIN"])
+                .then( jQuery.proxy(data => {
+                    this.getView().setModel(new JSONModel(data[0]), "ClaseMensajeModel")
+                }, this) )
+        },
+        
+        onAfterRendering: function() {
+            console.log("onAfterRendering Main");
+            this.bus.publish("flexible", "Master");
+        },
 	});
 }, /* bExport= */ true);

@@ -1,0 +1,14 @@
+{
+	"SupplierCollection": [
+		{
+            "CentroDescarga": "TCNO",
+            "CentroDescripcion": "CALLAO",
+            "CentroCodigo": "0012",
+			"FechaInicioDescarga": "",
+			"HoraInicioDescarga": "",
+            "CantidadFilas": 200 
+		}
+    ],
+    
+    "busyIndicatorRegistroTolvas": false
+}
