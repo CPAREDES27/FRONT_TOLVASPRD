@@ -12,115 +12,90 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     JSONModel) {
 	"use strict";
 
-	return BaseController.extend("com.tasa.tolvas.calculoderechopesca.controller.NuevaDeclaracionJurada", {
+	return BaseController.extend("com.tasa.tolvas.calculoderechopesca.controller.DerechoPescaTabla", {
 		handleRouteMatched: function(oEvent) {
-			var sAppId = "App60f18d59421c8929c54cd9bf";
-
-			var oParams = {};
-
-			if (oEvent.mParameters.data.context) {
-				this.sContext = oEvent.mParameters.data.context;
-
-			} else {
-				if (this.getOwnerComponent().getComponentData()) {
-					var patternConvert = function(oParam) {
-						if (Object.keys(oParam).length !== 0) {
-							for (var prop in oParam) {
-								if (prop !== "sourcePrototype" && prop.includes("Set")) {
-									return prop + "(" + oParam[prop][0] + ")";
-								}
-							}
-						}
-					};
-
-					this.sContext = patternConvert(this.getOwnerComponent().getComponentData().startupParameters);
-
-				}
-			}
-
-			var oPath;
-
-			if (this.sContext) {
-				oPath = {
-					path: "/" + this.sContext,
-					parameters: oParams
-				};
-				this.getView().bindObject(oPath);
+            let sTableName = "ZV_FLDC1",
+                aField = ["MJAHR", "RDPCA", "NRPOS", "CDPAG", "CDEMB", "CDMMA", "PSCHI", "PSOTR", "JURCA", "MNPAG", "DEDUC", "DEDUA", "INTER", "SUBTO", "NMEMB", "MREMB", "CDEMP", "MANDT"],
+                sMJAHR = "2020", //oModel.getProperty("/Form/0/Ejercicio").trim(),
+                sRDPCA = "01", //oModel.getProperty("/Form/0/Periodo").trim(),
+                aOption = [],
+                iRowCount = 0,
+                sOrder = "",
+                oView = this.getView();
+                
+            if (!Utilities.isEmpty(sMJAHR)){
+                aOption.push(
+                    {
+                        "control": "INPUT",
+                        "key": "MJAHR",
+                        "valueLow": sMJAHR,
+                        "valueHigh": "",
+                        "Longitud": "10"
+                    }
+                );
             }
-            
-            // let sTableName = "ZV_FLDC1",
-            //     // aField = ["MJAHR", "RDPCA", "NRPOS", "CDPAG", "CDEMB", "CDMMA", "PSCHI", "PSOTR", "JURCA", "MNPAG", "DEDUC", "DEDUA", "INTER", "SUBTO", "NMEMB", "MREMB", "CDEMP", "MANDT"],
-            //     sMJAHR = "2020", //oModel.getProperty("/Form/0/Ejercicio").trim(),
-            //     sRDPCA = "01", //oModel.getProperty("/Form/0/Periodo").trim(),
-            //     aOption = [],
-            //     iRowCount = 0,
-            //     sOrder = "",
-            //     oView = this.getView();
+            if (!Utilities.isEmpty(sRDPCA)){
+                aOption.push(
+                    {
+                        "control": "INPUT",
+                        "key": "RDPCA",
+                        "valueLow": sRDPCA,
+                        "valueHigh": "",
+                        "Longitud": "10"
+                    }
+                );
+            }
 
-                
-            let oView = this.getView(),
-                oModel = oView.getModel("FormSearchModel"); //.getProperty("/Form/1");
-            
-            oModel.attachRequestCompleted(function(oEvent){
-                let oAux = this.getProperty("/Form/1"),
-                    oFormNuevoDerecho = {
-                        "MJAHR": oAux.MJAHR,
-                        "RDPCA": oAux.RDPCA,
-                        "FHCTB": oAux.FHCTB,
-                        "FHCAC": oAux.FHCAC,
-                        "HRCAC": oAux.HRCAC,
-                        "ATCAC": oAux.ATCAC,
-                        "PRARI": oAux.PRARI,
-                        // "CDMND": oAux.CDMND,
-                        "TPCAM": oAux.TPCAM,
-                        "VAFOB": oAux.VAFOB,
-                        "VAUIT": oAux.VAUIT,
-                        "EQUIT": oAux.EQUIT,
-                        "FACTO": oAux.FACTO,
+            Utilities.getDataFromReadTable(sTableName, aOption, aField, sOrder, iRowCount)
+                .then(data => {
+                    let fPescaCHI =0,
+                        fJurelCaballa = 0,
+                        fOtros = 0,
+                        fCapturaTotal = 0,
+                        fDeducciones1 = 0,
+                        fDeducciones2 = 0,
+                        fIntereses = 0,
+                        fSubtotales = 0;
+                    data.forEach(element => {
+                        fPescaCHI += parseFloat(element.PSCHI);
+                        fJurelCaballa += parseFloat(element.PSOTR);
+                        fOtros += parseFloat(element.JURCA);
+                        fCapturaTotal += parseFloat(element.MNPAG);
+                        fDeducciones1 += parseFloat(element.DEDUC);
+                        fDeducciones2 += parseFloat(element.DEDUA);
+                        fIntereses += parseFloat(element.INTER);
+                        fSubtotales += parseFloat(element.SUBTO);
+                    });
 
-                        "ESCAC": oAux.ESCAC
-                    };
-                console.log(oFormNuevoDerecho);
-                // oView.setModel(new JSONModel(oFormNuevoDerecho), "DeclaracionJuradaModel");
-                // oView.getModel("DeclaracionJuradaModel").attachRequestCompleted(function(oEvent){
-                //     oView.getModel("DeclaracionJuradaModel").setProperty("/CDMND", oAux.CDMND);
-                // });
-                
-            })
-        },
+                    if( data.length > 0){
+                        data.push(
+                            {
+                                "NRPOS" : "",
+                                "CDPAG" : "Totales",
+                                "NMEMB" : "",
+                                "MREMB" : "",
+                                "PSCHI" : fPescaCHI,
+                                "PSOTR" : fJurelCaballa,
+                                "JURCA" : fOtros,
+                                "MNPAG" : fCapturaTotal,
+                                "DEDUC" : fDeducciones1,
+                                "DEDUA" : fDeducciones2,
+                                "INTER" : fIntereses,
+                                "SUBTO" : fSubtotales,
+                                "labelDesign" : sap.m.LabelDesign.Bold
+                            }
+                        )
+                    }
 
-        _onButtonSiguiente: function(oEvent) {
-            // getGetDerePesca: function (sMoneda, oDps) {
-            //     let oReq = {
-            //         "fields_derecho": [],
-            //         "fieldstr_dps": [],
-            //         "fieldt_mensaje": [],
-            //         "options": [],
-            //         "p_indtr": "L",
-            //         "p_moned": sMoneda, //"0002",
-            //         "p_user": "FGARCIA",
-            //         "rowcount": "0",
-            //         "s_derecho": [],
-            //         "str_dps": oDps
-            //     }
+                    oView.setModel(new JSONModel(data), "PescaModel");
+                });
 
-            //     return fetch(`${this.sBackUrl}/api/tolvas/calculoderechopesca_listar`, {
-            //         method: 'POST',
-            //         body: JSON.stringify(oReq)
-            //         })
-            //         .then(response => response.json())
-            //         // .then(data => console.log(data));
-            //         .then(data => data.data);
-            // },
 
-            let sMoneda = "",
-                oDps = [],
-                oDCModel = this.getView().getModel("DeclaracionJuradaModel");
+            Utilities.getDataFromReadTable("ZFLEMP", [{ "key": "INPRP", "valueLow": "P", "valueHigh": "", "control": "COMBOBOX", "Longitud": "10"}], ["CDEMP", "DSEMP"], "", 0)
+                .then( jQuery.proxy( aEmpresas => {
+                    oView.setModel(new JSONModel(aEmpresas), "EmpresasModel" );
+                }, this) )
 
-            sMoneda = oDCModel.getProperty("/CDMND");
-            oDps.push(oDCModel.getData());
-
-            Utilities.getGetDerePesca(sMoneda, oDps);
         },
         
 		_onButtonGuardar: function(oEvent) {
@@ -222,10 +197,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				fnPromiseResolve();
 			}
 
-		},
+        },
+        
 		onInit: function() {
 			this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			this.oRouter.getTarget("TargetNuevaDeclaracionJurada").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
+			this.oRouter.getTarget("TargetDerechoPescaTabla").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
 			var oView = this.getView();
 			oView.addEventDelegate({
 				onBeforeShow: function() {
@@ -240,18 +216,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					}
 				}.bind(this)
             });
-            
-            
-            Utilities.getDataFromDominios(["MONEDA"])
-                .then( jQuery.proxy(data => {
-                    oView.setModel(new JSONModel(data[0].data), "MonedaSetModel")                    
-                }, this) );
-
-        },
-        
-        onAfterRendering: function(){
-
-
         }
 	});
 }, /* bExport= */ true);

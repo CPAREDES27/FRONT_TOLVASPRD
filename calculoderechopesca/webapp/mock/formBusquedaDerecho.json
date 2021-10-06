@@ -3,7 +3,26 @@
 		{
 			"Ejercicio": "2021",
 			"Periodo": "04"
-		}
+        },
+        
+        {
+            "MJAHR": "2020",
+            "RDPCA": "12",
+            "FHCTB": "20201201",
+            "FHCAC": "20201202",
+            "HRCAC": "",
+            "ATCAC": "FGARCIA",
+            "PRARI": "150.0",
+
+            "CDMND": "00002",
+            "TPCAM": "3.5",
+            "VAFOB": "12",
+            "VAUIT": "13",
+            "EQUIT": "14",
+            "FACTO": "15",
+
+            "ESCAC": "C"
+        }
     ],
     "busyIndicatorTableDerechoTolvas": false
 }

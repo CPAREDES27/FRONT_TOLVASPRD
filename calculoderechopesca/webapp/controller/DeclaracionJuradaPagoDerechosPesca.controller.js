@@ -134,25 +134,25 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 });
 
 		},
-		_onInputValueHelpRequest: function(oEvent) {
+		// _onInputValueHelpRequest: function(oEvent) {
 
-			var sDialogName = "BusquedaDeEmpresas";
-			this.mDialogs = this.mDialogs || {};
-			var oDialog = this.mDialogs[sDialogName];
-			if (!oDialog) {
-				oDialog = new BusquedaDeEmpresas(this.getView());
-				this.mDialogs[sDialogName] = oDialog;
+		// 	var sDialogName = "BusquedaDeEmpresas";
+		// 	this.mDialogs = this.mDialogs || {};
+		// 	var oDialog = this.mDialogs[sDialogName];
+		// 	if (!oDialog) {
+		// 		oDialog = new BusquedaDeEmpresas(this.getView());
+		// 		this.mDialogs[sDialogName] = oDialog;
 
-				// For navigation.
-				oDialog.setRouter(this.oRouter);
-			}
+		// 		// For navigation.
+		// 		oDialog.setRouter(this.oRouter);
+		// 	}
 
-			var context = oEvent.getSource().getBindingContext();
-			oDialog._oControl.setBindingContext(context);
+		// 	var context = oEvent.getSource().getBindingContext();
+		// 	oDialog._oControl.setBindingContext(context);
 
-			oDialog.open();
+		// 	oDialog.open();
 
-		},
+		// },
 		_onButtonLiberar: function(oEvent) {
 			// var oBindingContext = oEvent.getSource().getBindingContext();
 
@@ -194,7 +194,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                                 textDirection: sap.ui.core.TextDirection.Inherit    // default
                             });
                         });
-                    this.oRouter.navTo("");
+                    // this.oRouter.navTo("");
                 }.bind(this),                                      // default
                 styleClass: "",                                     // default
                 actions: [MessageBox.Action.YES, MessageBox.Action.NO],
@@ -210,7 +210,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			return new Promise(function(fnResolve) {
 
-				this.doNavigate("", oBindingContext, fnResolve, "");
+                this.getOwnerComponent().getModel("passModel").setProperty("/data", this.getView().getModel("DeclaracionJuradaModel").getProperty("/"));
+                this.getOwnerComponent().getModel("passModel").setProperty("/data1", this.getView().getModel("PescaModel").getProperty("/"));
+				this.doNavigate("EditarDeclaracionJurada", oBindingContext, fnResolve, "");
 			}.bind(this)).catch(function(err) {
 				if (err !== undefined) {
 					MessageBox.error(err.message);

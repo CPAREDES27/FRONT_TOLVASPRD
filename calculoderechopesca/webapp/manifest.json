@@ -46,10 +46,9 @@
     "sap.ui5": {
         "flexEnabled": false,
         "rootView": {
-            "viewName": "com.tasa.tolvas.calculoderechopesca.view.Main",
+            "viewName": "com.tasa.tolvas.calculoderechopesca.view.App",
             "type": "XML",
-            "async": true,
-            "id": "Main"
+            "id": ""
         },
         "dependencies": {
             "minUI5Version": "1.94.0",
@@ -64,6 +63,9 @@
             "cozy": true
         },
         "models": {
+            "passModel": {
+                "type": "sap.ui.model.json.JSONModel"
+            },
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
@@ -82,16 +84,13 @@
             "config": {
                 "routerClass": "sap.m.routing.Router",
                 "viewType": "XML",
-                "async": true,
                 "viewPath": "com.tasa.tolvas.calculoderechopesca.view",
-                "controlAggregation": "pages",
-                "controlId": "app",
-                "clearControlAggregation": false
+                "controlAggregation": "pages"
             },
             "routes": [
                 {
                     "name": "RouteMain",
-                    "pattern": "RouteMain",
+                    "pattern": "",
                     "target": [
                         "TargetMain"
                     ]
@@ -108,27 +107,37 @@
                     "pattern": "DeclaracionJuradaPagoDerechosPesca",
                     "target": [
                         "TargetDeclaracionJuradaPagoDerechosPesca"
-                    ]
+                    ],
+                    "controlId": "app"
                 },
                 {
                     "name": "EditarDeclaracionJurada",
                     "pattern": "EditarDeclaracionJurada",
                     "target": [
                         "TargetEditarDeclaracionJurada"
-                    ]
+                    ],
+                    "controlId": "app"
                 },
                 {
                     "name": "LiberarDeclaracionJurada",
                     "pattern": "LiberarDeclaracionJurada",
                     "target": [
                         "TargetLiberarDeclaracionJurada"
-                    ]
+                    ],
+                    "controlId": "app"
                 },
                 {
                     "name": "NuevaDeclaracionJurada",
                     "pattern": "NuevaDeclaracionJurada",
                     "target": [
                         "TargetNuevaDeclaracionJurada"
+                    ]
+                },
+                {
+                    "name": "DerechoPescaTabla",
+                    "pattern": "DerechoPescaTabla",
+                    "target": [
+                        "TargetDerechoPescaTabla"
                     ]
                 }
             ],
@@ -138,7 +147,9 @@
                     "transition": "slide",
                     "clearControlAggregation": false,
                     "viewId": "Main",
-                    "viewName": "Main"
+                    "viewName": "Main",
+					"targetAggregation": "pages",
+					"controlId": "app"
                 },
                 "TargetDeclaracionJuradaPagoDerechosPesca": {
                     "viewType": "XML",
@@ -166,7 +177,15 @@
                     "transition": "slide",
                     "clearControlAggregation": false,
                     "viewId": "NuevaDeclaracionJurada",
-                    "viewName": "NuevaDeclaracionJurada"
+                    "viewName": "NuevaDeclaracionJurada",
+                    "controlId": "app"
+                },
+                "TargetDerechoPescaTabla": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "DerechoPescaTabla",
+                    "viewName": "DerechoPescaTabla"
                 }
             }
         }

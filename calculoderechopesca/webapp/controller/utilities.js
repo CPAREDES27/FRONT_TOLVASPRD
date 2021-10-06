@@ -124,6 +124,77 @@ sap.ui.define([
                 .then(response => response.json())
                 .then(data => data.data);
         },
+
+        getEmpresasList: function(aFields, aOptions){
+            let oReq = {
+                // "fields": [
+                //     "CDEMP", "DSEMP"
+                // ],
+                "fields": aFields,
+                // "option": [
+                //     {
+                //         "wa": "INPRP EQ 'P'"
+                //     }
+                // ],
+                "option": aOptions,
+                "options": [  ],
+                "p_cdusr": "FGARCIA",
+                "p_ruc": ""
+            };
+            
+            return fetch(`${this.sBackUrl}/api/empresa/Listar/`, {
+                method: 'POST',
+                body: JSON.stringify(oReq)
+                })
+                .then(response => response.json())
+                .then(data => data.data);
+        },
+        
+        getGetDerePesca: function (sMoneda, oDps) {
+            let oReq = {
+                "fields_derecho": [],
+                "fieldstr_dps": [],
+                "fieldt_mensaje": [],
+                "options": [],
+                "p_indtr": "L",
+                "p_moned": sMoneda, //"0002",
+                "p_user": "FGARCIA",
+                "rowcount": "0",
+                "s_derecho": [],
+                "str_dps": oDps
+            }
+
+            return fetch(`${this.sBackUrl}/api/tolvas/calculoderechopesca_listar`, {
+                method: 'POST',
+                body: JSON.stringify(oReq)
+                })
+                .then(response => response.json())
+                // .then(data => console.log(data));
+                .then(data => data.data);
+        },
+
+        getSaveDerePesca: function (sMoneda, oDps, oSDerecho) {
+            let oReq = {
+                "fields_derecho": [],
+                "fieldstr_dps": [],
+                "fieldt_mensaje": [],
+                "options": [],
+                "p_indtr": "G",
+                "p_moned": sMoneda, //"0002",
+                "p_user": "FGARCIA",
+                "rowcount": "0",
+                "s_derecho": oSDerecho,
+                "str_dps": oDps
+            }
+
+            return fetch(`${this.sBackUrl}/api/tolvas/calculoderechopesca_listar`, {
+                method: 'POST',
+                body: JSON.stringify(oReq)
+                })
+                .then(response => response.json())
+                // .then(data => console.log(data));
+                .then(data => data.data);
+        },
         
         getDataFromDominios: function (aType) {
             let aDominios = [];

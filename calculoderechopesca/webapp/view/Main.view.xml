@@ -6,9 +6,9 @@
     xmlns:form="sap.ui.layout.form" 
     xmlns:layout="sap.ui.layout"
     xmlns:core="sap.ui.core">
-	<Shell id="shell">
+	<!-- <Shell id="shell">
 		<App id="app">
-			<pages>
+			<pages> -->
 				<Page id="page" title="{i18n>title}" showFooter="true" showNavButton="false">
                     <content>
                         <form:Form width="100%" editable="true" visible="true" binding="{FormSearchModel>/Form/0/}">
@@ -78,7 +78,7 @@
                     <subHeader/>
                     <customHeader/>
                 </Page>
-			</pages>
+			<!-- </pages>
 		</App>
-	</Shell>
+	</Shell> -->
 </mvc:View>

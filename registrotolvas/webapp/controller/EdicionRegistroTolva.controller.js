@@ -56,82 +56,82 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             let data = this.getOwnerComponent().getModel("passModel").getProperty("/data");
             this.getView().setModel(new JSONModel(data), "EditRegistroTolvasModel");
 		},
-		_onInputValueHelpRequest: function(oEvent) {
+		// _onInputValueHelpRequest: function(oEvent) {
 
-			var sDialogName = "BusquedaDeEmpresas";
-			this.mDialogs = this.mDialogs || {};
-			var oDialog = this.mDialogs[sDialogName];
-			if (!oDialog) {
-				oDialog = new BusquedaDeEmpresas(this.getView());
-				this.mDialogs[sDialogName] = oDialog;
+		// 	var sDialogName = "BusquedaDeEmpresas";
+		// 	this.mDialogs = this.mDialogs || {};
+		// 	var oDialog = this.mDialogs[sDialogName];
+		// 	if (!oDialog) {
+		// 		oDialog = new BusquedaDeEmpresas(this.getView());
+		// 		this.mDialogs[sDialogName] = oDialog;
 
-				// For navigation.
-				oDialog.setRouter(this.oRouter);
-			}
+		// 		// For navigation.
+		// 		oDialog.setRouter(this.oRouter);
+		// 	}
 
-			var context = oEvent.getSource().getBindingContext();
-			oDialog._oControl.setBindingContext(context);
+		// 	var context = oEvent.getSource().getBindingContext();
+		// 	oDialog._oControl.setBindingContext(context);
 
-			oDialog.open();
+		// 	oDialog.open();
 
-		},
-		_onButtonPress: function(oEvent) {
+		// },
+		// _onButtonPress: function(oEvent) {
 
-			var sDialogName = "";
-			this.mDialogs = this.mDialogs || {};
-			var oDialog = this.mDialogs[sDialogName];
-			if (!oDialog) {
-				oDialog = new(this.getView());
-				this.mDialogs[sDialogName] = oDialog;
+		// 	var sDialogName = "";
+		// 	this.mDialogs = this.mDialogs || {};
+		// 	var oDialog = this.mDialogs[sDialogName];
+		// 	if (!oDialog) {
+		// 		oDialog = new(this.getView());
+		// 		this.mDialogs[sDialogName] = oDialog;
 
-				// For navigation.
-				oDialog.setRouter(this.oRouter);
-			}
+		// 		// For navigation.
+		// 		oDialog.setRouter(this.oRouter);
+		// 	}
 
-			var context = oEvent.getSource().getBindingContext();
-			oDialog._oControl.setBindingContext(context);
+		// 	var context = oEvent.getSource().getBindingContext();
+		// 	oDialog._oControl.setBindingContext(context);
 
-			oDialog.open();
+		// 	oDialog.open();
 
-		},
-		_onButtonPress1: function(oEvent) {
+		// },
+		// _onButtonPress1: function(oEvent) {
 
-			var sDialogName = "";
-			this.mDialogs = this.mDialogs || {};
-			var oDialog = this.mDialogs[sDialogName];
-			if (!oDialog) {
-				oDialog = new(this.getView());
-				this.mDialogs[sDialogName] = oDialog;
+		// 	var sDialogName = "";
+		// 	this.mDialogs = this.mDialogs || {};
+		// 	var oDialog = this.mDialogs[sDialogName];
+		// 	if (!oDialog) {
+		// 		oDialog = new(this.getView());
+		// 		this.mDialogs[sDialogName] = oDialog;
 
-				// For navigation.
-				oDialog.setRouter(this.oRouter);
-			}
+		// 		// For navigation.
+		// 		oDialog.setRouter(this.oRouter);
+		// 	}
 
-			var context = oEvent.getSource().getBindingContext();
-			oDialog._oControl.setBindingContext(context);
+		// 	var context = oEvent.getSource().getBindingContext();
+		// 	oDialog._oControl.setBindingContext(context);
 
-			oDialog.open();
+		// 	oDialog.open();
 
-		},
-		_onInputValueHelpRequest5: function(oEvent) {
+		// },
+		// _onInputValueHelpRequest5: function(oEvent) {
 
-			var sDialogName = "BusquedaDeEquipos";
-			this.mDialogs = this.mDialogs || {};
-			var oDialog = this.mDialogs[sDialogName];
-			if (!oDialog) {
-				oDialog = new BusquedaDeEquipos(this.getView());
-				this.mDialogs[sDialogName] = oDialog;
+		// 	var sDialogName = "BusquedaDeEquipos";
+		// 	this.mDialogs = this.mDialogs || {};
+		// 	var oDialog = this.mDialogs[sDialogName];
+		// 	if (!oDialog) {
+		// 		oDialog = new BusquedaDeEquipos(this.getView());
+		// 		this.mDialogs[sDialogName] = oDialog;
 
-				// For navigation.
-				oDialog.setRouter(this.oRouter);
-			}
+		// 		// For navigation.
+		// 		oDialog.setRouter(this.oRouter);
+		// 	}
 
-			var context = oEvent.getSource().getBindingContext();
-			oDialog._oControl.setBindingContext(context);
+		// 	var context = oEvent.getSource().getBindingContext();
+		// 	oDialog._oControl.setBindingContext(context);
 
-			oDialog.open();
+		// 	oDialog.open();
 
-		},
+		// },
 		_onButtonPress2: function(oEvent) {
 
 			var sDialogName = "";

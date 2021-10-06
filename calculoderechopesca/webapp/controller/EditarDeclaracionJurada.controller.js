@@ -2,97 +2,116 @@
 sap.ui.define(["sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
 //	"./BusquedaDeEmpresas",
+    "sap/ui/model/json/JSONModel",
 	"./utilities",
 	"sap/ui/core/routing/History"
 ], function(BaseController, 
     MessageBox, 
-//    BusquedaDeEmpresas, 
+//    BusquedaDeEmpresas,
+    JSONModel,
     Utilities, 
     History) {
 	"use strict";
 
 	return BaseController.extend("com.tasa.tolvas.calculoderechopesca.controller.EditarDeclaracionJurada", {
 		handleRouteMatched: function(oEvent) {
-			var sAppId = "App60f18d59421c8929c54cd9bf";
+			// var sAppId = "App60f18d59421c8929c54cd9bf";
 
-			var oParams = {};
+			// var oParams = {};
 
-			if (oEvent.mParameters.data.context) {
-				this.sContext = oEvent.mParameters.data.context;
+			// if (oEvent.mParameters.data.context) {
+			// 	this.sContext = oEvent.mParameters.data.context;
 
-			} else {
-				if (this.getOwnerComponent().getComponentData()) {
-					var patternConvert = function(oParam) {
-						if (Object.keys(oParam).length !== 0) {
-							for (var prop in oParam) {
-								if (prop !== "sourcePrototype" && prop.includes("Set")) {
-									return prop + "(" + oParam[prop][0] + ")";
-								}
-							}
-						}
-					};
+			// } else {
+			// 	if (this.getOwnerComponent().getComponentData()) {
+			// 		var patternConvert = function(oParam) {
+			// 			if (Object.keys(oParam).length !== 0) {
+			// 				for (var prop in oParam) {
+			// 					if (prop !== "sourcePrototype" && prop.includes("Set")) {
+			// 						return prop + "(" + oParam[prop][0] + ")";
+			// 					}
+			// 				}
+			// 			}
+			// 		};
 
-					this.sContext = patternConvert(this.getOwnerComponent().getComponentData().startupParameters);
+			// 		this.sContext = patternConvert(this.getOwnerComponent().getComponentData().startupParameters);
 
-				}
-			}
+			// 	}
+			// }
 
-			var oPath;
+			// var oPath;
 
-			if (this.sContext) {
-				oPath = {
-					path: "/" + this.sContext,
-					parameters: oParams
-				};
-				this.getView().bindObject(oPath);
-            }
-		},
-		_onInputValueHelpRequest: function(oEvent) {
+			// if (this.sContext) {
+			// 	oPath = {
+			// 		path: "/" + this.sContext,
+			// 		parameters: oParams
+			// 	};
+			// 	this.getView().bindObject(oPath);
+            // }
 
-			var sDialogName = "BusquedaDeEmpresas";
-			this.mDialogs = this.mDialogs || {};
-			var oDialog = this.mDialogs[sDialogName];
-			if (!oDialog) {
-				oDialog = new BusquedaDeEmpresas(this.getView());
-				this.mDialogs[sDialogName] = oDialog;
+            Utilities.getDataFromDominios(["MONEDA"])
+                .then( jQuery.proxy(aMoneda => {
+                    // this.getView().setModel(new JSONModel(data[0]), "MonedasModel")
+                    
+                    let data = this.getOwnerComponent().getModel("passModel").getProperty("/data"),
+                        oElem = aMoneda[0].data.find(element => data.CDMND === element.id);
 
-				// For navigation.
-				oDialog.setRouter(this.oRouter);
-			}
+                    data.DSCMND = oElem.descripcion;
+                    this.getView().setModel(new JSONModel(data), "EditDerechoPescaModel");
 
-			var context = oEvent.getSource().getBindingContext();
-			oDialog._oControl.setBindingContext(context);
+                    
+                    data = this.getOwnerComponent().getModel("passModel").getProperty("/data1");
+                    this.getView().setModel(new JSONModel(data), "PescaModel");
+                    
+                }, this) );
 
-			oDialog.open();
+            Utilities.getDataFromReadTable("ZFLEMP", [{ "key": "INPRP", "valueLow": "P", "valueHigh": "", "control": "COMBOBOX", "Longitud": "10"}], ["CDEMP", "DSEMP"], "", 0)
+                .then( jQuery.proxy( aEmpresas => {
+                    this.getView().setModel(new JSONModel(aEmpresas), "EmpresasModel" );
+                }, this) )
+        },
+        
+		// _onInputValueHelpRequest: function(oEvent) {
 
-		},
-		_onButtonLiberar: function(oEvent) {
+		// 	var sDialogName = "BusquedaDeEmpresas";
+		// 	this.mDialogs = this.mDialogs || {};
+		// 	var oDialog = this.mDialogs[sDialogName];
+		// 	if (!oDialog) {
+		// 		oDialog = new BusquedaDeEmpresas(this.getView());
+		// 		this.mDialogs[sDialogName] = oDialog;
 
-			var oBindingContext = oEvent.getSource().getBindingContext();
+		// 		// For navigation.
+		// 		oDialog.setRouter(this.oRouter);
+		// 	}
 
-			return new Promise(function(fnResolve) {
+		// 	var context = oEvent.getSource().getBindingContext();
+		// 	oDialog._oControl.setBindingContext(context);
 
-				this.doNavigate("TargetLiberarDeclaracionJurada", oBindingContext, fnResolve, "");
-			}.bind(this)).catch(function(err) {
-				if (err !== undefined) {
-					MessageBox.error(err.message);
-				}
-			});
+		// 	oDialog.open();
 
-		},
+		// },
+		// _onButtonLiberar: function(oEvent) {
+		// 	var oBindingContext = oEvent.getSource().getBindingContext();
+		// 	return new Promise(function(fnResolve) {
+		// 		this.doNavigate("TargetLiberarDeclaracionJurada", oBindingContext, fnResolve, "");
+		// 	}.bind(this)).catch(function(err) {
+		// 		if (err !== undefined) {
+		// 			MessageBox.error(err.message);
+		// 		}
+		// 	});
 
-		_onButtonEditar: function(oEvent) {
-			var oBindingContext = oEvent.getSource().getBindingContext();
+		// },
 
-			return new Promise(function(fnResolve) {
-
-				this.doNavigate("TargetEditarDeclaracionJurada", oBindingContext, fnResolve, "");
-			}.bind(this)).catch(function(err) {
-				if (err !== undefined) {
-					MessageBox.error(err.message);
-				}
-			});
-		},
+		// _onButtonEditar: function(oEvent) {
+		// 	var oBindingContext = oEvent.getSource().getBindingContext();
+		// 	return new Promise(function(fnResolve) {
+		// 		this.doNavigate("TargetEditarDeclaracionJurada", oBindingContext, fnResolve, "");
+		// 	}.bind(this)).catch(function(err) {
+		// 		if (err !== undefined) {
+		// 			MessageBox.error(err.message);
+		// 		}
+		// 	});
+		// },
 
 		doNavigate: function(sRouteName, oBindingContext, fnPromiseResolve, sViaRelation) {
 			var sPath = (oBindingContext) ? oBindingContext.getPath() : null;
@@ -147,7 +166,15 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				fnPromiseResolve();
 			}
 
-		},
+        },
+        
+        // loadCombMoneda: function(){
+        //     Utilities.getDataFromDominios(["MONEDA"])
+        //         .then( jQuery.proxy(data => {
+        //             this.getView().setModel(new JSONModel(data[0]), "MonedasModel")
+        //         }, this) )
+        // },
+
 		onInit: function() {
 			this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			this.oRouter.getTarget("TargetEditarDeclaracionJurada").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
@@ -164,7 +191,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						}
 					}
 				}.bind(this)
-			});
+            });
+            
+            // this.loadCombMoneda();
 
 		}
 	});

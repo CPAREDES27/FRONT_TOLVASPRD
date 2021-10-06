@@ -1,158 +1,11 @@
-<mvc:View xmlns:mvc="sap.ui.core.mvc" 
-    controllerName="com.tasa.tolvas.calculoderechopesca.controller.EditarDeclaracionJurada" 
+<mvc:View controllerName="com.tasa.tolvas.calculoderechopesca.controller.DerechoPescaTabla" 
+    xmlns:mvc="sap.ui.core.mvc" 
     xmlns="sap.m" 
     xmlns:form="sap.ui.layout.form" 
-    xmlns:layout="sap.ui.layout"
     xmlns:core="sap.ui.core"
-    xmlns:t="sap.ui.table"
-    xmlns:template="http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1">
+    xmlns:t="sap.ui.table">
     <Page showHeader="true" title="Cálculo Derecho de Pesca" showFooter="true" showNavButton="false">
         <content>
-            <form:Form width="100%" editable="true" visible="true" binding="{EditDerechoPescaModel>/}">
-                <form:title>
-                    <core:Title text="Ingresar datos" level="Auto"/>
-                </form:title>
-                <form:formContainers>
-                    <form:FormContainer visible="true">
-                        <form:formElements>
-                            <form:FormElement visible="true">
-                                <form:label>
-                                    <Label text="Ejercicio" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                </form:label>
-                                <form:fields>
-                                    <Text text="{EditDerechoPescaModel>/MJAHR}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                </form:fields>
-                            </form:FormElement>
-                            <form:FormElement visible="true">
-                                <form:label>
-                                    <Label text="Periodo" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                </form:label>
-                                <form:fields>
-                                    <Text text="{EditDerechoPescaModel>/RDPCA}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                </form:fields>
-                            </form:FormElement>
-                            <form:FormElement visible="true">
-                                <form:label>
-                                    <Label text="Fecha de Contabilización" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                </form:label>
-                                <form:fields>
-                                    <Text text="{
-                                        path: 'EditDerechoPescaModel>/FHCTB',
-                                        type: 'sap.ui.model.type.Date',
-                                        formatOptions: {
-                                            pattern: 'dd/MM/yyyy',
-                                            source: {
-                                                pattern: 'yyyyMMdd'
-                                            }
-                                        }
-                                    }" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                </form:fields>
-                            </form:FormElement>
-                            <form:FormElement visible="true">
-                                <form:label>
-                                    <Label text="Fecha de Cálculo" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                </form:label>
-                                <form:fields>
-                                    <Text text="{
-                                        path: 'EditDerechoPescaModel>/FHCAC',
-                                        type: 'sap.ui.model.type.Date',
-                                        formatOptions: {
-                                            pattern: 'dd/MM/yyyy',
-                                            source: {
-                                                pattern: 'yyyyMMdd'
-                                            }
-                                        }
-                                    }" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                </form:fields>
-                            </form:FormElement>
-                            <form:FormElement visible="true">
-                                <form:label>
-                                    <Label text="Precio de harina" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true">
-                                        <layoutData>
-                                            <layout:GridData span="XL2 L2 M2 S12" />
-                                        </layoutData>
-                                    </Label>
-                                </form:label>
-                                <form:fields>
-                                    <Text text="{EditDerechoPescaModel>/PRARI}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true">
-                                        <layoutData>
-                                            <layout:GridData span="XL4 L4 M4 S12" />
-                                        </layoutData>
-                                    </Text>
-                                </form:fields>
-                            </form:FormElement>
-                            <form:FormElement visible="true">
-                                <form:label>
-                                    <Label text="Moneda del precio" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true">
-                                        <layoutData>
-                                            <layout:GridData span="XL2 L2 M2 S12" />
-                                        </layoutData>
-                                    </Label>
-                                </form:label>
-                                <form:fields>
-                                    <Text text="{EditDerechoPescaModel>/DSCMND}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true">
-                                        <layoutData>
-                                            <layout:GridData span="XL4 L4 M4 S12" />
-                                        </layoutData>
-                                    </Text>
-                                </form:fields>
-                            </form:FormElement>
-                            <form:FormElement visible="true">
-                                <form:label>
-                                    <Label text="Tipo de cambio a S/." design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                </form:label>
-                                <form:fields>
-                                    <Text text="{
-                                        path: 'EditDerechoPescaModel>/TPCAM',
-                                        type: 'sap.ui.model.type.Float',
-                                        formatOptions: {
-                                            maxFractionDigits: 3,
-                                            decimalSeparator: '.'
-                                        }
-                                    }" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                </form:fields>
-                            </form:FormElement>
-                            <form:FormElement visible="true">
-                                <form:label>
-                                    <Label text="Valor del FOB - CHI (%)" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                </form:label>
-                                <form:fields>
-                                    <Text text="{EditDerechoPescaModel>/VAFOB}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                </form:fields>
-                            </form:FormElement>
-                            <form:FormElement visible="true">
-                                <form:label>
-                                    <Label text="Valor U.I.T." design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                </form:label>
-                                <form:fields>
-                                    <Text text="{EditDerechoPescaModel>/VAUIT}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                </form:fields>
-                            </form:FormElement>
-                            <form:FormElement visible="true">
-                                <form:label>
-                                    <Label text="Valor por TM - CHD (%)" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                </form:label>
-                                <form:fields>
-                                    <Text text="{EditDerechoPescaModel>/EQUIT}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                </form:fields>
-                            </form:FormElement>
-                            <form:FormElement visible="true">
-                                <form:label>
-                                    <Label text="Descuento (%)" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                </form:label>
-                                <form:fields>
-                                    <Text text="{EditDerechoPescaModel>/FACTO}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                </form:fields>
-                            </form:FormElement>
-                        </form:formElements>
-                    </form:FormContainer>
-                </form:formContainers>
-                <form:layout>
-                    <form:ResponsiveGridLayout adjustLabelSpan="false" labelSpanXL="2" labelSpanL="2" labelSpanM="2" labelSpanS="12"/>
-                </form:layout>
-            </form:Form>
-            <!-- <Button text="Buscar" type="Default" icon="sap-icon://search" iconFirst="true" width="50%" enabled="true" visible="true" iconDensityAware="false" class="sapUiResponsiveMargin"/> -->
-
             <t:Table
 				ariaLabelledBy="title"
 				rows="{PescaModel>/}"
@@ -402,8 +255,9 @@
             <OverflowToolbar width="100%" height="46px" design="Auto" enabled="true" visible="true">
                 <content>
                     <ToolbarSpacer width=""/>
-                    <Button text="Guardar" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onButtonSave"/>
-                    <Button text="Cerrar" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+                    <!-- <Button text="Siguiente" type="Emphasized" icon="sap-icon://save" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onButtonSiguiente"/> -->
+                    <Button text="Guardar" type="Emphasized" icon="sap-icon://open-command-field" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onButtonGuardar"/>
+                    <Button text="Cerrar" type="Default" icon="sap-icon://decline" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
                 </content>
             </OverflowToolbar>
         </footer>

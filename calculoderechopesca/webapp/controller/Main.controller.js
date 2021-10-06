@@ -53,25 +53,25 @@ sap.ui.define([
                 }
 
             },
-            _onInputValueHelpRequest: function(oEvent) {
+            // _onInputValueHelpRequest: function(oEvent) {
 
-                var sDialogName = "BusquedaDeEmpresas";
-                this.mDialogs = this.mDialogs || {};
-                var oDialog = this.mDialogs[sDialogName];
-                if (!oDialog) {
-                    oDialog = new BusquedaDeEmpresas(this.getView());
-                    this.mDialogs[sDialogName] = oDialog;
+            //     var sDialogName = "BusquedaDeEmpresas";
+            //     this.mDialogs = this.mDialogs || {};
+            //     var oDialog = this.mDialogs[sDialogName];
+            //     if (!oDialog) {
+            //         oDialog = new BusquedaDeEmpresas(this.getView());
+            //         this.mDialogs[sDialogName] = oDialog;
 
-                    // For navigation.
-                    oDialog.setRouter(this.oRouter);
-                }
+            //         // For navigation.
+            //         oDialog.setRouter(this.oRouter);
+            //     }
 
-                var context = oEvent.getSource().getBindingContext();
-                oDialog._oControl.setBindingContext(context);
+            //     var context = oEvent.getSource().getBindingContext();
+            //     oDialog._oControl.setBindingContext(context);
 
-                oDialog.open();
+            //     oDialog.open();
 
-            },
+            // },
             _onEjecutarPress: function(oEvent) {
                 var oBindingContext = oEvent.getSource().getBindingContext();
 
