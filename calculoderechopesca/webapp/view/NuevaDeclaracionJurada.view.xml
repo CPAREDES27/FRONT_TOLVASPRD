@@ -58,9 +58,9 @@
                                     <Label text="Moneda del precio" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Select selectedKey="{DeclaracionJuradaModel>/CDMND}" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%" items="{MonedaSetModel>/}">
+                                    <Select id="cbMonedaPrecio" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%" items="{MonedaSetModel>/}">
                                         <items>
-											<core:Item key="{MonedasModel>id}" text="{MonedaSetModel>descripcion}"/>
+											<core:Item key="{MonedaSetModel>id}" text="{MonedaSetModel>descripcion}"/>
                                         </items>
                                     </Select>
                                 </form:fields>

@@ -164,13 +164,14 @@ sap.ui.define([
                 "str_dps": oDps
             }
 
-            return fetch(`${this.sBackUrl}/api/tolvas/calculoderechopesca_listar`, {
+            return fetch(`${this.sBackUrl}/api/tolvas/calculoderechopesca`, {
                 method: 'POST',
                 body: JSON.stringify(oReq)
                 })
                 .then(response => response.json())
                 // .then(data => console.log(data));
-                .then(data => data.data);
+                .then(data => data)
+                .catch(error=>console.error(error));
         },
 
         getSaveDerePesca: function (sMoneda, oDps, oSDerecho) {
@@ -187,7 +188,7 @@ sap.ui.define([
                 "str_dps": oDps
             }
 
-            return fetch(`${this.sBackUrl}/api/tolvas/calculoderechopesca_listar`, {
+            return fetch(`${this.sBackUrl}/api/tolvas/calculoderechopesca`, {
                 method: 'POST',
                 body: JSON.stringify(oReq)
                 })
