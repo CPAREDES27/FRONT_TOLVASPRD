@@ -23,7 +23,22 @@
                                                 <Label text="Centro" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" showValueHelp="true" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onInputValueHelpRequest"/>
+                                                <Input id="centro" value="{FormModel>/Centro}" description="{FormModel>/DescCentro}" liveChange="onChangeInput" valueState="Information" valueStateText="Ingrese centro" showSuggestion="true"  showTableSuggestionValueHelp="false" suggestionRows="{ComboModel>/Centros}" suggestionItemSelected="onPressCentro" width="100%">
+                                                    <suggestionColumns>
+                                                        <Column>
+                                                            <Label text="Centro" />
+                                                        </Column>
+                                                        <Column>
+                                                            <Label text="Descripción" />
+                                                        </Column>
+                                                    </suggestionColumns>
+                                                    <suggestionRows >
+                                                        <ColumnListItem>
+                                                            <Label text="{ComboModel>WERKS}" />
+					                                        <Label text="{ComboModel>NAME1}" />
+                                                        </ColumnListItem>
+                                                    </suggestionRows>
+                                                </Input>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -31,7 +46,7 @@
                                                 <Label text="Embarcación" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" showValueHelp="true" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onInputValueHelpRequest"/>
+                                                <Input id="embarcacion" value="{FormModel>/Embarcacion}" description="{FormModel>/DescEmba}" showValueHelp="true" valueHelpRequest="onAbrirAyudaEmbarcacion" width="100%" valueStateText="Invalid entry"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -39,11 +54,9 @@
                                                 <Label text="Balanza" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <ComboBox editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
+                                                <ComboBox id="cbxBalanza" change="onChange" selectedKey="{FormModel>/Balanza}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%" items="{ComboModel>/Balanzas}">
                                                     <items>
-                                                        <core:Item text="Item" enabled="true" key="Item"/>
-                                                        <core:Item text="Item" enabled="true" key="Item"/>
-                                                        <core:Item text="Item" enabled="true" key="Item"/>
+                                                        <core:Item text="{ComboModel>descripcion}" enabled="true" key="{ComboModel>id}"/>
                                                     </items>
                                                 </ComboBox>
                                             </form:fields>
@@ -53,11 +66,9 @@
                                                 <Label text="Punto de descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <ComboBox editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
+                                                <ComboBox id="cbxPuntoDesc" change="onChange" selectedKey="{FormModel>/PuntoDesc}" items="{ComboModel>/PtsDesc}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
                                                     <items>
-                                                        <core:Item text="Item" enabled="true" key="Item"/>
-                                                        <core:Item text="Item" enabled="true" key="Item"/>
-                                                        <core:Item text="Item" enabled="true" key="Item"/>
+                                                        <core:Item text="{ComboModel>descripcion}" enabled="true" key="{ComboModel>id}"/>
                                                     </items>
                                                 </ComboBox>
                                             </form:fields>
@@ -67,7 +78,7 @@
                                                 <Label text="Ticket" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                <Input id="ticket" liveChange="onChangeInput" value="{FormModel>/Ticket}" type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -75,7 +86,22 @@
                                                 <Label text="Especie" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" showValueHelp="true" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onInputValueHelpRequest"/>
+                                                <Input id="especies" liveChange="onChangeInput" value="{FormModel>/Especie}" description="{FormModel>/DescEsp}" suggestionItemSelected="onPressEspecie" valueState="Information" valueStateText="Ingrese especie" showSuggestion="true" showTableSuggestionValueHelp="false" suggestionRows="{ComboModel>/Especies}" width="100%">
+                                                    <suggestionColumns>
+                                                        <Column>
+                                                            <Label text="Centro" />
+                                                        </Column>
+                                                        <Column>
+                                                            <Label text="Descripción" />
+                                                        </Column>
+                                                    </suggestionColumns>
+                                                    <suggestionRows>
+                                                        <ColumnListItem>
+                                                            <Label text="{ComboModel>id}" />
+					                                        <Label text="{ComboModel>descripcion}" />
+                                                        </ColumnListItem>
+                                                    </suggestionRows>
+                                                </Input>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -83,7 +109,7 @@
                                                 <Label text="Fecha inicio descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <DateTimePicker  valueFormat="yyyy-MM-dd-HH-mm-ss" displayFormat="long" visible="true" width="auto" />
+                                                <DateTimePicker value="{FormModel>/FechIniDesc}" valueFormat="dd/MM/yyyy HH:mm" displayFormat="dd/MM/yyyy HH:mm" visible="true" width="auto" />
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -91,7 +117,7 @@
                                                 <Label text="Fecha fin descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <DateTimePicker  valueFormat="yyyy-MM-dd-HH-mm-ss" displayFormat="long" visible="true" width="auto" />
+                                                <DateTimePicker value="{FormModel>/FechFinDesc}" valueFormat="dd/MM/yyyy HH:mm" displayFormat="dd/MM/yyyy HH:mm" visible="true" width="auto" />
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -99,7 +125,7 @@
                                                 <Label text="Pesca descargada" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Text text=".200" visible="true" width="auto" />
+                                                <Input id="pescDesc" liveChange="onChangeInput" width="auto" value="{FormModel>/PescDesc}" />
                                             </form:fields>
                                         </form:FormElement>
                                     </form:formElements>
@@ -115,8 +141,7 @@
                         <OverflowToolbar width="100%" height="46px" design="Auto" enabled="true" visible="true">
                             <content>
                                 <ToolbarSpacer width=""/>
-                                <Button text="Save" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
-                                <Button text="Cancel" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+                                <Button text="Guardar" press="onGuardar" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
                             </content>
                         </OverflowToolbar>
                     </footer>

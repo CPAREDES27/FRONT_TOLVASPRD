@@ -41,7 +41,8 @@
             "desktop": true,
             "tablet": true,
             "phone": true
-        }
+        },
+        "fullWidth": true
     },
     "sap.ui5": {
         "flexEnabled": false,
@@ -73,6 +74,7 @@
                     "bundleName": "com.tasa.tolvas.registrotolvas.i18n.i18n"
                 }
             }
+        
         },
         "resources": {
             "css": [

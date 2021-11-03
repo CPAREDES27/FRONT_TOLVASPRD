@@ -1,12 +1,12 @@
 {
 	"SupplierCollection": [
 		{
-            "CentroDescarga": "TCNO",
-            "CentroDescripcion": "CALLAO",
-            "CentroCodigo": "0012",
+            "CentroDescarga": "",
+            "CentroDescripcion": "",
+            "CentroCodigo": "",
 			"FechaInicioDescarga": "",
 			"HoraInicioDescarga": "",
-            "CantidadFilas": 200 
+            "CantidadFilas": "200" 
 		}
     ],
     

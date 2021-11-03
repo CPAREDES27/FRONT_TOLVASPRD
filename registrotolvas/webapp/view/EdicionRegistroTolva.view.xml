@@ -3,8 +3,7 @@
     xmlns="sap.m" 
     xmlns:form="sap.ui.layout.form" 
     xmlns:core="sap.ui.core" 
-    xmlns:layout="sap.ui.layout" 
-    xmlns:unified="sap.ui.unified">
+    xmlns:layout="sap.ui.layout" >
     <Page title="{i18n>title}" showFooter="true" showNavButton="false">
         <content>
             <form:Form width="100%" editable="true" visible="true" binding="{EditRegistroTolvasModel>/}">
@@ -43,11 +42,7 @@
                                     <Label text="Embarcación" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Text" value="{EditRegistroTolvasModel>CDEMB}" showValueHelp="true" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onInputValueHelpRequest">
-                                        <layoutData>
-                                            <layout:GridData span="XL5 L5 M5 S6" />
-                                        </layoutData>
-                                    </Input>
+                                    <Input id="embarcacion" value="{EditRegistroTolvasModel>CDEMB}" showValueHelp="true" valueHelpRequest="onAbrirAyudaEmbarcacion" width="100%" valueStateText="Invalid entry"/>
                                     <Text text="{EditRegistroTolvasModel>NMEMB}" visible="true" width="auto">
                                         <layoutData>
                                             <layout:GridData span="XL5 L5 M5 S6" />
@@ -141,7 +136,7 @@
                 <content>
                     <ToolbarSpacer width=""/>
                     <Button text="Guardar" type="Emphasized" icon="sap-icon://save" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press=".onPressSave"/>
-                    <Button text="Cancelar" type="Reject" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+                    <Button text="Cancelar" type="Reject" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="onCancelEditRegTolvas"/>
                 </content>
             </OverflowToolbar>
         </footer>

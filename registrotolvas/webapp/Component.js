@@ -27,6 +27,10 @@ sap.ui.define([
 			// set the FLP model
 			this.setModel(models.createFLPModel(), "FLP");
 
+			this.setModel(models.createFilterModel(), "FilterModel");
+
+			this.setModel(models.createCombosModel(), "CombosModel")
+
 			// set the dataSource model
 			this.setModel(new sap.ui.model.json.JSONModel({}), "dataSource");
 

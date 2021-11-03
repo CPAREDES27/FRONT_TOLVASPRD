@@ -5,12 +5,12 @@
     xmlns:core="sap.ui.core" 
     xmlns:t="sap.ui.table"
     xmlns:layout="sap.ui.layout">
-    <Shell id="shell">
+    
 		<App id="app">
 			<pages>
 				<Page id="page" title="{i18n>title}" showFooter="true" showNavButton="false">
                     <content>
-                        <form:Form width="100%" editable="true" visible="true" binding="{FormSearchModel>/SupplierCollection/0/}">
+                        <form:Form width="100%" editable="true" visible="true">
                             <form:title>
                                 <core:Title text="Datos de selección" level="Auto"/>
                             </form:title>
@@ -22,12 +22,23 @@
                                                 <Label text="Centro" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" value="{FormSearchModel>CentroDescarga}" showValueHelp="true" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onInputValueHelpRequest">
-                                                    <layoutData>
-                                                        <layout:GridData span="XL5 L5 M5 S12" />
-                                                    </layoutData>
+                                               <Input id="centro" value="{FilterModel>/CentroDescarga}" type="Text" valueState="Information" valueStateText="Ingrese centro" showSuggestion="true" showTableSuggestionValueHelp="false" suggestionRows="{CombosModel>/Centros}" width="100%">
+                                                    <suggestionColumns>
+                                                        <Column>
+                                                            <Label text="Centro" />
+                                                        </Column>
+                                                        <Column>
+                                                            <Label text="Descripción" />
+                                                        </Column>
+                                                    </suggestionColumns>
+                                                    <suggestionRows>
+                                                        <ColumnListItem>
+                                                            <Label text="{CombosModel>WERKS}" />
+					                                        <Label text="{CombosModel>NAME1}" />
+                                                        </ColumnListItem>
+                                                    </suggestionRows>
                                                 </Input>
-                                                <Text text="{FormSearchModel>CentroDescripcion}" visible="true" width="auto" >
+                                                <Text text="{FilterModel>/CentroDescripcion}" visible="true" width="auto" >
                                                     <layoutData>
                                                         <layout:GridData span="XL5 L5 M5 S12" />
                                                     </layoutData>
@@ -39,7 +50,7 @@
                                                 <Label text="Fecha inicio descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <DatePicker value="{FormSearchModel>FechaInicioDescarga}" width="auto" displayFormat="medium" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd">
+                                                <DatePicker value="{FilterModel>/FechaInicioDescarga}" width="auto" displayFormat="dd/MM/yyyy" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd" >
                                                     <layoutData>
                                                         <layout:GridData span="XL5 L5 M5 S12" />
                                                     </layoutData>
@@ -51,7 +62,7 @@
                                                 <Label text="Hora inicio descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <TimePicker value="{FormSearchModel>HoraInicioDescarga}" valueFormat="HHmmss" displayFormat="HH:mm">
+                                                <TimePicker value="{FilterModel>/HoraInicioDescarga}" valueFormat="HHmmss" displayFormat="HH:mm">
                                                     <layoutData>
                                                         <layout:GridData span="XL5 L5 M5 S12" />
                                                     </layoutData>
@@ -63,14 +74,7 @@
                                                 <Label text="Cantidad de Filas" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input value="{
-                                                        path: 'FormSearchModel>CantidadFilas',
-                                                        type: 'sap.ui.model.type.Integer',
-                                                        constraints: 
-                                                        {
-                                                            minimum: 0
-                                                        }
-                                                    }" type="Number" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0">
+                                                <Input value="{FilterModel>/CantidadFilas}" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0">
                                                     <layoutData>
                                                         <!-- <FlexItemData growFactor="1" /> -->
                                                         <layout:GridData span="XL5 L5 M5 S12" />
@@ -101,6 +105,7 @@
                         <!-- <Button text="Buscar" type="Default" icon="sap-icon://search" iconFirst="true" width="50%" enabled="true" visible="true" iconDensityAware="false" class="sapUiResponsiveMargin"/> -->
                         
                         <t:Table
+                            id="tableData"
                             selectionMode="None"
                             rows="{RegistroTolvasModel>/}"
                             visibleRowCount="5"
@@ -109,6 +114,12 @@
                             rowActionCount="1"
                             busy="{FormSearchModel>/busyIndicatorRegistroTolvas}" >
                             <t:extension>
+                                <OverflowToolbar style="Clear">
+						                    <Title id="title" text=""/>
+                                            <ToolbarSpacer width=""/>
+                                            <SearchField liveChange=".filterGlobally" placeholder="Búsqueda rápida" width="auto"/>
+                                            <Button press="exportarExcel" text="Exportar" icon="sap-icon://excel-attachment" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+					                    </OverflowToolbar>
                             </t:extension>
                             <t:rowActionTemplate>
                                 <t:RowAction>
@@ -121,49 +132,56 @@
                             </t:rowActionTemplate>
                             <t:columns>
                                 <t:Column
-                                    width="auto" >
+                                    width="auto" 
+                                    filterProperty="NRDES" defaultFilterOperator="Contains" sortProperty="NRDES">
                                     <Label text="Número descarga" wrapping="true" textAlign="Left" width="100%"/>
                                     <t:template>
                                         <Text text="{RegistroTolvasModel>NRDES}"/>
                                     </t:template>
                                 </t:Column>
                                 <t:Column
-                                    width="auto">
+                                    width="auto" 
+                                    filterProperty="WERKS" defaultFilterOperator="Contains" sortProperty="WERKS">
                                     <Label text="Centro" textAlign="Left" width="100%"/>
                                     <t:template>
                                         <Text text="{RegistroTolvasModel>WERKS}"/>
                                     </t:template>
                                 </t:Column>
                                 <t:Column
-                                    width="auto">
+                                    width="auto" 
+                                    filterProperty="TICKE" defaultFilterOperator="Contains" sortProperty="TICKE">
                                     <Label text="Ticket" textAlign="Left" wrapping="true" width="100%"/>
                                     <t:template>
                                         <Text text="{RegistroTolvasModel>TICKE}"/>
                                     </t:template>
                                 </t:Column>
                                 <t:Column
-                                    width="auto">
+                                    width="auto" 
+                                    filterProperty="CDEMB" defaultFilterOperator="Contains" sortProperty="CDEMB">
                                     <Label text="Código embarcación" wrapping="true" textAlign="Left" width="100%"/>
                                     <t:template>
                                         <Text text="{RegistroTolvasModel>CDEMB}"/>
                                     </t:template>
                                 </t:Column>
                                 <t:Column
-                                    width="auto">
+                                    width="auto" 
+                                    filterProperty="NMEMB" defaultFilterOperator="Contains" sortProperty="NMEMB">
                                     <Label text="Nombre embarcación" wrapping="true" textAlign="Left" width="100%"/>
                                     <t:template>
                                         <Text text="{RegistroTolvasModel>NMEMB}"/>
                                     </t:template>
                                 </t:Column>
                                 <t:Column
-                                    width="auto" >
+                                    width="auto" 
+                                    filterProperty="MREMB" defaultFilterOperator="Contains" sortProperty="MREMB">
                                     <Label text="Matricula" textAlign="Left" width="100%"/>
                                     <t:template>
                                         <Text text="{RegistroTolvasModel>MREMB}"/> 
                                     </t:template>
                                 </t:Column>
                                 <t:Column
-                                    width="auto" hAlign="Right">
+                                    width="auto" hAlign="Right" 
+                                    filterProperty="CBOD" defaultFilterOperator="EQ" sortProperty="CBOD">
                                     <Label text="CBOD" textAlign="Right" width="100%"/>
                                     <t:template>
                                         <Text text="{
@@ -177,7 +195,8 @@
                                     </t:template>
                                 </t:Column>
                                 <t:Column
-                                    width="auto" >
+                                    width="auto" 
+                                    filterProperty="FIDES" defaultFilterOperator="Contains" sortProperty="FIDES">
                                     <Label text="Fecha inicio descarga" textAlign="Left" wrapping="true" width="100%"/>
                                     <t:template>
                                         <Text text="{RegistroTolvasModel>FIDES}"/>  
@@ -194,7 +213,8 @@
                                         }
                                     }"/> -->
                                 <t:Column
-                                    width="auto">
+                                    width="auto" 
+                                    filterProperty="HIDES" defaultFilterOperator="Contains" sortProperty="HIDES">
                                     <Label text="Hora inicio descarga" textAlign="Left" wrapping="true" width="100%" />
                                     <t:template>
                                         <Text text="{
@@ -211,14 +231,16 @@
                                     </t:template>
                                 </t:Column>
                                 <t:Column
-                                    width="auto">
+                                    width="auto" 
+                                    filterProperty="FFDES" defaultFilterOperator="Contains" sortProperty="FFDES">
                                     <Label text="Fecha fin descarga" textAlign="Left" wrapping="true" width="100%" />
                                     <t:template>
                                         <Text text="{RegistroTolvasModel>FFDES}"/>
                                     </t:template>
                                 </t:Column>
-                                <t:Column
-                                    width="auto">
+                                <t:Column 
+                                    width="auto" 
+                                    filterProperty="HFDES" defaultFilterOperator="Contains" sortProperty="HFDES">
                                     <Label text="Hora fin descarga" textAlign="Left" wrapping="true" width="100%"/>
                                     <t:template>
                                         <Text text="{
@@ -234,7 +256,8 @@
                                     </t:template>
                                 </t:Column>
                                 <t:Column
-                                    width="auto" hAlign="Right">
+                                    width="auto" hAlign="Right" 
+                                    filterProperty="CNPDS" defaultFilterOperator="EQ" sortProperty="CNPDS">
                                     <Label text="Pesca descargada" wrapping="true" textAlign="Right" width="100%" />
                                     <t:template>
                                         <Text text="{
@@ -271,6 +294,5 @@
                 </Page>
             </pages>
 		</App>
-	</Shell>
 
 </mvc:View>

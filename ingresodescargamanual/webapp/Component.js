@@ -28,6 +28,13 @@ sap.ui.define([
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
+
+			// set combo model
+			this.setModel(models.createCombosModel(), "ComboModel");
+
+			// set form model
+			this.setModel(models.createFormModel(), "FormModel");
+
 		},
 
 		getNavigationPropertyForNavigationWithContext: function(sEntityNameSet, targetPageName) {

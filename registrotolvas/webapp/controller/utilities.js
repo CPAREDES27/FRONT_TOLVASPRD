@@ -148,6 +148,46 @@ sap.ui.define([
                 .then(data => data.data);
         },
 
+		obtenerCentros: function(usuario){
+			const bodyAyudaBusqueda = {
+				"nombreAyuda": "BSQCENTRO",
+				"p_user": usuario
+			};
+
+			return fetch(`${this.sBackUrl}/api/General/AyudasBusqueda/`, {
+                method: 'POST',
+                body: JSON.stringify(bodyAyudaBusqueda)
+                })
+                .then(response => response.json())
+                // .then(data => console.log(data));
+                .then(data => data.data);
+		},
+
+		obtenerEmbarcaciones: function(body){
+			
+			return fetch(`${this.sBackUrl}/api/embarcacion/ConsultarEmbarcacion/`, {
+                method: 'POST',
+                body: JSON.stringify(body)
+                })
+                .then(response => response.json())
+                // .then(data => console.log(data));
+                .then(data => data.data);
+		},
+
+		enviarNotificacion: function(planta, data){
+			var body = {
+				"data": data,
+				"planta": planta
+			};
+			return fetch(`${this.sBackUrl}/api/correo/EnviarNotifDescTolvas`, {
+                method: 'POST',
+                body: JSON.stringify(body)
+                })
+                .then(response => response.json())
+                // .then(data => console.log(data));
+                .then(data => data);
+		},
+
 		formaterx: function (value) {
 
 			if (value) {
