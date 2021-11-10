@@ -24,7 +24,30 @@
                                                 <Label text="Centro" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input value="" type="Text" showValueHelp="true" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onInputValueHelpRequest"/>
+                                                <Input id="idCentro" value="{FilterModel>/Centro}" type="Text" valueState="Information" valueStateText="Ingrese centro" suggestionItemSelected="onSelectWerks" showSuggestion="true" showTableSuggestionValueHelp="false" suggestionRows="{CombosModel>/Centros}" width="100%">
+                                                    <suggestionColumns>
+                                                        <Column>
+                                                            <Label text="Planta" />
+                                                        </Column>
+                                                        <Column>
+                                                            <Label text="Descripción" />
+                                                        </Column>
+                                                        <Column>
+                                                            <Label text="Centro" />
+                                                        </Column>
+                                                        <Column>
+                                                            <Label text="Armador" />
+                                                        </Column>
+                                                    </suggestionColumns>
+                                                    <suggestionRows>
+                                                        <ColumnListItem>
+                                                            <Label text="{CombosModel>CDPTA}" />
+					                                        <Label text="{CombosModel>DESCR}" />
+                                                            <Label text="{CombosModel>WERKS}" />
+                                                            <Label text="{CombosModel>STCD1}" />
+                                                        </ColumnListItem>
+                                                    </suggestionRows>
+                                                </Input>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -32,7 +55,7 @@
                                                 <Label text="Fecha" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <DatePicker value="" width="auto" displayFormat="medium" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/>
+                                                <DatePicker id="dpDate" value="{FilterModel>/Fecha}" width="auto" displayFormat="dd/MM/yyyy" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">

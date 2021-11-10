@@ -14,10 +14,12 @@ sap.ui.define([
 
 		createFormModel: function(){
 			var data = {
-				Centro: "",
-				DescCentro: " ",
+				CentroPlanta: "",
+				Planta: "",
+				DescPlanta: " ",
 				Embarcacion: "",
 				DescEmba: " ",
+				Matricula: "",
 				Balanza: "",
 				PuntoDesc: "",
 				Ticket: "",
@@ -33,7 +35,7 @@ sap.ui.define([
 
 		createCombosModel: function(){
 			var data = {
-				Centros: [],
+				Plantas: [],
 				IndProp: [],
 				Embarcaciones: [],
 				Balanzas: [],

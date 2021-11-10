@@ -133,14 +133,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         loadInitData: function () {
             BusyIndicator.show(0);
             var oModel = this.getOwnerComponent().getModel("ComboModel");
-            let centros = [];
+            let plantas = [];
             let zinprpDom = [];
             let balanzas = [];
             let puntoDesc = [];
             let especies = [];
 
             const bodyAyudaBusqueda = {
-                "nombreAyuda": "BSQCENTRO",
+                "nombreAyuda": "BSQPLANTAS",
                 "p_user": this.getCurrentUser()
             };
 
@@ -151,8 +151,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 })
                 .then(resp => resp.json()).then(data => {
                     console.log("Busqueda: ", data);
-                    centros = data.data;
-                    oModel.setProperty("/Centros", centros);
+                    plantas = data.data;
+                    oModel.setProperty("/Plantas", plantas);
                     BusyIndicator.hide();
                 }).catch(error => console.log(error));
 
@@ -298,14 +298,15 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             var oModel = this.getOwnerComponent().getModel("FormModel");
             var objeto = evt.getSource().getBindingContext("ComboModel").getObject();
             if (objeto) {
-                var descEmba =  objeto.NMEMB + "    " + objeto.MREMB;
+                var descEmba = objeto.NMEMB + "    " + objeto.MREMB;
                 oModel.setProperty("/Embarcacion", objeto.CDEMB);
                 oModel.setProperty("/DescEmba", descEmba);
+                oModel.setProperty("/Matricula", objeto.MREMB);
                 oModel.refresh();
                 this.getView().byId("embarcacion").setValueState("None");
                 this.getDialog().close();
             }
-            
+
         },
 
         onAbrirAyudaEmbarcacion: function (evt) {
@@ -328,13 +329,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             var objeto = evt.getParameter("selectedRow").getBindingContext("ComboModel").getObject();
             if (objeto) {
                 var oModel = this.getOwnerComponent().getModel("FormModel");
-                oModel.setProperty("/Centro", objeto.WERKS);
-                oModel.setProperty("/DescCentro", objeto.NAME1);
+                oModel.setProperty("/CentroPlanta", objeto.WERKS);
+                oModel.setProperty("/Planta", objeto.CDPTA);
+                oModel.setProperty("/DescPlanta", objeto.NAME1);
                 oModel.refresh();
             }
         },
 
-        onPressEspecie: function(evt){
+        onPressEspecie: function (evt) {
             var objeto = evt.getParameter("selectedRow").getBindingContext("ComboModel").getObject();
             if (objeto) {
                 var oModel = this.getOwnerComponent().getModel("FormModel");
@@ -344,86 +346,188 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             }
         },
 
-        onGuardar: function(){
+        onGuardar: function () {
+            BusyIndicator.show(0);
             var oModel = this.getOwnerComponent().getModel("FormModel");
-            var centro = oModel.getProperty("/Centro");
+            var centro = oModel.getProperty("/CentroPlanta");
+            var planta = oModel.getProperty("/Planta");
             var embarcacion = oModel.getProperty("/Embarcacion");
+            var matricula = oModel.getProperty("/Matricula");
             var balanza = oModel.getProperty("/Balanza");
             var puntoDesc = oModel.getProperty("/PuntoDesc");
             var ticket = oModel.getProperty("/Ticket");
             var especie = oModel.getProperty("/Especie");
             var pescDesc = oModel.getProperty("/PescDesc");
+            var iniDesc = oModel.getProperty("/FechIniDesc");
+            var finDesc = oModel.getProperty("/FechFinDesc");
+
             var bOk = true;
 
-            if(!centro){
+            if (!centro) {
                 bOk = false;
-                this.getView().byId("centro").setValueState("Error");                
+                this.getView().byId("centro").setValueState("Error");
             }
 
-            if(!embarcacion){
+            if (!embarcacion) {
                 bOk = false;
-                this.getView().byId("embarcacion").setValueState("Error");                
+                this.getView().byId("embarcacion").setValueState("Error");
             }
 
-            if(!balanza){
+            if (!balanza) {
                 bOk = false;
-                this.getView().byId("cbxBalanza").setValueState("Error");                
+                this.getView().byId("cbxBalanza").setValueState("Error");
             }
 
-            if(!puntoDesc){
+            if (!puntoDesc) {
                 bOk = false;
-                this.getView().byId("cbxPuntoDesc").setValueState("Error");                
+                this.getView().byId("cbxPuntoDesc").setValueState("Error");
             }
 
-            if(!ticket){
+            if (!ticket) {
                 bOk = false;
-                this.getView().byId("ticket").setValueState("Error");                
+                this.getView().byId("ticket").setValueState("Error");
             }
 
-            if(!especie){
+            if (!especie) {
                 bOk = false;
-                this.getView().byId("especies").setValueState("Error");                
+                this.getView().byId("especies").setValueState("Error");
             }
 
-            if(!pescDesc){
+            if (!pescDesc) {
                 bOk = false;
-                this.getView().byId("pescDesc").setValueState("Error");                
+                this.getView().byId("pescDesc").setValueState("Error");
+            }
+
+            var fechaIniDesc = null;
+            var horaIniDesc = null;
+            console.log("iniDesc: ", iniDesc);
+            if (iniDesc) {
+                fechaIniDesc = iniDesc.split(" ")[0];
+                horaIniDesc = iniDesc.split(" ")[1];
+            }
+
+            var fechFinDesc = null;
+            var horaFinDesc = null;
+            console.log("finDesc: ", finDesc);
+            if (finDesc) {
+                fechFinDesc = finDesc.split(" ")[0];
+                horaFinDesc = finDesc.split(" ")[1];
             }
 
 
             if (bOk) {
-                //consumir rfc guardar
+
+                var tmpStr_des = [];
+                var obj = {
+                    TICKE: this.formatoCeros(ticket),
+                    CDBAL: balanza,
+                    CDTPC: "I",
+                    CDPTA: planta,
+                    CDEMB: embarcacion,
+                    CDPDG: puntoDesc,
+                    CDSPC: especie,
+                    CNPDS: pescDesc,
+                    FIDES: fechaIniDesc,
+                    HIDES: horaIniDesc,
+                    FFDES: fechFinDesc,
+                    HFDES: horaFinDesc,
+                    ESDES: "S",
+                    SALDO: pescDesc,
+                    MREMB: matricula,
+                    ATMOD: this.getCurrentUser()
+                };
+                tmpStr_des.push(obj);
+
+                var body = {
+                    "fieldst_mensaje": [
+                        "CMIN",
+                        "CDMIN",
+                        "DSMIN"
+                    ],
+                    "p_user": this.getCurrentUser(),
+                    "str_des": tmpStr_des
+                };
+
+                fetch(`${mainUrlServices}tolvas/ingresodescargamanual_guardar`,
+                    {
+                        method: 'POST',
+                        body: JSON.stringify(body)
+                    })
+                    .then(resp => resp.json()).then(data => {
+                        if (data) {
+                            var mensajes = data.t_mensaje[0];
+                            MessageBox.information(mensajes.DSMIN, {
+                                title: "Mensaje",
+                                onclose: function () {
+                                    oModel.setProperty("/CentroPlanta", "");
+                                    oModel.setProperty("/Planta", "");
+                                    oModel.setProperty("/DescPlanta", "");
+                                    oModel.setProperty("/Embarcacion", "");
+                                    oModel.setProperty("/DescEmba", "");
+                                    oModel.setProperty("/Matricula", "");
+                                    oModel.setProperty("/Balanza", "");
+                                    oModel.setProperty("/PuntoDesc", "");
+                                    oModel.setProperty("/Ticket", "");
+                                    oModel.setProperty("/Especie", "");
+                                    oModel.setProperty("/PescDesc", "");
+                                    oModel.setProperty("/FechIniDesc", "");
+                                    oModel.setProperty("/FechFinDesc", "");
+                                    oModel.refresh();
+                                }
+                            });
+                        }
+                        BusyIndicator.hide();
+                    }).catch(error => console.log(error));
             } else {
+                BusyIndicator.hide();
                 MessageBox.error("Hay campos obligatorios que estan vacios.");
             }
 
         },
 
-        onChangeInput: function(evt){
-            var idControl = evt.getSource().getId();
-            var input = this.getView().byId(idControl);
-            if(idControl.includes("centro")){
-                input.setValueState("Information");
+        formatoCeros: function (numero) {
+            if (!isNaN(numero)) {
+                var strNumero = numero.toString();
+                if (strNumero.length < 8) {
+                    var ceros = "";
+                    var diffStr = 8 - strNumero.length;
+                    for (let index = 0; index < diffStr; index++) {
+                        ceros += "0";
+                    }
+                    return ceros + "" + strNumero;
+                } else {
+                    return numero;
+                }
+            } else {
+                return "00000000";
             }
-            if(idControl.includes("ticket")){
-                input.setValueState("None");
-            }
-            if(idControl.includes("especies")){
-                input.setValueState("Information");
-            }
-            if(idControl.includes("pescDesc")){
-                input.setValueState("None");
-            }
-            
         },
 
-        onChange: function(evt){
+        onChangeInput: function (evt) {
+            var idControl = evt.getSource().getId();
+            var input = this.getView().byId(idControl);
+            if (idControl.includes("centro")) {
+                input.setValueState("Information");
+            }
+            if (idControl.includes("ticket")) {
+                input.setValueState("None");
+            }
+            if (idControl.includes("especies")) {
+                input.setValueState("Information");
+            }
+            if (idControl.includes("pescDesc")) {
+                input.setValueState("None");
+            }
+
+        },
+
+        onChange: function (evt) {
             var idControl = evt.getSource().getId();
             var combo = this.getView().byId(idControl);
-            if(idControl.includes("cbxBalanza")){
+            if (idControl.includes("cbxBalanza")) {
                 combo.setValueState("None");
             }
-            if(idControl.includes("cbxPuntoDesc")){
+            if (idControl.includes("cbxPuntoDesc")) {
                 combo.setValueState("None");
             }
         },

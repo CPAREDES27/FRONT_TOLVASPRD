@@ -23,19 +23,27 @@
                                                 <Label text="Centro" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input id="centro" value="{FormModel>/Centro}" description="{FormModel>/DescCentro}" liveChange="onChangeInput" valueState="Information" valueStateText="Ingrese centro" showSuggestion="true"  showTableSuggestionValueHelp="false" suggestionRows="{ComboModel>/Centros}" suggestionItemSelected="onPressCentro" width="100%">
+                                                <Input id="centro" value="{FormModel>/CentroPlanta}" description="{FormModel>/DescPlanta}" liveChange="onChangeInput" valueState="Information" valueStateText="Ingrese centro" showSuggestion="true"  showTableSuggestionValueHelp="false" suggestionRows="{ComboModel>/Plantas}" suggestionItemSelected="onPressCentro" width="100%">
                                                     <suggestionColumns>
                                                         <Column>
-                                                            <Label text="Centro" />
+                                                            <Label text="Planta" />
                                                         </Column>
                                                         <Column>
                                                             <Label text="Descripción" />
                                                         </Column>
+                                                        <Column>
+                                                            <Label text="Centro" />
+                                                        </Column>
+                                                        <Column>
+                                                            <Label text="Armador" />
+                                                        </Column>
                                                     </suggestionColumns>
-                                                    <suggestionRows >
+                                                    <suggestionRows>
                                                         <ColumnListItem>
+                                                            <Label text="{ComboModel>CDPTA}" />
+					                                        <Label text="{ComboModel>DESCR}" />
                                                             <Label text="{ComboModel>WERKS}" />
-					                                        <Label text="{ComboModel>NAME1}" />
+                                                            <Label text="{ComboModel>NAME1}" />
                                                         </ColumnListItem>
                                                     </suggestionRows>
                                                 </Input>
@@ -109,7 +117,7 @@
                                                 <Label text="Fecha inicio descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <DateTimePicker value="{FormModel>/FechIniDesc}" valueFormat="dd/MM/yyyy HH:mm" displayFormat="dd/MM/yyyy HH:mm" visible="true" width="auto" />
+                                                <DateTimePicker id="dtpIniDesc" value="{FormModel>/FechIniDesc}" valueFormat="yyyyMMdd HH:mm" displayFormat="dd/MM/yyyy HH:mm" visible="true" width="auto" />
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -117,7 +125,7 @@
                                                 <Label text="Fecha fin descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <DateTimePicker value="{FormModel>/FechFinDesc}" valueFormat="dd/MM/yyyy HH:mm" displayFormat="dd/MM/yyyy HH:mm" visible="true" width="auto" />
+                                                <DateTimePicker id="dtpFinDesc" value="{FormModel>/FechFinDesc}" valueFormat="yyyyMMdd HH:mm" displayFormat="dd/MM/yyyy HH:mm" visible="true" width="auto" />
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
