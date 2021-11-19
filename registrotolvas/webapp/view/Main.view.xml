@@ -22,26 +22,55 @@
                                                 <Label text="Centro" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                               <Input id="centro" value="{FilterModel>/CentroDescarga}" type="Text" valueState="Information" valueStateText="Ingrese centro" showSuggestion="true" showTableSuggestionValueHelp="false" suggestionRows="{CombosModel>/Centros}" width="100%">
-                                                    <suggestionColumns>
-                                                        <Column>
-                                                            <Label text="Centro" />
-                                                        </Column>
-                                                        <Column>
-                                                            <Label text="Descripción" />
-                                                        </Column>
-                                                    </suggestionColumns>
-                                                    <suggestionRows>
-                                                        <ColumnListItem>
-                                                            <Label text="{CombosModel>WERKS}" />
-					                                        <Label text="{CombosModel>NAME1}" />
-                                                        </ColumnListItem>
-                                                    </suggestionRows>
-                                                </Input>
-                                                <Text text="{FilterModel>/CentroDescripcion}" visible="true" width="auto" >
-                                                    <layoutData>
-                                                        <layout:GridData span="XL5 L5 M5 S12" />
-                                                    </layoutData>
+                                            <Input  change="multiInputPlanta" class="sapUiSmallMarginBottom"
+                                                            id="idPlantaIni"
+                                                            width="auto"
+                                                            placeholder="Ingresar Centro..."
+                                                            showSuggestion="true"
+                                                            showValueHelp="false"
+                                                            valueState="Information"
+                                                            valueStateText="Ingrese un texto"
+                                                            suggestionRows="{Planta>/listaPlanta}">
+												    <suggestionColumns>
+													
+													<Column
+														hAlign="Begin"
+														popinDisplay="Inline"
+														demandPopin="true"
+														minScreenWidth="Tablet">
+														<Label text="Centro"/>
+													</Column>
+													<Column
+														hAlign="End"
+														popinDisplay="Inline"
+														demandPopin="true"
+														minScreenWidth="Tablet">
+														<Label text="Planta"/>
+													</Column>
+													<Column
+														hAlign="End"
+														popinDisplay="Inline"
+														demandPopin="true"
+														minScreenWidth="Tablet">
+														<Label text="Descripción"/>
+													</Column>
+												</suggestionColumns>
+												<suggestionRows>
+													<ColumnListItem>
+													<cells>
+														<Label text="{Planta>WERKS}"/>
+														<Label text="{Planta>CDPTA}"/>
+														<Label text="{Planta>DESCR}"/>
+														<Label text="{
+																parts:[{path:'Planta'},{path:'Centro'}],
+																type: 'sap.ui.model.type.Currency',
+																formatOptions: {showMeasure: true}
+																}"/>
+													</cells>
+													</ColumnListItem>
+												</suggestionRows>
+											</Input>
+                                                <Text text="" id="idDescr" visible="true" width="auto" >
                                                 </Text>
                                             </form:fields>
                                         </form:FormElement>
@@ -50,10 +79,8 @@
                                                 <Label text="Fecha inicio descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <DatePicker value="{FilterModel>/FechaInicioDescarga}" width="auto" displayFormat="dd/MM/yyyy" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd" >
-                                                    <layoutData>
-                                                        <layout:GridData span="XL5 L5 M5 S12" />
-                                                    </layoutData>
+                                                <DatePicker value="{FilterModel>/FechaInicioDescarga}" id="idFecha" width="auto" displayFormat="dd/MM/yyyy" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd" >
+                                                   
                                                 </DatePicker>
                                             </form:fields>
                                         </form:FormElement>
@@ -62,23 +89,18 @@
                                                 <Label text="Hora inicio descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <TimePicker value="{FilterModel>/HoraInicioDescarga}" valueFormat="HHmmss" displayFormat="HH:mm">
-                                                    <layoutData>
-                                                        <layout:GridData span="XL5 L5 M5 S12" />
-                                                    </layoutData>
+                                                <TimePicker value="{FilterModel>/HoraInicioDescarga}" id="idHora" valueFormat="HHmmss" displayFormat="HH:mm">
+                                                   
                                                 </TimePicker>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
                                             <form:label>
-                                                <Label text="Cantidad de Filas" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Label text="Cantidad de Filas" design="Standard"  width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input value="{FilterModel>/CantidadFilas}" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0">
-                                                    <layoutData>
-                                                        <!-- <FlexItemData growFactor="1" /> -->
-                                                        <layout:GridData span="XL5 L5 M5 S12" />
-                                                    </layoutData>
+                                                <Input value="{FilterModel>/CantidadFilas}" id="idCant" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0">
+                                                   
                                                 </Input>
                                             </form:fields>
                                         </form:FormElement>
@@ -87,11 +109,8 @@
                                                 <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Button text="Buscar" type="Default" icon="sap-icon://search" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="requestListaRegistroTolvas">
-                                                    <layoutData>
-                                                        <layout:GridData span="XL5 L5 M5 S12" />
-                                                    </layoutData>
-                                                </Button>
+                                            <Button text="Buscar" type="Emphasized" press="requestListaRegistroTolvas" />
+									        <Button text="Limpiar" type="Emphasized" press="onLimpiar" />
                                             </form:fields>
                                         </form:FormElement>
                                     </form:formElements>
@@ -117,8 +136,8 @@
                                 <OverflowToolbar style="Clear">
 						                    <Title id="title" text=""/>
                                             <ToolbarSpacer width=""/>
-                                            <SearchField liveChange=".filterGlobally" placeholder="Búsqueda rápida" width="auto"/>
                                             <Button press="exportarExcel" text="Exportar" icon="sap-icon://excel-attachment" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+                                            <SearchField liveChange=".filterGlobally" placeholder="Búsqueda rápida" width="auto"/>
 					                    </OverflowToolbar>
                             </t:extension>
                             <t:rowActionTemplate>

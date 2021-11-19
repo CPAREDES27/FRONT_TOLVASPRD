@@ -3,7 +3,8 @@ sap.ui.define([
 	"sap/m/MessageBox",
 //	"./BusquedaDeEmpresas",
 	"./utilities",
-	"sap/ui/core/routing/History"
+	"sap/ui/core/routing/History",
+    
 ],
 	/**
 	 * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -15,7 +16,7 @@ sap.ui.define([
         Utilities,
         History) {
         "use strict";
-
+        var oGlobalBusyDialog = new sap.m.BusyDialog();
         return BaseController.extend("com.tasa.tolvas.calculoderechopesca.controller.Main", {
             handleRouteMatched: function(oEvent) {
                 var sAppId = "App60f18d59421c8929c54cd9bf";
@@ -73,10 +74,30 @@ sap.ui.define([
 
             // },
             _onEjecutarPress: function(oEvent) {
-                var oBindingContext = oEvent.getSource().getBindingContext();
+                var periodo= this.byId("idPeriodo").getValue();
+                var idEjercicio= this.byId("idEjercicio").getValue();
+                var cadena="";
+                var estado=false;
+                if(periodo===""|| periodo===null){
+                    estado=true;
+                    cadena+="El campo EJERCICIO es obligatorio\n";
+                }
+                if(idEjercicio===""|| idEjercicio===null){
+                    cadena+="El campo PERIODO es obligatorio";
+                    estado=true;
+                }
+                if(estado){
+                    MessageBox.error(cadena);
+                    return false;
+                }
 
-                return new Promise(function(fnResolve) {
+                oGlobalBusyDialog.open();
+                var oBindingContext = oEvent.getSource().getBindingContext("FormSearchModel");
+
+                // this.oRouter().navTo("DeclaracionJuradaPagoDerechosPesca");
+               return new Promise(function(fnResolve) {
                     this.doNavigate("DeclaracionJuradaPagoDerechosPesca", oBindingContext, fnResolve, "");
+                    oGlobalBusyDialog.close();
                 }.bind(this)).catch(function(err) {
                     if (err !== undefined) {
                         MessageBox.error(err.message);
@@ -168,6 +189,11 @@ sap.ui.define([
                     }.bind(this)
                 });
 
-            }
+            },
+            onLimpiar: function(){
+                this.byId("idEjercicio").setValue("");
+                this.byId("idPeriodo").setValue("");
+            },
+            
         });
 }, /* bExport= */ true);

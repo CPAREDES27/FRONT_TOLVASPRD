@@ -107,8 +107,7 @@
                     "pattern": "DeclaracionJuradaPagoDerechosPesca",
                     "target": [
                         "TargetDeclaracionJuradaPagoDerechosPesca"
-                    ],
-                    "controlId": "app"
+                    ]
                 },
                 {
                     "name": "EditarDeclaracionJurada",
@@ -156,7 +155,8 @@
                     "transition": "slide",
                     "clearControlAggregation": false,
                     "viewId": "DeclaracionJuradaPagoDerechosPesca",
-                    "viewName": "DeclaracionJuradaPagoDerechosPesca"
+                    "viewName": "DeclaracionJuradaPagoDerechosPesca",
+                    "controlId": "app"
                 },
                 "TargetEditarDeclaracionJurada": {
                     "viewType": "XML",

@@ -70,8 +70,8 @@ sap.ui.define([
                 "p_user": "FGARCIA",
                 "fields": aField,
                 "rowcount": iRowCount,
-                "p_options": [],
-                "p_option": aOption
+                "p_options": aOption,
+                "p_option": []
             };
 
             return fetch(`${this.sBackUrl}/api/tolvas/registrotolvas_listar`, {

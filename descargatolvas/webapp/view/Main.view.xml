@@ -32,8 +32,103 @@
                                                         <Label text="Centro de descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <Input value="{FormSearchModel>CentroDescargaBottom}" type="Text" showValueHelp="true" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onInputValueHelpRequest"/>
-                                                        <Input value="{FormSearchModel>CentroDescargaTop}" type="Text" showValueHelp="true" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onInputValueHelpRequest"/>
+                                                        <Input  change="multiInputPlanta" class="sapUiSmallMarginBottom"
+                                                            id="idPlantaIni"
+                                                            width="100%"
+                                                            placeholder="Ingresar Centro..."
+                                                            showSuggestion="true"
+                                                            showValueHelp="false"
+                                                            valueState="Information"
+                                                            valueStateText="Ingrese un texto"
+                                                            suggestionRows="{Planta>/listaPlanta}">
+												    <suggestionColumns>
+													
+													<Column
+														hAlign="Begin"
+														popinDisplay="Inline"
+														demandPopin="true"
+														minScreenWidth="Tablet">
+														<Label text="Centro"/>
+													</Column>
+													<Column
+														hAlign="End"
+														popinDisplay="Inline"
+														demandPopin="true"
+														minScreenWidth="Tablet">
+														<Label text="Planta"/>
+													</Column>
+													<Column
+														hAlign="End"
+														popinDisplay="Inline"
+														demandPopin="true"
+														minScreenWidth="Tablet">
+														<Label text="Descripción"/>
+													</Column>
+												</suggestionColumns>
+												<suggestionRows>
+													<ColumnListItem>
+													<cells>
+														<Label text="{Planta>WERKS}"/>
+														<Label text="{Planta>CDPTA}"/>
+														<Label text="{Planta>DESCR}"/>
+														<Label text="{
+																parts:[{path:'Planta'},{path:'Centro'}],
+																type: 'sap.ui.model.type.Currency',
+																formatOptions: {showMeasure: true}
+																}"/>
+													</cells>
+													</ColumnListItem>
+												</suggestionRows>
+											</Input>
+											<Input  change="multiInputPlanta" class="sapUiSmallMarginBottom"
+												id="idPlantaFin"
+												width="100%"
+												placeholder="Ingresar Centro..."
+												showSuggestion="true"
+												showValueHelp="false"
+												valueState="Information"
+												valueStateText="Ingrese un texto"
+												suggestionRows="{Planta>/listaPlanta}">
+												<suggestionColumns>
+													
+													<Column
+														hAlign="Begin"
+														popinDisplay="Inline"
+														demandPopin="true"
+														minScreenWidth="Tablet">
+														<Label text="Centro"/>
+													</Column>
+													<Column
+														hAlign="End"
+														popinDisplay="Inline"
+														demandPopin="true"
+														minScreenWidth="Tablet">
+														<Label text="Planta"/>
+													</Column>
+														<Column
+														hAlign="End"
+														popinDisplay="Inline"
+														demandPopin="true"
+														minScreenWidth="Tablet">
+														<Label text="Descripción"/>
+													</Column>
+												</suggestionColumns>
+												<suggestionRows>
+													<ColumnListItem>
+													<cells>
+														<Label text="{Planta>WERKS}"/>
+														<Label text="{Planta>CDPTA}"/>
+														<Label text="{Planta>DESCR}"/>
+														
+														<Label text="{
+																parts:[{path:'Planta'},{path:'Descripcion'}],
+																type: 'sap.ui.model.type.Currency',
+																formatOptions: {showMeasure: true}
+																}"/>
+													</cells>
+													</ColumnListItem>
+												</suggestionRows>
+											</Input>
                                                     </form:fields>
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
@@ -41,8 +136,8 @@
                                                         <Label text="Fecha inicio de descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <DatePicker value="{FormSearchModel>FechaInicioDescargaBottom}" width="auto" displayFormat="medium" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/>
-                                                        <DatePicker value="{FormSearchModel>FechaInicioDescargaTop}" width="auto" displayFormat="medium" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/>
+                                                        <DatePicker id="idFechaIni"  width="auto" displayFormat="dd/MM/yyyy" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd" />
+                                                        <DatePicker id="idFechaFin" width="auto" displayFormat="dd/MM/yyyy" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/>
                                                     </form:fields>
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
@@ -50,8 +145,8 @@
                                                         <Label text="Hora inicio de descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <TimePicker value="{FormSearchModel>HoraInicioDescargaBottom}" valueFormat="HH:mm" displayFormat="HH:mm"/>
-                                                        <TimePicker value="{FormSearchModel>HoraInicioDescargaTop}" valueFormat="HH:mm" displayFormat="HH:mm"/>
+                                                        <TimePicker id="idTimeIni" valueFormat="HH:mm" displayFormat="HH:mm"/>
+                                                        <TimePicker id="idTimeFin" valueFormat="HH:mm" displayFormat="HH:mm"/>
                                                     </form:fields>
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
@@ -59,17 +154,28 @@
                                                         <Label text="Fecha de producción" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <DatePicker value="{FormSearchModel>FechaProduccionBottom}" width="auto" displayFormat="medium" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/>
-                                                        <DatePicker value="{FormSearchModel>FechaProduccionTop}" width="auto" displayFormat="medium" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/>
+                                                        <DatePicker id="idFechaPrdIni" width="auto" displayFormat="dd/MM/yyyy" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/>
+                                                        <DatePicker id="idFechaPrdFin" width="auto" displayFormat="dd/MM/yyyy" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/>
                                                     </form:fields>
                                                 </form:FormElement>
+
+                                                <form:FormElement visible="true">
+                                                    <form:label>
+                                                        <Label text="Número de descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                    </form:label>
+                                                    <form:fields>
+                                                        <Input type="Text" id="idNumeroDescargaIni" enabled="true" visible="true" width="100%"  required="false" valueStateText="Invalid entry" maxLength="0"/>	
+                                                        <Input type="Text" id="idNumeroDescargaFin"  enabled="true" visible="true" width="100%" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>	
+                                                    </form:fields>
+                                                </form:FormElement>
+
                                                 <form:FormElement visible="true">
                                                     <form:label>
                                                         <Label text="Matrícula de Embarcación" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <Input value="{FormSearchModel>MatriculaEmbarcacionBottom}" type="Text" showValueHelp="true" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onInputValueHelpRequest"/>
-                                                        <Input value="{FormSearchModel>MatriculaEmbarcacionTop}" type="Text" showValueHelp="true" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onInputValueHelpRequest"/>
+                                                        <Input type="Text" id="idEmbarcacion1" showValueHelp="true" enabled="true" visible="true" width="100%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>	
+                                                        <Input type="Text" id="idEmbarcacion2" showValueHelp="true" enabled="true" visible="true" width="100%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>	
                                                     </form:fields>
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
@@ -77,12 +183,12 @@
                                                         <Label text="Clase de Mensaje" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <ComboBox selectedKey="{FormSearchModel>ClaseMensajeBottom}" items="{ClaseMensajeModel>/data}" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
+                                                        <ComboBox  id="idClaseManejoIni" selectedKey="{FormSearchModel>ClaseMensajeBottom}" items="{ClaseMensajeModel>/data}" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
                                                             <items>
                                                                 <core:Item key="{ClaseMensajeModel>id}" text="{ClaseMensajeModel>descripcion}"/>
                                                             </items>
                                                         </ComboBox>
-                                                        <ComboBox selectedKey="{FormSearchModel>ClaseMensajeTop}" items="{ClaseMensajeModel>/data}" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
+                                                        <ComboBox id="idClaseManejoFin" selectedKey="{FormSearchModel>ClaseMensajeTop}" items="{ClaseMensajeModel>/data}" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
                                                             <items>
                                                                 <core:Item key="{ClaseMensajeModel>id}" text="{ClaseMensajeModel>descripcion}"/>
                                                             </items>
@@ -101,7 +207,7 @@
                                                                 {
                                                                     minimum: 0
                                                                 }
-                                                            }" type="Number" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0">
+                                                            }" type="Number" id="idCant" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0">
                                                             <layoutData>
                                                                 <!-- <FlexItemData growFactor="1" /> -->
                                                                 <layout:GridData span="XL5 L5 M5 S12" />
@@ -114,12 +220,8 @@
                                                         <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <Button text="Buscar" type="Default" icon="sap-icon://search" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"
-                                                            press="_onButtonSearchPress">
-                                                            <layoutData>
-                                                                <layout:GridData span="XL5 L5 M5 S12" />
-                                                            </layoutData>
-                                                        </Button>
+                                                            <Button text="Buscar" type="Emphasized" press="_onButtonSearchPress" />
+									                        <Button text="Limpiar" type="Emphasized" press="onLimpiar" />
                                                     </form:fields>
                                                 </form:FormElement>
                                             </form:formElements>
@@ -132,18 +234,32 @@
                                 </form:Form>
                                 
                                 <t:Table
-                                    selectionMode="None"
-                                    rows="{DescargaTolvaModel>/data}"
-                                    visibleRowCount="5"
-                                    enableColumnFreeze="true"
-                                    showColumnVisibilityMenu="true"
-                                    rowActionCount="1"
-                                    busy="{FormSearchModel>/busyIndicatorTableDescargaTolvas}" >
+                               
+                                        rows="{DescargaTolvaModel>/data}"
+                                        id="table"
+                                        visibleRowCount="7"
+                                        selectionMode="None"
+                                        showColumnVisibilityMenu="{ui>/showVisibilityMenuEntry}"
+                                        enableColumnFreeze="{ui>/showFreezeMenuEntry}"
+                                        enableCellFilter="{ui>/enableCellFilter}"
+                                        columnSelect="onColumnSelect"
+                                        cellContextmenu="onProductIdCellContextMenu"
+                                        ariaLabelledBy="title">
                                     <t:extension>
-                                        <!-- <OverflowToolbar style="Clear">
-                                            <Title id="title" text="Contacts"/>
-                                        </OverflowToolbar> -->
+                                       <OverflowToolbar style="Clear">
+                                        <Title id="title" text="Lista de registros: {dataPrecio.str_ppc.total}" />
+                                        <ToolbarSpacer/>
+                                        <ToolbarSeparator/>
+                                        <Button icon="sap-icon://excel-attachment" press="onExport" text="Exportar" tooltip="Exportar Excel"/>
+                                        <SearchField
+                                            placeholder="Búsqueda rápida"
+                                            value="{ui>/globalFilter}"
+                                            liveChange="onSearch"
+                                            width="15rem"/>
+                                    </OverflowToolbar>
                                     </t:extension>
+
+
                                     <t:rowActionTemplate>
                                         <t:RowAction>
                                             <t:items>
@@ -151,6 +267,7 @@
                                             </t:items>
                                         </t:RowAction>                                    
                                     </t:rowActionTemplate>
+
                                     <t:columns>
                                         <t:Column
                                             width="2rem" >
@@ -197,7 +314,8 @@
                                             </t:template>
                                         </t:Column>
                                         <t:Column
-                                            width="auto">
+                                            width="10rem"
+                                           >
 							                <Label text="Nro. Descarga" textAlign="Left" wrapping="true" width="100%"/>
                                             <t:template>
                                                 <Text text="{DescargaTolvaModel>NRDES}"/>
@@ -267,14 +385,15 @@
                                             </t:template>
                                         </t:Column>
                                         <t:Column
-                                            width="auto">
+                                            width="auto"
+                                            hAlign="End">
                                             <Label text="Peso modificado" textAlign="Right" wrapping="true" width="100%" />
                                             <t:template>
                                                 <Text text="{DescargaTolvaModel>PESACUMOD}" textAlign="Right"/>
                                             </t:template>
                                         </t:Column>
                                         <t:Column
-                                            width="auto">
+                                            width="8rem">
                                             <Label text="Nro. pedido" textAlign="Left" wrapping="true" width="100%"/>
                                             <t:template>
                                                 <Text text="{DescargaTolvaModel>NROPEDI}"/>
@@ -302,10 +421,26 @@
                                             </t:template>
                                         </t:Column>
                                         <t:Column
+                                            width="10rem">
+                                            <Label visible="false" />
+                                            <t:template>
+                                                <Button text="Ejecutar" visible="{:= ${DescargaTolvaModel>CMIN} === 'E'}" emphasized="true" press="onEjecutar"/>
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column
                                             width="auto">
                                             <Label visible="false" />
                                             <t:template>
-                                                <Link text="Ejecutar" visible="{:= ${DescargaTolvaModel>CMIN} === 'E'}" emphasized="true" press="sap.m.MessageBox.alert('hiciste click')"/>
+                                             
+                                                <core:Icon
+                                                    src="sap-icon://navigation-right-arrow"
+                                                    class="size1"
+                                                    color="#031E48" 
+                                                     press="onPressRow" >
+                                                    <core:layoutData>
+                                                        <FlexItemData growFactor="1" />
+                                                    </core:layoutData>
+                                                </core:Icon>
                                             </t:template>
                                         </t:Column>
                                     </t:columns>
@@ -454,6 +589,25 @@
                                                 <form:formContainers>
                                                     <form:FormContainer visible="true">
                                                         <form:formElements>
+                                                        <form:FormElement visible="true">
+                                                                <form:label>
+                                                                    <Label text="Tipo de Programa" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                                </form:label>
+                                                                <form:fields>
+                                                                    <Text text="{
+                                                            path: 'DescargaTolvaModel>TPROG',
+                                                            formatter: 'com.tasa.tolvas.descargatolvas.controller.formatter.textColumnPrograma'
+                                                        }" width="auto"/>
+                                                                </form:fields>
+                                                            </form:FormElement>
+                                                            <form:FormElement visible="true">
+                                                                <form:label>
+                                                                    <Label text="Mensaje" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                                </form:label>
+                                                                <form:fields>
+                                                                    <Text text="{DescargaTolvaModel>DSMEN}" width="auto"/>
+                                                                </form:fields>
+                                                            </form:FormElement>
                                                             <form:FormElement visible="true">
                                                                 <form:label>
                                                                     <Label text="Número de descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
@@ -561,9 +715,34 @@
                                                                     <Label text="Especie" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                                 </form:label>
                                                                 <form:fields>
+                                                                    <Text text="{DescargaTolvaModel>CDSPC}" width="auto"/>
+                                                                </form:fields>
+                                                            </form:FormElement>
+                                                            <form:FormElement visible="true">
+                                                                <form:label>
+                                                                    <Label text="Nomb. Especie" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                                </form:label>
+                                                                <form:fields>
                                                                     <Text text="{DescargaTolvaModel>DSSPC}" width="auto"/>
                                                                 </form:fields>
                                                             </form:FormElement>
+                                                             <form:FormElement visible="true">
+                                                                <form:label>
+                                                                    <Label text="Fecha/hora descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                                </form:label>
+                                                                <form:fields>
+                                                                    <Text text="{DescargaTolvaModel>FIDES} {DescargaTolvaModel>HIDES}" width="auto"/>
+                                                                </form:fields>
+                                                            </form:FormElement>
+                                                            <form:FormElement visible="true">
+                                                                <form:label>
+                                                                    <Label text="Peso modificado" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                                </form:label>
+                                                                <form:fields>
+                                                                    <Text text="{DescargaTolvaModel>PESACUMOD} {DescargaTolvaModel>HIDES}" width="auto"/>
+                                                                </form:fields>
+                                                            </form:FormElement>
+                                                            
                                                         </form:formElements>
                                                         <form:title/>
                                                     </form:FormContainer>

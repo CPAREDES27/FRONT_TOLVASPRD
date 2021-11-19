@@ -349,7 +349,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				options2.push({
 					"cantidad": "20",
 					"control": "COMBOBOX",
-					"key": "NAME1",
+					"key": "LIFNR",
 					"valueHigh": "",
 					"valueLow": idArmador
 				})

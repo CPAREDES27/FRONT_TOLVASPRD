@@ -30,10 +30,8 @@
                                                 <Label text="Ejercicio" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" value="{FormSearchModel>Ejercicio}" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0">
-                                                    <layoutData>
-                                                        <layout:GridData span="XL5 L5 M5 S12" />
-                                                    </layoutData>
+                                                <Input type="Text" value="{FormSearchModel>Ejercicio}"  id="idEjercicio" enabled="true" visible="true" width="100%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0">
+                                                    
                                                 </Input>
                                             </form:fields>
                                         </form:FormElement>
@@ -42,10 +40,8 @@
                                                 <Label text="Periodo" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" value="{FormSearchModel>Periodo}" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0">
-                                                    <layoutData>
-                                                        <layout:GridData span="XL5 L5 M5 S12" />
-                                                    </layoutData>
+                                                <Input type="Text" value="{FormSearchModel>Periodo}" id="idPeriodo" enabled="true" visible="true" width="100%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0">
+                                                    
                                                 </Input>
                                             </form:fields>
                                         </form:FormElement>
@@ -54,7 +50,8 @@
                                                 <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Button text="Ejecutar" type="Default" icon="sap-icon://search" iconFirst="true" width="50%" enabled="true" visible="true" iconDensityAware="false" press="_onEjecutarPress"/>
+                                                <Button text="Buscar" type="Emphasized" press="_onEjecutarPress" />
+									            <Button text="Limpiar" type="Emphasized" press="onLimpiar" />
                                             </form:fields>
                                         </form:FormElement>
                                     </form:formElements>

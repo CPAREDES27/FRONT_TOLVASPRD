@@ -4,14 +4,21 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     "./utilities",
     "sap/ui/core/routing/History",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/core/Fragment"
+    "sap/ui/core/Fragment",
+    "sap/ui/model/ValidateException",
+    "sap/ui/core/Core",
+    'sap/m/MessageItem'
 ], function (BaseController,
     MessageBox,
     //  BusquedaDeEmpresas, 
     Utilities,
     History,
     JSONModel,
-    Fragment) {
+    Fragment,
+    ValidateException,
+    Core,
+    MessageItem
+    ) {
     "use strict";
 
     return BaseController.extend("com.tasa.tolvas.calculoderechopesca.controller.NuevaDeclaracionJurada", {
@@ -140,6 +147,134 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                     });
                 }
             }
+        },
+        validaPeriodo: function(){
+           
+            
+        },
+        validaInp: function(evn){
+            var idEjercicio=this.byId("idEjercicio").getValue();
+            var idPeriodo=this.byId("idPeriodo").getValue();
+            var idFechaConta = this.byId("idFechaConta").getValue();
+            var idFechaCalculo = this.byId("idFechaCalculo").getValue();
+            var idPrecioHarina = this.byId("idPrecioHarina").getValue();
+            var cbMonedaPrecio = this.byId("cbMonedaPrecio").getSelectedKey();
+            var idTipoCambio = this.byId("idTipoCambio").getValue();
+            var idFOB = this.byId("idFOB").getValue();
+            var idUIT = this.byId("idUIT").getValue();
+            var idValorTM = this.byId("idValorTM").getValue();
+            var idDescuento = this.byId("idDescuento").getValue();
+            if(idEjercicio){
+                this.getView().byId('idEjercicio').setValueState();  
+            }
+            if(idPeriodo){
+                this.getView().byId('idPeriodo').setValueState();  
+            }
+            if(idFechaConta){
+                this.getView().byId('idFechaConta').setValueState();  
+            }
+            if(idFechaCalculo){
+                this.getView().byId('idFechaCalculo').setValueState();  
+            }
+            if(idPrecioHarina){
+                this.getView().byId('idPrecioHarina').setValueState();  
+                this.onChangeDecimals(evn);
+            }
+            if(idFOB){
+                this.getView().byId('idTipoCambio').setValueState();  
+            }
+            if(idFOB){
+                this.getView().byId('idFOB').setValueState();  
+            }
+            if(idUIT){
+                this.getView().byId('idUIT').setValueState();  
+            }
+            if(idValorTM){
+                this.getView().byId('idValorTM').setValueState();  
+            }
+            if(idDescuento){
+                this.getView().byId('idDescuento').setValueState();  
+            }
+
+        },
+        validateFields: function(){
+            var idEjercicio=this.byId("idEjercicio").getValue();
+            var idPeriodo=this.byId("idPeriodo").getValue();
+            var idFechaConta = this.byId("idFechaConta").getValue();
+            var idFechaCalculo = this.byId("idFechaCalculo").getValue();
+            var idPrecioHarina = this.byId("idPrecioHarina").getValue();
+            var cbMonedaPrecio = this.byId("cbMonedaPrecio").getSelectedKey();
+            var idTipoCambio = this.byId("idTipoCambio").getValue();
+            var idFOB = this.byId("idFOB").getValue();
+            var idUIT = this.byId("idUIT").getValue();
+            var idValorTM = this.byId("idValorTM").getValue();
+            var idDescuento = this.byId("idDescuento").getValue();
+            var cadenaError="";
+            var estado=false;
+            if(!idEjercicio){
+                cadenaError+="El campo EJERCICIO es obligatorio\n";
+                this.getView().byId('idEjercicio').setValueState(sap.ui.core.ValueState.Error);  
+                estado=true;
+            }
+            if(!idPeriodo){
+                cadenaError+="El campo PERIODO es obligatorio\n";
+                this.getView().byId('idPeriodo').setValueState(sap.ui.core.ValueState.Error); 
+                estado=true; 
+            }
+            if(!idFechaConta){
+                cadenaError+="El campo FECHA CONTAB es obligatorio\n";
+                this.getView().byId('idFechaConta').setValueState(sap.ui.core.ValueState.Error);  
+                estado=true;
+            }
+            if(!idFechaCalculo){
+                cadenaError+="El campo FECHA CÁLCULO es obligatorio\n";
+                this.getView().byId('idFechaCalculo').setValueState(sap.ui.core.ValueState.Error);  
+                estado=true;
+            }
+            if(!idPrecioHarina){
+                cadenaError+="El campo Precio de HARINA es obligatorio\n";
+                this.getView().byId('idPrecioHarina').setValueState(sap.ui.core.ValueState.Error);
+                estado=true;  
+            }
+            if(!idTipoCambio){
+                cadenaError+="El campo TIPO DE CAMBIO es obligatorio\n";
+                this.getView().byId('idTipoCambio').setValueState(sap.ui.core.ValueState.Error);  
+                estado=true;
+            }
+            if(!idFOB){
+                cadenaError+="El campo VALOR DEL FOB es obligatorio\n";
+                this.getView().byId('idFOB').setValueState(sap.ui.core.ValueState.Error);  
+                estado=true;
+            }
+            if(!idUIT){
+                cadenaError+="El campo VALOR UIT es obligatorio\n";
+                this.getView().byId('idUIT').setValueState(sap.ui.core.ValueState.Error);  
+                estado=true;
+            }
+            if(!idValorTM){
+                cadenaError+="El campo VALOR TM es obligatorio\n";
+                this.getView().byId('idValorTM').setValueState(sap.ui.core.ValueState.Error);  
+                estado=true;
+            }
+            if(!idDescuento){
+                cadenaError+="El campo DESCUENTO TM es obligatorio\n";
+                this.getView().byId('idDescuento').setValueState(sap.ui.core.ValueState.Error);  
+                estado=true;
+            }
+            if(estado){
+                MessageBox.error(cadenaError);
+            }else{
+                this._onButtonSiguiente();
+            }
+            
+           
+        },
+        onChangeDecimals: function(evn){
+            var number = evn.getParameter('value');
+            number = Number.parseFloat(number).toFixed(3);
+            
+            var input = evn.getSource();
+            input.setValue(number);
         },
 
         _onButtonGuardar: function (oEvent) {

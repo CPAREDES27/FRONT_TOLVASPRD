@@ -149,7 +149,7 @@ sap.ui.define([
                 .then(response => response.json())
                 .then(data => data.data);
         },
-        
+       
         getGetDerePesca: function (sMoneda, oDps) {
             let oReq = {
                 "fields_derecho": [],

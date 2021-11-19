@@ -28,9 +28,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         "use strict";
 
         var EdmType = exportLibrary.EdmType;
-
+        var oGlobalBusyDialog = new sap.m.BusyDialog();
+        const mainUrlServices = 'https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/';
         return BaseController.extend("com.tasa.tolvas.registrotolvas.controller.Main", {
-
+           
             dataTableKeys: [
 				'NRDES',
 				'WERKS',
@@ -43,18 +44,22 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				'HIDES',
 				'FFDES',
 				'HFDES',
+                'HFDES',
 				'CNPDS'
 			],
 
-
+           
 
             handleRouteMatched: function (oEvent) {
+                
+                console.log("hola");
                 var sAppId = "App60f18d59421c8929c54cd9bf";
 
                 var oParams = {};
 
                 if (oEvent.mParameters.data.context) {
                     this.sContext = oEvent.mParameters.data.context;
+                    console.log("hola");
 
                 } else {
                     if (this.getOwnerComponent().getComponentData()) {
@@ -72,7 +77,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
                     }
                 }
-
+                
                 var oPath;
 
                 if (this.sContext) {
@@ -84,9 +89,112 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 }
 
                 this.requestListaRegistroTolvas();
+               
 
             },
+            getRouter : function () {
+                return UIComponent.getRouterFor(this);
+            },
+    
+            /**
+             * Convenience method for getting the view model by name.
+             * @public
+             * @param {string} [sName] the model name
+             * @returns {sap.ui.model.Model} the model instance
+             */
+            getModel : function (sName) {
+                return this.getView().getModel(sName);
+            },
+    
+            setModel : function (oModel, sName) {
+                return this.getView().setModel(oModel, sName);
+            },
+            listPlanta: function(){
+                oGlobalBusyDialog.open();
+                var dataPlantas={
+                    "delimitador": "|",
+                    "fields": [
+                     
+                    ],
+                    "no_data": "",
+                    "option": [
+                      {
+                        "wa":"INPRP = 'P'"
+                        },
+                        {
+                        "wa":"AND ESREG = 'S'"
+                        }
+                    ],
+                    "options": [
+                      
+                    ],
+                    "order": "",
+                    "p_user": "FGARCIA",
+                    "rowcount": 0,
+                    "rowskips": 0,
+                    "tabla": "ZV_FLPL"
+                  }
+                  fetch(`${mainUrlServices}General/Read_Table`,
+                  {
+                      method: 'POST',
+                      body: JSON.stringify(dataPlantas)
+                  })
+                  .then(resp => resp.json()).then(data => {
+                    var dataPuerto=data.data;
+                    console.log(data);
+                    console.log(this.getView().getModel("Planta").setProperty("/listaPlanta",dataPuerto));
+                    
+                        oGlobalBusyDialog.close();
+                    
+                  }).catch(error => console.log(error)
+                  );
+                
+            },
+            onBusqueda: function(){
+                var idPlantaIni=this.byId("idPlantaIni").getValue();
+                var idFecha = this.byId("idFecha").getValue();
+                var idHora = this.byId("idHora").getValue();
+                var idCant = this.byId("idCant").getValue();
 
+             
+                var options=[];
+                if(idPlantaIni){
+                    options.push({
+                        "cantidad": "20",
+                        "control": "INPUT",
+                        "key": "WERKS",
+                        "valueHigh": "",
+                        "valueLow": idPlantaIni
+                        
+                    });
+                }
+                if(idFecha){
+                    options.push({
+                        "cantidad": "20",
+                        "control": "INPUT",
+                        "key": "FIDES",
+                        "valueHigh": "",
+                        "valueLow": idFecha
+                        
+                    });
+                }
+                if(idHora){
+                    options.push({
+                        "cantidad": "20",
+                        "control": "INPUT",
+                        "key": "HIDES",
+                        "valueHigh": "",
+                        "valueLow": idHora
+                        
+                    });
+                }
+               
+                var body={
+
+                }
+
+            }
+            ,
             requestListaRegistroTolvas: function () {
                 BusyIndicator.show(0);
                 let sTableName = "",
@@ -94,43 +202,64 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                     oModel = this.getOwnerComponent().getModel("FilterModel"),
                     aField = [],
                     aOption = [],
-                    sCDPTA = oModel.getProperty("/CentroDescarga"),
-                    sFIDES = oModel.getProperty("/FechaInicioDescarga"),
-                    sHIDES = oModel.getProperty("/HoraInicioDescarga"),
-                    iRowCount = oModel.getProperty("/CantidadFilas"),
+                   
                     sOrder = "";
-
+                    var array=this.getView().getModel("Planta").oData.listaPlanta;
+                    var cdpta;
+                   
+                    
+                    var idPlantaIni=this.byId("idPlantaIni").getValue();
+                    for(var i=0;i<array.length;i++){
+                        if(array[i].WERKS===idPlantaIni){
+                            cdpta=array[i].CDPTA;   
+                        }
+                    }
+                    console.log(cdpta);
+                    var idFecha = this.byId("idFecha").getValue();
+                    var idHora = this.byId("idHora").getValue();
+                    var idCant = this.byId("idCant").getValue();
                 aField = [];
 
-                if (!Utilities.isEmpty(sCDPTA)) {
-                    aOption.push(
-                        {
-                            "wa": `CDPTA LIKE '${sCDPTA}'`
-                        }
-                    )
+                var options=[];
+                if(idPlantaIni){
+                    options.push({
+                        "cantidad": "20",
+                        "control": "INPUT",
+                        "key": "CDPTA",
+                        "valueHigh": "",
+                        "valueLow": cdpta
+                        
+                    });
                 }
-                if (!Utilities.isEmpty(sFIDES)) {
-                    aOption.push(
-                        {
-                            "wa": `FIDES LIKE '${sFIDES}'`
-                        }
-                    )
+                if(idFecha){
+                    options.push({
+                        "cantidad": "20",
+                        "control": "INPUT",
+                        "key": "FIDES",
+                        "valueHigh": "",
+                        "valueLow": idFecha
+                        
+                    });
                 }
-                if (!Utilities.isEmpty(sHIDES)) {
-                    aOption.push(
-                        {
-                            "wa": `HIDES LIKE '${sHIDES}'`
-                        }
-                    )
+                if(idHora){
+                    options.push({
+                        "cantidad": "20",
+                        "control": "INPUT",
+                        "key": "HIDES",
+                        "valueHigh": "",
+                        "valueLow": idHora
+                        
+                    });
                 }
 
+                console.log(options);
 
                 //oView.getModel("FormSearchModel").setProperty("/busyIndicatorTableDescargaTolvas", true);
-                Utilities.getDataFromRegistroTolvas(aOption, aField, iRowCount.toString())
+                Utilities.getDataFromRegistroTolvas(options, aField, idCant)
                     .then(data => {
                         console.log("Data: ", data);
                         let oResp1 = data;
-
+                        console.log(oResp1);
                         let aWERKS = [];
                         let aCDPTA = [];
                         // let iIndex = 0;
@@ -160,7 +289,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                                 }
                             ];
 
-                            aAjax.push(Utilities.getDataFromReadTable(sTableName, aOption, aField, sOrder, iRowCount)
+                            aAjax.push(Utilities.getDataFromReadTable(sTableName, aOption, aField, sOrder, idCant)
                                 .then(data => {
                                     // let oResp2 = data;
                                     aWERKS.push(data[0].WERKS);
@@ -282,8 +411,28 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 this.getView().setModel(oModel, "FormSearchModel");*/
             },
 
+            multiInputPlanta:function(){
+                var idPlanta=this.byId("idPlantaIni").getValue();
+                var array=this.getView().getModel("Planta").oData.listaPlanta;
+                console.log(array);
+                var estado=false;
+                for(var i=0;i<array.length;i++){
+                    if(array[i].WERKS===idPlanta){
+                        this.byId("idDescr").setText(array[i].DESCR);
+                        estado= true;
+                    }
+                }
+                if(!estado){
+                    
+                    this.byId("idDescr").setText("");
+                    
+                }
+
+
+            },
             cargarInitData: function () {
                 //cargar centros
+                this.listPlanta();
                 var usuario = this.getCurrentUser();
                 var oView = this.getView();
                 var oModel = this.getOwnerComponent().getModel("CombosModel");
@@ -357,7 +506,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					}
 
 				}
-				title.splice(title.length - 2, 1);
+				title.splice(title.length +2, 1);
 				title.pop();
 
 				/**
@@ -393,7 +542,120 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 				return aCols;
 			},
-
+            onExport: function() {
+				var aCols, aProducts, oSettings, oSheet;
+	
+				aCols = this.createColumnConfig2();
+				console.log(this.getView().getModel("RegistroTolvasModel"));
+				aProducts = this.getView().getModel("RegistroTolvasModel").getProperty('/');
+	
+				oSettings = {
+					
+					workbook: { 
+						columns: aCols,
+						context: {
+							application: 'Debug Test Application',
+							version: '1.95.0',
+							title: 'Some random title',
+							modifiedBy: 'John Doe',
+							metaSheetName: 'Custom metadata'
+						}
+						
+					},
+					dataSource: aProducts,
+					fileName:"POLITICA DE PRECIOS"
+				};
+	
+				oSheet = new Spreadsheet(oSettings);
+				oSheet.build()
+					.then( function() {
+						MessageToast.show('El Archivo ha sido exportado correctamente');
+					})
+					.finally(oSheet.destroy);
+			},
+            createColumnConfig2: function() {
+				return [
+					{
+						name: "NRDES",
+						template: {
+						  content: "{NRDES}"
+						}
+					  },
+					  {
+						name: "WERKS",
+						template: {
+						  content: "{WERKS}"
+						}
+					  },
+					  {
+						name: "TICKE",
+						template: {
+						  content: "{TICKE}"
+						}
+					  },
+					  {
+						name: "CDEMB",
+						template: {
+						  content: "{CDEMB}"
+						}
+					  },
+					  {
+						name: "NMEMB",
+						template: {
+						  content: "{NMEMB}"
+						}
+					  },
+					  
+					  {
+						name: "MREMB",
+						template: {
+						  content: "{MREMB}"
+						}
+					  },
+					  {
+						name: "CPPMS",
+						template: {
+						  content: "{CPPMS}"
+						}
+					  },
+					  {
+						name: "FIDES",
+						template: {
+						  content: "{FIDES}"
+						}
+					  },
+					  {
+						name: "HIDES",
+						template: {
+						  content: "{HIDES}"
+						}
+					  },
+					  {
+						name: "FFDES",
+						template: {
+						  content: "{FFDES}"
+						}
+					  },
+					  {
+						name: "HFDES",
+						template: {
+						  content: "{HFDES}"
+						}
+					  },
+					  {
+						name: "CNPDS",
+						template: {
+						  content: "{CNPDS}"
+						}
+					  }
+                    ];
+			},
+            onLimpiar: function(){
+                this.byId("idFecha").setValue("");
+                this.byId("idHora").setValue("");
+                this.byId("idDescr").setText("");
+                this.byId("idPlantaIni").setValue("");
+            },
             exportarExcel: function (event) {
 				var aCols, oRowBinding, oSettings, oSheet, oTable;
 

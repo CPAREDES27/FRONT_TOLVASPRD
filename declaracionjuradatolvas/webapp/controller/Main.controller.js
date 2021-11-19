@@ -195,6 +195,7 @@ sap.ui.define([
                 let aOption = null;
                 let sCentro = oModel.getProperty("/Centro");
                 let sFecha = oModel.getProperty("/Fecha");
+                
                 let oView = this.getView();
 
                 sTableName = "ZV_FLPA";
@@ -226,6 +227,10 @@ sap.ui.define([
                         Utilities.getDataFromReadTable(sTableName, aOption, aField, "INBAL ASCENDING", null)
                             .then(data => {
                                 console.log(data);
+                                for(var i=0;i<data.length;i++){
+                                    data[i].VisibleB=true;
+                                }
+                                console.log("hola",data);
                                 let oResp2 = data;
                                 if (oResp2.length > 0) {
                                     sTableName = "T001W";
@@ -259,8 +264,10 @@ sap.ui.define([
                                             oResp2.push({
                                                 INBAL: "Total",
                                                 VisibleCombo: false,
+                                                VisibleB:false,
                                                 CNPDS: sumPescDesc.toFixed(3)
                                             });
+                                            
 
                                             oModelForm.setProperty("/Titulo", me.oBundle.getText("TITULO"));
                                             oModelForm.setProperty("/Subtitulo", me.oBundle.getText("SUBTITULO"));
@@ -273,18 +280,7 @@ sap.ui.define([
                                             oModelForm.setProperty("/Fecha", sFecha);
                                             oModelForm.setProperty("/Descargas", oResp2);
                                             me.oRouter.navTo("DeclaracionJuradaDiaria");
-                                            //me.navTo(oEvent);
-                                            
-                                            /*oView.setModel(new JSONModel({
-                                                "CentroPlanta": oResp1.WERKS,
-                                                "DescripcionPlanta": oResp1.DESCR,
-                                                "Propietario": oResp1.NAME1,
-                                                "UbicacionPlanta": oResp3.STRAS,
-                                                "Balanza": sBalanza,
-                                                "Tolva": sBalanza,
-                                                "Fecha": sFecha,
-                                                "reporte": oResp2
-                                            }), "TolvaModel");*/
+
                                             BusyIndicator.hide();
                                         });
                                 } else {
@@ -305,12 +301,13 @@ sap.ui.define([
                 if (!centro) {
                     bOk = false;
                     mensaje = "El centro es Obligatorio";
-                } else {
-                    if (!fecha) {
-                        bOk = false;
-                        mensaje = "La fecha es Obligatoria";
-                    }
-                }
+                } 
+                // else {
+                //     if (!fecha) {
+                //         bOk = false;
+                //         mensaje = "La fecha es Obligatoria";
+                //     }
+                // }
                 return {
                     bOk: bOk,
                     mensaje: mensaje
@@ -319,6 +316,12 @@ sap.ui.define([
 
             getCurrentUser: function () {
                 return "FGARCIA";
-            }
+            },
+            onLimpiar: function(){
+                this.byId("idCentro").setValue("");
+                this.byId("dpDate").setValue("");
+            },
+            
+            
         });
     }, /* bExport= */ true);

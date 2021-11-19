@@ -13,9 +13,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     JSONModel,
     History) {
 	"use strict";
-
+	var oGlobalBusyDialog = new sap.m.BusyDialog();
 	return BaseController.extend("com.tasa.tolvas.calculoderechopesca.controller.DeclaracionJuradaPagoDerechosPesca", {
 		handleRouteMatched: function(oEvent) {
+			oGlobalBusyDialog.open();
 			var sAppId = "App60f18d59421c8929c54cd9bf";
 
 			var oParams = {};
@@ -132,7 +133,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
                     oView.setModel(new JSONModel(data), "PescaModel");
                 });
-
+				oGlobalBusyDialog.close();
 		},
 		// _onInputValueHelpRequest: function(oEvent) {
 
@@ -204,7 +205,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             });
 
 		},
-
+		onNavBack: function(){
+			this.oRouter.navTo("RouteMain");
+		},
 		_onButtonEditar: function(oEvent) {
 			var oBindingContext = oEvent.getSource().getBindingContext();
 

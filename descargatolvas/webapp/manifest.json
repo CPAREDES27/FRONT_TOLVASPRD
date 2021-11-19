@@ -68,7 +68,16 @@
                 "settings": {
                     "bundleName": "com.tasa.tolvas.descargatolvas.i18n.i18n"
                 }
+            },
+            "Planta":{
+                "type": "sap.ui.model.json.JSONModel",
+                "preload":true
+            },
+            "DescargaTolvaModel":{
+                "type": "sap.ui.model.json.JSONModel",
+                "preload":true
             }
+            
         },
         "resources": {
             "css": [

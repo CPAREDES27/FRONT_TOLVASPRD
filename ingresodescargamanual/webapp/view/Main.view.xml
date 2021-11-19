@@ -54,7 +54,8 @@
                                                 <Label text="Embarcación" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input id="embarcacion" value="{FormModel>/Embarcacion}" description="{FormModel>/DescEmba}" showValueHelp="true" valueHelpRequest="onAbrirAyudaEmbarcacion" width="100%" valueStateText="Invalid entry"/>
+                                            
+                                                <Input id="embarcacion" value="{FormModel>/Embarcacion}" change="onChangeEmba" description="{FormModel>/DescEmba}" showValueHelp="true" valueHelpRequest="onOpenEmba" width="100%" valueStateText="Invalid entry"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -86,7 +87,7 @@
                                                 <Label text="Ticket" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input id="ticket" liveChange="onChangeInput" value="{FormModel>/Ticket}" type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                <Input id="ticket" liveChange="onChangeInput" value="{FormModel>/Ticket}" type="Number" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -133,7 +134,7 @@
                                                 <Label text="Pesca descargada" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input id="pescDesc" liveChange="onChangeInput" width="auto" value="{FormModel>/PescDesc}" />
+                                                <Input id="pescDesc" change="onChangeDecimals" type="Number" width="auto" value="{FormModel>/PescDesc}" />
                                             </form:fields>
                                         </form:FormElement>
                                     </form:formElements>

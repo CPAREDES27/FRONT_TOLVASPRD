@@ -18,7 +18,7 @@
                                     <Label text="Ejercicio" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input value="{DeclaracionJuradaModel>/MJAHR}" type="Text" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input value="{DeclaracionJuradaModel>/MJAHR}" change="validaInp" id="idEjercicio" type="Number"  enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -26,7 +26,7 @@
                                     <Label text="Periodo" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input value="{DeclaracionJuradaModel>/RDPCA}" type="Text" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input value="{DeclaracionJuradaModel>/RDPCA}" change="validaInp" id="idPeriodo" type="Number" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -34,7 +34,7 @@
                                     <Label text="Fecha de Contabilización" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <DatePicker value="{DeclaracionJuradaModel>/FHCTB}" width="auto" displayFormat="medium" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/>
+                                    <DatePicker value="{DeclaracionJuradaModel>/FHCTB}" change="validaInp" id="idFechaConta" width="auto"  required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd" displayFormat="dd/MM/yyyy"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -42,7 +42,7 @@
                                     <Label text="Fecha de Cálculo" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <DatePicker value="{DeclaracionJuradaModel>/FHCAC}" width="auto" displayFormat="medium" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/>
+                                    <DatePicker value="{DeclaracionJuradaModel>/FHCAC}" change="validaInp" id="idFechaCalculo" width="auto" displayFormat="dd/MM/yyyy" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -50,7 +50,10 @@
                                     <Label text="Precio de harina" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input value="{DeclaracionJuradaModel>/PRARI}" type="Text" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                
+                                    <Input value="{
+                                        path: 'DeclaracionJuradaModel>/PRARI'
+                                    }"       type="Text" enabled="true" change="validaInp"  id="idPrecioHarina"  visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -70,7 +73,7 @@
                                     <Label text="Tipo de cambio a S/" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input value="{DeclaracionJuradaModel>/TPCAM}" type="Text" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input value="{DeclaracionJuradaModel>/TPCAM}" change="validaInp" id="idTipoCambio" type="Text" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -78,7 +81,7 @@
                                     <Label text="Valor del FOB - CHI (%)" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input value="{DeclaracionJuradaModel>/VAFOB}" type="Text" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input value="{DeclaracionJuradaModel>/VAFOB}" change="validaInp" id="idFOB" type="Text" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -86,7 +89,7 @@
                                     <Label text="Valor U.I.T." design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input value="{DeclaracionJuradaModel>/VAUIT}" type="Text" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input value="{DeclaracionJuradaModel>/VAUIT}" change="validaInp" id="idUIT" type="Text" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -100,7 +103,7 @@
                                         constraints: {
                                             minimum: 0
                                         }
-                                    }" type="Text" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    }" type="Text" enabled="true" change="validaInp" id="idValorTM" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -114,7 +117,7 @@
                                         constraints: {
                                             minimum: 0
                                         }
-                                    }" type="Text" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    }" type="Text" enabled="true" change="validaInp" id="idDescuento" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                         </form:formElements>
@@ -129,7 +132,7 @@
             <OverflowToolbar width="100%" height="46px" design="Auto" enabled="true" visible="true">
                 <content>
                     <ToolbarSpacer width=""/>
-                    <Button text="Siguiente" type="Emphasized" icon="sap-icon://save" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onButtonSiguiente"/>
+                    <Button text="Siguiente" type="Emphasized" icon="sap-icon://save" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="validateFields"/>
                     <!-- <Button text="Guardar" type="Emphasized" icon="sap-icon://save" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onButtonGuardar"/> -->
                     <Button text="Cerrar" type="Default" icon="sap-icon://decline" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
                 </content>

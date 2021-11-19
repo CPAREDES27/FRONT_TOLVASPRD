@@ -63,7 +63,9 @@
                                                 <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Button text="Ejecutar" type="Default" icon="sap-icon://search" iconFirst="true" width="50%" enabled="true" visible="true" iconDensityAware="false" press="_onButtonPress"/>
+                                                
+                                                <Button text="Buscar" type="Emphasized" press="_onButtonPress" />
+									            <Button text="Limpiar" type="Emphasized" press="onLimpiar" />
                                             </form:fields>
                                         </form:FormElement>
                                     </form:formElements>
