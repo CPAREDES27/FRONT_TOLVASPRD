@@ -60,21 +60,30 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         loadComboBalanza: function () {
             let oView = this.getView();
             let oReq = {
-                "fields": [
+                fields: [
                     "CDBAL",
                     "DSBAL",
                     "INBAL"
                 ],
-                "p_option": [
+                p_option: [],
+                p_options:[
                     {
-                        "wa": "ESREG = 'S'"
+                        cantidad: "10",
+                        control:"MULTIINPUT",
+                        key:"ESREG",
+                        valueHigh: "",
+                        valueLow:'S'
                     },
                     {
-                        "wa": "AND CDPTA = '0012'"
+                        cantidad: "10",
+                        control:"MULTIINPUT",
+                        key:"CDPTA",
+                        valueHigh: "",
+                        valueLow:'0012'
                     }
                 ],
-                "p_user": "FGARCIA",
-                "rowcount": "200"
+                p_user: "FGARCIA",
+                rowcount: "200"
             }
             let url = "https://flota-approuterqas.cfapps.us10.hana.ondemand.com/api/tolvas/registrotolvas_listar";
             return fetch(url, {
@@ -91,14 +100,19 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         loadPuntoDescarga: function () {
             let oView = this.getView();
             let oReq = {
-                "fields": [],
-                "p_option": [
+                fields: [],
+                p_option: [],
+                p_options:[
                     {
-                        "wa": "CDPTA LIKE '0012'"
+                        cantidad: "20",
+                        control:"INPUT",
+                        key:"CDPTA",
+                        valueHigh: "",
+                        valueLow:"0012"
                     }
                 ],
-                "p_user": "FGARCIA",
-                "rowcount": "200"
+                p_user: "FGARCIA",
+                rowcount: "200"
             }
             let url = "https://flota-approuterqas.cfapps.us10.hana.ondemand.com/api/tolvas/registrotolvas_listar";
             return fetch(url, {

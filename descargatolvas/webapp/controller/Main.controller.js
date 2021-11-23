@@ -153,16 +153,22 @@ function(
 				 
 				],
 				"no_data": "",
-				"option": [
-				  {
-					"wa":"INPRP = 'P'"
-					},
-					{
-					"wa":"AND ESREG = 'S'"
-					}
-				],
+				"option": [],
 				"options": [
-				  
+					{
+                        cantidad: "20",
+                        control:"MULTIINPUT",
+                        key:"INPRP",
+                        valueHigh: "",
+                        valueLow:"P"
+                    },
+					{
+                        cantidad: "20",
+                        control:"MULTIINPUT",
+                        key:"ESREG",
+                        valueHigh: "",
+                        valueLow:"S"
+                    }
 				],
 				"order": "",
 				"p_user": "FGARCIA",
@@ -339,7 +345,6 @@ function(
 			var idClaseManejoFin=this.byId("idClaseManejoFin").getSelectedKey();
 			var idCant=this.byId("idCant").getValue();
 
-			var option = "(TPROG = 'G' OR (TPROG = 'A' AND CMIN = 'E'))";
 			var options=[];
 			options.push({
 				"cantidad": "20",
@@ -517,11 +522,7 @@ function(
 				  
 				],
 				"no_data": "",
-				"option": [
-					{
-						"wa" : option
-					}
-				],
+				"option": [],
 				"options": options,
 				"order": "FHERR DESCENDING HRERR DESCENDING CMIN ASCENDING",
 				"p_user": "FGARCIA",
@@ -531,7 +532,7 @@ function(
 			}
 			console.log(body);
 
-			fetch(`${mainUrlServices}General/Read_Table/`,
+			fetch(`${mainUrlServices}tolvas/buscar_descargas/`,
 					  {
 						  method: 'POST',
 						  body: JSON.stringify(body)

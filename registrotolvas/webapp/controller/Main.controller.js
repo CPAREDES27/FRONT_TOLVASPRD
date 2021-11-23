@@ -117,16 +117,22 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                      
                     ],
                     "no_data": "",
-                    "option": [
-                      {
-                        "wa":"INPRP = 'P'"
+                    "option": [],
+                    "options": [
+                        {
+                            cantidad: "20",
+                            control:"MULTIINPUT",
+                            key:"INPRP",
+                            valueHigh: "",
+                            valueLow:"P"
                         },
                         {
-                        "wa":"AND ESREG = 'S'"
+                            cantidad: "20",
+                            control:"MULTIINPUT",
+                            key:"ESREG",
+                            valueHigh: "",
+                            valueLow:"S"
                         }
-                    ],
-                    "options": [
-                      
                     ],
                     "order": "",
                     "p_user": "FGARCIA",
