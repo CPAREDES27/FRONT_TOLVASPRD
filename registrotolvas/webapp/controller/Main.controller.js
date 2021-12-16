@@ -569,7 +569,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						
 					},
 					dataSource: aProducts,
-					fileName:"POLITICA DE PRECIOS"
+					fileName:"Reporte Registro de Tolvas"
 				};
 	
 				oSheet = new Spreadsheet(oSettings);
@@ -681,7 +681,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						} 
 					},
 					dataSource: oRowBinding,
-					fileName: 'Consulta de pesca descargada.xlsx',
+					fileName: 'Reporte Registro de Tolvas.xlsx',
 					worker: false // We need to disable worker because we are using a Mockserver as OData Service
 				};
 

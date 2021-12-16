@@ -404,6 +404,23 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             sap.ui.getCore().byId("indicadorPropiedad").setValue("");
             sap.ui.getCore().byId("idDescArmador").setValue("");
         },
+        onLimpiar: function(){
+            var oModel = this.getOwnerComponent().getModel("FormModel");
+            var centro = oModel.setProperty("/CentroPlanta","");
+            var centro = oModel.setProperty("/DescPlanta","");
+            var centro = oModel.setProperty("/DescEsp","");
+            var planta = oModel.setProperty("/Planta","");
+            var embarcacion = oModel.setProperty("/Embarcacion","");
+            var matricula = oModel.setProperty("/Matricula","");
+            var balanza = oModel.setProperty("/Balanza","");
+            var puntoDesc = oModel.setProperty("/PuntoDesc","");
+            var ticket = oModel.setProperty("/Ticket","");
+            var especie = oModel.setProperty("/Especie","");
+            var pescDesc = oModel.setProperty("/PescDesc","");
+            var iniDesc = oModel.setProperty("/FechIniDesc","");
+            var finDesc = oModel.setProperty("/FechFinDesc","");
+        
+        },
         onGuardar: function () {
             BusyIndicator.show(0);
             var oModel = this.getOwnerComponent().getModel("FormModel");

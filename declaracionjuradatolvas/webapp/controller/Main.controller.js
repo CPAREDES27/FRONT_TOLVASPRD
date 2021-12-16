@@ -195,7 +195,7 @@ sap.ui.define([
                 let aOption = null;
                 let sCentro = oModel.getProperty("/Centro");
                 let sFecha = oModel.getProperty("/Fecha");
-                
+        
                 let oView = this.getView();
 
                 sTableName = "ZV_FLPA";
@@ -268,7 +268,8 @@ sap.ui.define([
                                                 CNPDS: sumPescDesc.toFixed(3)
                                             });
                                             
-
+                                            oModelForm.setProperty("/CentroPDF",sCentro);
+                                            oModelForm.setProperty("/sFechaPDF",sFecha);
                                             oModelForm.setProperty("/Titulo", me.oBundle.getText("TITULO"));
                                             oModelForm.setProperty("/Subtitulo", me.oBundle.getText("SUBTITULO"));
                                             oModelForm.setProperty("/Mensaje", me.oBundle.getText("MENSAJE"));
@@ -300,7 +301,12 @@ sap.ui.define([
                 var mensaje = "";
                 if (!centro) {
                     bOk = false;
-                    mensaje = "El centro es Obligatorio";
+                    mensaje += "El centro es Obligatorio\n";
+                    this.byId("")
+                } 
+                if (!fecha) {
+                    bOk = false;
+                    mensaje += "La fecha es Obligatorio\n";
                 } 
                 // else {
                 //     if (!fecha) {

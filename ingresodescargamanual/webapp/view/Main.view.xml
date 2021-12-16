@@ -151,6 +151,7 @@
                             <content>
                                 <ToolbarSpacer width=""/>
                                 <Button text="Guardar" press="onGuardar" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+                                <Button text="Limpiar" press="onLimpiar" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
                             </content>
                         </OverflowToolbar>
                     </footer>
