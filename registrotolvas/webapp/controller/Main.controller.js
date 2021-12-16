@@ -112,35 +112,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             listPlanta: function(){
                 oGlobalBusyDialog.open();
                 var dataPlantas={
-                    "delimitador": "|",
-                    "fields": [
-                     
-                    ],
-                    "no_data": "",
-                    "option": [],
-                    "options": [
-                        {
-                            cantidad: "20",
-                            control:"MULTIINPUT",
-                            key:"INPRP",
-                            valueHigh: "",
-                            valueLow:"P"
-                        },
-                        {
-                            cantidad: "20",
-                            control:"MULTIINPUT",
-                            key:"ESREG",
-                            valueHigh: "",
-                            valueLow:"S"
-                        }
-                    ],
-                    "order": "",
-                    "p_user": "FGARCIA",
-                    "rowcount": 0,
-                    "rowskips": 0,
-                    "tabla": "ZV_FLPL"
-                  }
-                  fetch(`${mainUrlServices}General/Read_Table`,
+                    "nombreAyuda": "BSQPLANTAS"
+                }
+                  fetch(`${mainUrlServices}General/AyudasBusqueda`,
                   {
                       method: 'POST',
                       body: JSON.stringify(dataPlantas)
