@@ -136,8 +136,14 @@
                                                         <Label text="Fecha inicio de descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <DatePicker id="idFechaIni"  width="auto" displayFormat="dd/MM/yyyy" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd" />
-                                                        <DatePicker id="idFechaFin" width="auto" displayFormat="dd/MM/yyyy" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/>
+                                                        <DateRangeSelection
+                                                            id="idFechaInicioRange"
+                                                            delimiter="-"
+                                                            width="100%"
+                                                            displayFormat="dd/MM/yyyy"
+                                                            secondDateValue="" />
+                                                        <!--<DatePicker id="idFechaIni"  width="auto" displayFormat="dd/MM/yyyy" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd" />
+                                                        <DatePicker id="idFechaFin" width="auto" displayFormat="dd/MM/yyyy" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/> -->
                                                     </form:fields>
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
@@ -154,8 +160,13 @@
                                                         <Label text="Fecha de producción" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <DatePicker id="idFechaPrdIni" width="auto" displayFormat="dd/MM/yyyy" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/>
-                                                        <DatePicker id="idFechaPrdFin" width="auto" displayFormat="dd/MM/yyyy" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/>
+                                                        <DateRangeSelection
+                                                            id="idFechaPrdRange"
+                                                            delimiter="-"
+                                                            displayFormat="dd/MM/yyyy"
+                                                            secondDateValue="" />
+                                                        <!-- <DatePicker id="idFechaPrdIni" width="auto" displayFormat="dd/MM/yyyy" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/>
+                                                        <DatePicker id="idFechaPrdFin" width="auto" displayFormat="dd/MM/yyyy" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/> -->
                                                     </form:fields>
                                                 </form:FormElement>
 
@@ -183,16 +194,16 @@
                                                         <Label text="Clase de Mensaje" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <ComboBox  id="idClaseManejoIni" selectedKey="{FormSearchModel>ClaseMensajeBottom}" items="{ClaseMensajeModel>/data}" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
+                                                        <Select  id="idClaseManejoIni" selectedKey="{FormSearchModel>ClaseMensajeBottom}" items="{ClaseMensajeModel>/data}" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
                                                             <items>
                                                                 <core:Item key="{ClaseMensajeModel>id}" text="{ClaseMensajeModel>descripcion}"/>
                                                             </items>
-                                                        </ComboBox>
-                                                        <ComboBox id="idClaseManejoFin" selectedKey="{FormSearchModel>ClaseMensajeTop}" items="{ClaseMensajeModel>/data}" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
+                                                        </Select>
+                                                        <Select id="idClaseManejoFin" selectedKey="{FormSearchModel>ClaseMensajeTop}" items="{ClaseMensajeModel>/data}" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
                                                             <items>
                                                                 <core:Item key="{ClaseMensajeModel>id}" text="{ClaseMensajeModel>descripcion}"/>
                                                             </items>
-                                                        </ComboBox>
+                                                        </Select>
                                                     </form:fields>
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
@@ -221,7 +232,7 @@
                                                     </form:label>
                                                     <form:fields>
                                                             <Button text="Buscar" type="Emphasized" press="_onButtonSearchPress" />
-									                        <Button text="Limpiar" type="Emphasized" press="onLimpiar" />
+									                        <Button text="Limpiar" press="onLimpiar" />
                                                     </form:fields>
                                                 </form:FormElement>
                                             </form:formElements>
@@ -314,7 +325,7 @@
                                             </t:template>
                                         </t:Column>
                                         <t:Column
-                                            width="10rem"
+                                            width="9rem"
                                            >
 							                <Label text="Nro. Descarga" textAlign="Left" wrapping="true" width="100%"/>
                                             <t:template>
@@ -322,21 +333,21 @@
                                             </t:template>
                                         </t:Column>
                                         <t:Column
-                                            width="auto">
+                                            width="9rem">
 							                <Label text="Matrícula" textAlign="Left" width="100%"/>
                                             <t:template>
                                                 <Text text="{DescargaTolvaModel>MREMB}"/>
                                             </t:template>
                                         </t:Column>
                                         <t:Column
-                                            width="auto">
+                                            width="8rem">
 							                <Label text="Embarcación" textAlign="Left" width="100%"/>
                                             <t:template>
                                                 <Text text="{DescargaTolvaModel>NMEMB}"/>
                                             </t:template>
                                         </t:Column>
                                         <t:Column
-                                            width="4rem" >
+                                            width="auto" >
 							                <Label text="MFBF" textAlign="Left" width="100%"/>
                                             <t:template>
                                                 <core:Icon src="{
@@ -347,7 +358,7 @@
                                             </t:template>
                                         </t:Column>
                                         <t:Column
-                                            width="4rem" >
+                                            width="auto" >
                                             <Label text="MB1B" textAlign="Left" width="100%"/>
                                             <t:template>
                                                 <core:Icon src="{
@@ -358,7 +369,7 @@
                                             </t:template>
                                         </t:Column>
                                         <t:Column
-                                            width="4rem" >
+                                            width="auto" >
                                             <Label text="MIGO" textAlign="Left" width="100%"/>
                                             <t:template>
                                                 <core:Icon src="{
@@ -369,7 +380,7 @@
                                             </t:template>
                                         </t:Column>
                                         <t:Column
-                                            width="auto">
+                                            width="8rem">
                                             <Label text="Fecha producción" textAlign="Left" wrapping="true" width="100%" />
                                                 <t:template>
                                                     <Text text="{
@@ -385,7 +396,7 @@
                                             </t:template>
                                         </t:Column>
                                         <t:Column
-                                            width="auto"
+                                            width="10rem"
                                             hAlign="End">
                                             <Label text="Peso modificado" textAlign="Right" wrapping="true" width="100%" />
                                             <t:template>
@@ -393,35 +404,35 @@
                                             </t:template>
                                         </t:Column>
                                         <t:Column
-                                            width="8rem">
+                                            width="9rem">
                                             <Label text="Nro. pedido" textAlign="Left" wrapping="true" width="100%"/>
                                             <t:template>
                                                 <Text text="{DescargaTolvaModel>NROPEDI}"/>
                                             </t:template>
                                         </t:Column>
                                         <t:Column
-                                            width="auto">
+                                            width="4rem">
                                             <Label text="Centro" textAlign="Left" width="100%" />
                                             <t:template>
                                                 <Text text="{DescargaTolvaModel>WERKS}"/>
                                             </t:template>
                                         </t:Column>
                                         <t:Column
-                                            width="auto">
+                                            width="9rem">
                                             <Label text="Planta" textAlign="Left" width="100%" />
                                             <t:template>
                                                 <Text text="{DescargaTolvaModel>DSPTA}"/>
                                             </t:template>
                                         </t:Column>
                                         <t:Column
-                                            width="auto">
+                                            width="9rem">
                                             <Label text="Especie" textAlign="Left" width="100%" />
                                             <t:template>
                                                 <Text text="{DescargaTolvaModel>DSSPC}"/>
                                             </t:template>
                                         </t:Column>
                                         <t:Column
-                                            width="10rem">
+                                            width="auto">
                                             <Label visible="false" />
                                             <t:template>
                                                 <Button text="Ejecutar" visible="{:= ${DescargaTolvaModel>CMIN} === 'E'}" emphasized="true" press="onEjecutar"/>
@@ -522,7 +533,7 @@
                                         class="sapUiTinyMarginEnd">
                                 </f:Avatar> -->
                                 <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-                                    <Label text="Matricula"/>
+                                    <Label text="Matrícula"/>
                                     <Text text="{DescargaTolvaModel>MREMB}"/>
                                 </VBox>
                                 <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
@@ -618,7 +629,7 @@
                                                             </form:FormElement>
                                                             <form:FormElement visible="true">
                                                                 <form:label>
-                                                                    <Label text="Matricula" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                                    <Label text="Matrícula" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                                 </form:label>
                                                                 <form:fields>
                                                                     <Text text="{DescargaTolvaModel>MREMB}" width="auto"/>

@@ -130,7 +130,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             let ViewModel= new JSONModel(
                 {}
                 );
+            let ViewModelPropiedad = new JSONModel({});
             this.setModel(ViewModel, "consultaMareas");
+            this.setModel(ViewModelPropiedad, "Propiedad");
 			this.currentInputEmba = "";
 				this.primerOption = [];
 				this.segundoOption = [];
@@ -221,11 +223,28 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                     method: 'POST',
                     body: JSON.stringify(bodyDominios)
                 })
-                .then(resp => resp.json()).then(data => {
-                    zinprpDom = data.data.find(d => d.dominio == "ZINPRP").data;
-                    balanzas = data.data.find(d => d.dominio == "ZCDTBA").data;
-                    puntoDesc = data.data.find(d => d.dominio == "ZCDTPD").data;
-                    especies = data.data.find(d => d.dominio == "ZDO_ESPECIES").data;
+                .then(resp => resp.json()).then(data=>{
+                    let dominios = data.data;
+                    //Adicionar un item en blanco a las balanzas y puntos de descarga
+                    const indexBalanzas = dominios.findIndex(d => d.dominio == "ZCDTBA");
+                    const indexPuntoDesc = dominios.findIndex(d => d.dominio == "ZCDTPD");
+
+                    dominios[indexBalanzas].data.unshift({
+                        descripcion: "",
+                        id: ""
+                    });
+
+                    dominios[indexPuntoDesc].data.unshift({
+                        descripcion: "",
+                        id: ""
+                    });
+
+                    return dominios;
+                }).then(dominios => {
+                    zinprpDom = dominios.find(d => d.dominio == "ZINPRP").data;
+                    balanzas = dominios.find(d => d.dominio == "ZCDTBA").data;
+                    puntoDesc = dominios.find(d => d.dominio == "ZCDTPD").data;
+                    especies = dominios.find(d => d.dominio == "ZDO_ESPECIES").data;
                     oModel.setProperty("/IndProp", zinprpDom);
                     oModel.setProperty("/Balanzas", balanzas);
                     oModel.setProperty("/PtsDesc", puntoDesc);
@@ -859,10 +878,34 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         },
         onOpenEmba: function(evt){
             this.currentInputEmba = evt.getSource().getId();
-            this.getDialog().open();
+            //this.getDialog().open();
+            this.loadEmbarcacionFragment();
         },
+        loadEmbarcacionFragment: async function(){
+            //Iniciar los controles del fragment
+            let listaPropiedad = await fetch(`${mainUrlServices}dominios/Listar`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    dominios: [
+                        {
+                            domname: "ZINPRP",
+                            status: "A"
+                        }
+                    ]
+                })
+            }).then(resp => resp.json()).then(data => data.data[0].data).catch(error => console.log(error));
 
-        
+            if (listaPropiedad) {
+                listaPropiedad.unshift({
+                    descripcion: "-",
+                    id: null
+                })
+
+                this.getModel("Propiedad").setProperty("/listaPropiedad", listaPropiedad);
+
+                this.getDialog().open();
+            }
+        },
         buscarEmbarca: function(evt){
             console.log(evt);
             var indices = evt.mParameters.listItem.oBindingContexts.consultaMareas.sPath.split("/")[2];

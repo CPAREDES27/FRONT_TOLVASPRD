@@ -169,12 +169,10 @@ function(
 		onLimpiar: function(){
 			this.byId("idPlantaIni").setValue("");
 			this.byId("idPlantaFin").setValue("");
-			this.byId("idFechaIni").setValue("");
-			this.byId("idFechaFin").setValue("");
+			this.byId("idFechaInicioRange").setValue("");
 			this.byId("idTimeIni").setValue("");
 			this.byId("idTimeFin").setValue("");
-			this.byId("idFechaPrdIni").setValue("");
-			this.byId("idFechaPrdFin").setValue("");
+			this.byId("idFechaPrdRange").setValue("");
 			this.byId("idNumeroDescargaIni").setValue("");
 			this.byId("idNumeroDescargaFin").setValue("");
 			this.byId("idEmbarcacion1").setValue("");
@@ -305,12 +303,12 @@ function(
 			oGlobalBusyDialog.open();
             var idPlantaIni=this.byId("idPlantaIni").getValue();
 			var idPlantaFin=this.byId("idPlantaFin").getValue();
-			var idFechaIni=this.byId("idFechaIni").getValue();
-			var idFechaFin=this.byId("idFechaFin").getValue();
+			var idFechaIni=this.byId("idFechaInicioRange").getDateValue();
+			var idFechaFin=this.byId("idFechaInicioRange").getSecondDateValue();
 			var idTimeIni=this.byId("idTimeIni").getValue();
 			var idTimeFin=this.byId("idTimeFin").getValue();
-			var idFechaPrdIni=this.byId("idFechaPrdIni").getValue();
-			var idFechaPrdFin=this.byId("idFechaPrdFin").getValue();
+			var idFechaPrdIni=this.byId("idFechaPrdRange").getDateValue();
+			var idFechaPrdFin=this.byId("idFechaPrdRange").getSecondDateValue();
 			var idNumeroDescargaIni=this.byId("idNumeroDescargaIni").getValue();
 			var idNumeroDescargaFin=this.byId("idNumeroDescargaFin").getValue();
 			var idEmbarcacion1=this.byId("idEmbarcacion1").getValue();
@@ -379,8 +377,8 @@ function(
 					cantidad: "10",
 					control:"MULTIINPUT",
 					key:"FIDES",
-					valueHigh: fechaIniVigencia2,
-					valueLow:fechaIniVigencia
+					valueHigh: Utilities.formatDateWA(idFechaFin, "yyyyMMdd"),
+					valueLow: Utilities.formatDateWA(idFechaIni, "yyyyMMdd")
 				});
 			}
 			if(idTimeIni || idTimeFin){
@@ -397,8 +395,8 @@ function(
 					cantidad: "10",
 					control:"MULTIINPUT",
 					key:"FECCONMOV",
-					valueHigh: idFechaPrdFin,
-					valueLow:idFechaPrdIni
+					valueHigh: Utilities.formatDateWA(idFechaPrdFin, "yyyyMMdd"),
+					valueLow: Utilities.formatDateWA(idFechaPrdIni, "yyyyMMdd")
 				});
 			}
 			if(idNumeroDescargaIni && idNumeroDescargaFin){
@@ -701,6 +699,11 @@ function(
         loadComboClaseMensaje: function(){
             Utilities.getDataFromDominios(["ZCLMIN"])
                 .then( jQuery.proxy(data => {
+					//Adicionar el valor vacio
+					data[0].data.unshift({
+						descripcion: "",
+						id: ""
+					});
                     this.getView().setModel(new JSONModel(data[0]), "ClaseMensajeModel")
                 }, this) )
         },

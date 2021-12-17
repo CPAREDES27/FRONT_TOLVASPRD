@@ -150,6 +150,12 @@ sap.ui.define([
 
 			return cadenaCorreo;
 		},
+		formatDateWA:function(date, pattern){
+			var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({
+				pattern: pattern
+			});
+			return dateFormat.format(new Date(date));
+		},
 		eventIsDefinedNavigate: function (oEvt) {
 			var ok = true;
 			try {

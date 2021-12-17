@@ -51,7 +51,7 @@
                                             </form:label>
                                             <form:fields>
                                                 <Button text="Buscar" type="Emphasized" press="_onEjecutarPress" />
-									            <Button text="Limpiar" type="Emphasized" press="onLimpiar" />
+									            <Button text="Limpiar" press="onLimpiar" />
                                             </form:fields>
                                         </form:FormElement>
                                     </form:formElements>

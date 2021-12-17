@@ -110,7 +110,7 @@
                                             </form:label>
                                             <form:fields>
                                             <Button text="Buscar" type="Emphasized" press="requestListaRegistroTolvas" />
-									        <Button text="Limpiar" type="Emphasized" press="onLimpiar" />
+									        <Button text="Limpiar" press="onLimpiar" />
                                             </form:fields>
                                         </form:FormElement>
                                     </form:formElements>
@@ -193,7 +193,7 @@
                                 <t:Column
                                     width="auto" 
                                     filterProperty="MREMB" defaultFilterOperator="Contains" sortProperty="MREMB">
-                                    <Label text="Matricula" textAlign="Left" width="100%"/>
+                                    <Label text="Matrícula" textAlign="Left" width="100%"/>
                                     <t:template>
                                         <Text text="{RegistroTolvasModel>MREMB}"/> 
                                     </t:template>

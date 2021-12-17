@@ -70,7 +70,7 @@
                                     </form:label>
                                     <form:fields>
                                         <Button text="Buscar" type="Emphasized" icon="sap-icon://search" iconFirst="true" width="100%" enabled="true" visible="true" iconDensityAware="false" press="onSearchEmbarcacion"/>
-                                        <Button press="clearFilterEmba" text="Limpiar" type="Emphasized" icon="sap-icon://clear-filter" iconFirst="true" width="100%" enabled="true" visible="true" iconDensityAware="false"/>
+                                        <Button press="clearFilterEmba" text="Limpiar" icon="sap-icon://clear-filter" iconFirst="true" width="100%" enabled="true" visible="true" iconDensityAware="false"/>
                                     </form:fields>
                             </form:FormElement>
 						</form:formElements>
@@ -111,7 +111,7 @@
 			<Column
 				minScreenWidth="Tablet"
 				demandPopin="true">
-				<Text text="Matricula" />
+				<Text text="MatrÍcula" />
 			</Column>
 			<Column
 				minScreenWidth="Desktop"

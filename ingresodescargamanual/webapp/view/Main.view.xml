@@ -63,11 +63,11 @@
                                                 <Label text="Balanza" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <ComboBox id="cbxBalanza" change="onChange" selectedKey="{FormModel>/Balanza}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%" items="{ComboModel>/Balanzas}">
+                                                <Select id="cbxBalanza" change="onChange" selectedKey="{FormModel>/Balanza}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%" items="{ComboModel>/Balanzas}">
                                                     <items>
                                                         <core:Item text="{ComboModel>descripcion}" enabled="true" key="{ComboModel>id}"/>
                                                     </items>
-                                                </ComboBox>
+                                                </Select>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -75,11 +75,11 @@
                                                 <Label text="Punto de descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <ComboBox id="cbxPuntoDesc" change="onChange" selectedKey="{FormModel>/PuntoDesc}" items="{ComboModel>/PtsDesc}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
+                                                <Select id="cbxPuntoDesc" change="onChange" selectedKey="{FormModel>/PuntoDesc}" items="{ComboModel>/PtsDesc}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
                                                     <items>
                                                         <core:Item text="{ComboModel>descripcion}" enabled="true" key="{ComboModel>id}"/>
                                                     </items>
-                                                </ComboBox>
+                                                </Select>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -151,7 +151,7 @@
                             <content>
                                 <ToolbarSpacer width=""/>
                                 <Button text="Guardar" press="onGuardar" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
-                                <Button text="Limpiar" press="onLimpiar" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+                                <Button text="Limpiar" press="onLimpiar" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
                             </content>
                         </OverflowToolbar>
                     </footer>
