@@ -305,7 +305,7 @@
                                             <!-- sortProperty="supplier"
                                             filterProperty="supplier" -->
                                         <t:Column
-                                            width="auto">
+                                            width="7rem">
 							                <Label text="Programa" textAlign="Left" width="100%"/>
                                             <t:template>
                                                 <Text text="{
@@ -432,7 +432,7 @@
                                             </t:template>
                                         </t:Column>
                                         <t:Column
-                                            width="auto">
+                                            width="7rem">
                                             <Label visible="false" />
                                             <t:template>
                                                 <Button text="Ejecutar" visible="{:= ${DescargaTolvaModel>CMIN} === 'E'}" emphasized="true" press="onEjecutar"/>

@@ -106,7 +106,7 @@
 		<columns>
 			<Column
 				width="12em">
-				<Text text="Codigo Embarcacion" />
+				<Text text="Código Embarcacion" />
 			</Column>
 			<Column
 				minScreenWidth="Tablet"

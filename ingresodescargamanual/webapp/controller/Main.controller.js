@@ -223,24 +223,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                     method: 'POST',
                     body: JSON.stringify(bodyDominios)
                 })
-                .then(resp => resp.json()).then(data=>{
-                    let dominios = data.data;
-                    //Adicionar un item en blanco a las balanzas y puntos de descarga
-                    const indexBalanzas = dominios.findIndex(d => d.dominio == "ZCDTBA");
-                    const indexPuntoDesc = dominios.findIndex(d => d.dominio == "ZCDTPD");
-
-                    dominios[indexBalanzas].data.unshift({
-                        descripcion: "",
-                        id: ""
-                    });
-
-                    dominios[indexPuntoDesc].data.unshift({
-                        descripcion: "",
-                        id: ""
-                    });
-
-                    return dominios;
-                }).then(dominios => {
+                .then(resp => resp.json()).then(data=>data.data).then(dominios => {
                     zinprpDom = dominios.find(d => d.dominio == "ZINPRP").data;
                     balanzas = dominios.find(d => d.dominio == "ZCDTBA").data;
                     puntoDesc = dominios.find(d => d.dominio == "ZCDTPD").data;
