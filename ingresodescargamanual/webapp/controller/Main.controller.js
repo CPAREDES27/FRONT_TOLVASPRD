@@ -227,12 +227,21 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                     zinprpDom = dominios.find(d => d.dominio == "ZINPRP").data;
                     balanzas = dominios.find(d => d.dominio == "ZCDTBA").data;
                     puntoDesc = dominios.find(d => d.dominio == "ZCDTPD").data;
-                    especies = dominios.find(d => d.dominio == "ZDO_ESPECIES").data;
                     oModel.setProperty("/IndProp", zinprpDom);
-                    oModel.setProperty("/Balanzas", balanzas);
-                    oModel.setProperty("/PtsDesc", puntoDesc);
-                    oModel.setProperty("/Especies", especies);
                 }).catch(error => console.log(error));
+
+            // Listar especies
+            const ayudaBusqEspecies = {
+                nombreAyuda: "BSQESPEC"
+            };
+
+            fetch(`${mainUrlServices}General/AyudasBusqueda/`,{
+                method: 'POST',
+                body: JSON.stringify(ayudaBusqEspecies)
+            }).then(resp => resp.json()).then(data => {
+                oModel.setProperty("/Especies", data.data);
+            }).catch(error => console.log(error));
+
         },
 
         onSearchEmbarcacion: function () {
@@ -366,7 +375,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             return this.oDialog;
         },
 
-        onPressCentro: function (evt) {
+        onPressCentro: async function (evt) {
+            var oComboModel = this.getOwnerComponent().getModel("ComboModel");
             var objeto = evt.getParameter("selectedRow").getBindingContext("ComboModel").getObject();
             if (objeto) {
                 var oModel = this.getOwnerComponent().getModel("FormModel");
@@ -374,6 +384,45 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 oModel.setProperty("/Planta", objeto.CDPTA);
                 oModel.setProperty("/DescPlanta", objeto.NAME1);
                 oModel.refresh();
+
+                // Cargar balanzas y puntos de descarga relacionados al centro
+                const consultaPuntosDescarga = {
+                    nombreConsulta: "CONSGENPUNTDES",
+                    p_user: "FGARCIA",
+                    parametro1: objeto.CDPTA,
+                    parametro2: "",
+                    parametro3: "",
+                    parametro4: "",
+                    parametro5: ""
+                };
+
+                const consultaBalanzas = {
+                    nombreConsulta: "CONSGENBALANZA",
+                    p_user: "FGARCIA",
+                    parametro1: objeto.CDPTA,
+                    parametro2: "",
+                    parametro3: "",
+                    parametro4: "",
+                    parametro5: ""
+                };
+
+                const balanzas = await fetch(`${mainUrlServices}General/ConsultaGeneral`,{
+                    method: 'POST',
+                    body: JSON.stringify(consultaBalanzas)
+                }).then(resp => resp.json()).then(data=>data.data).catch(error => console.log(error));
+
+                const puntosDescarga = await fetch(`${mainUrlServices}General/ConsultaGeneral`,{
+                    method: 'POST',
+                    body: JSON.stringify(consultaPuntosDescarga)
+                }).then(resp => resp.json()).then(data=>data.data).catch(error => console.log(error));
+
+                if(balanzas){
+                    oComboModel.setProperty("/Balanzas", balanzas);
+                }
+
+                if(puntosDescarga){
+                    oComboModel.setProperty("/PtsDesc", puntosDescarga);
+                }
             }
         },
 
@@ -381,13 +430,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             var objeto = evt.getParameter("selectedRow").getBindingContext("ComboModel").getObject();
             if (objeto) {
                 var oModel = this.getOwnerComponent().getModel("FormModel");
-                oModel.setProperty("/Especie", objeto.id);
-                oModel.setProperty("/DescEsp", objeto.descripcion);
+                oModel.setProperty("/Especie", objeto.CDSPC);
+                oModel.setProperty("/DescEsp", objeto.DSSPC);
                 oModel.refresh();
             }
         },
 
-        onLimpiar: function(){
+        /*onLimpiar: function(){
+            let oComboModel = this.getOwnerComponent().getModel("ComboModel");
             this.byId("centro").setValue("");
             this.byId("embarcacion").setValue("");
             this.byId("cbxBalanza").setValue("");
@@ -397,7 +447,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             this.byId("dtpIniDesc").setValue("");
             this.byId("dtpFinDesc").setValue("");
             this.byId("pescDesc").setValue("");
-        },
+
+            // Limpiar selectores
+            oComboModel.setProperty("/Balanzas", []);
+            oComboModel.setProperty("/PtsDesc", []);
+        },*/
         onLimpiarEmba:function(){
             sap.ui.getCore().byId("idEmba").setValue("");
             sap.ui.getCore().byId("idNombEmba").setValue("");
@@ -408,6 +462,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         },
         onLimpiar: function(){
             var oModel = this.getOwnerComponent().getModel("FormModel");
+            var oComboModel = this.getOwnerComponent().getModel("ComboModel");
             var centro = oModel.setProperty("/CentroPlanta","");
             var centro = oModel.setProperty("/DescPlanta","");
             var centro = oModel.setProperty("/DescEsp","");
@@ -421,7 +476,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             var pescDesc = oModel.setProperty("/PescDesc","");
             var iniDesc = oModel.setProperty("/FechIniDesc","");
             var finDesc = oModel.setProperty("/FechFinDesc","");
-        
+            
+            // Limpiar selectores
+            oComboModel.setProperty("/Balanzas", []);
+            oComboModel.setProperty("/PtsDesc", []);
         },
         onGuardar: function () {
             BusyIndicator.show(0);
@@ -536,6 +594,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                             MessageBox.information(mensajes.DSMIN, {
                                 title: "Mensaje",
                                 onclose: function () {
+                                    /*
                                     oModel.setProperty("/CentroPlanta", "");
                                     oModel.setProperty("/Planta", "");
                                     oModel.setProperty("/DescPlanta", "");
@@ -550,8 +609,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                                     oModel.setProperty("/FechIniDesc", "");
                                     oModel.setProperty("/FechFinDesc", "");
                                     oModel.refresh();
+                                    */
                                 }
                             });
+                            this.onLimpiar();
                         }
                         BusyIndicator.hide();
                     }).catch(error => console.log(error));
