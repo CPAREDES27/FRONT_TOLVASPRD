@@ -651,7 +651,8 @@ function(
             // console.log(this.createId("fcl"))
 			this.oRouter = this.getOwnerComponent().getRouter();//sap.ui.core.UIComponent.getRouterFor(this);
             this.oRouter.getTarget("TargetMain").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
-            
+			let ViewModelPropiedad = new JSONModel({});
+            this.setModel(ViewModelPropiedad, "Propiedad");
 			// this.oRouter.attachRouteMatched(this.handleRouteMatched, this);
             // this.oRouter.getRoute("default").attachPatternMatched(this.handleRouteMatched, this);
             
@@ -948,10 +949,34 @@ function(
 		},
 		onOpenEmba: function(evt){
 			this.currentInputEmba = evt.getSource().getId();
-			this.getDialog().open();
+			//this.getDialog().open();
+			this.loadEmbarcacionFragment();
 		},
+		loadEmbarcacionFragment: async function() {
+            //Iniciar los controles del fragment
+            let listaPropiedad = await fetch(`${mainUrlServices}dominios/Listar`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    dominios: [
+                        {
+                            domname: "ZINPRP",
+                            status: "A"
+                        }
+                    ]
+                })
+            }).then(resp => resp.json()).then(data => data.data[0].data).catch(error => console.log(error));
 
-		
+            if (listaPropiedad) {
+                listaPropiedad.unshift({
+                    descripcion: "-",
+                    id: null
+                });
+
+                this.getModel("Propiedad").setProperty("/listaPropiedad", listaPropiedad);
+
+                this.getDialog().open();
+            }
+        },
 		buscarEmbarca: function(evt){
 			console.log(evt);
 			var indices = evt.mParameters.listItem.oBindingContexts.consultaMareas.sPath.split("/")[2];

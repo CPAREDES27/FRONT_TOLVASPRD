@@ -244,13 +244,18 @@ sap.ui.define([
                                         .then(data => {
                                             let oResp3 = data[0];
                                             let sBalanza = '';
+                                            let indBalanza = null;
                                             var sumPescDesc = 0;
                                             oResp2.forEach((element, index) => {
                                                 console.log(element);
                                                 if (index === 0) {
-                                                    sBalanza += element.INBAL;
-                                                } else {
-                                                    sBalanza += ', ' + element.INBAL;
+                                                    indBalanza = element.INBAL;
+                                                    sBalanza += indBalanza;
+                                                }
+                                                
+                                                if (indBalanza !== element.INBAL) {
+                                                    indBalanza = element.INBAL;
+                                                    sBalanza += ', ' + indBalanza;
                                                 }
                                                 element.Especie = "01";
                                                 element.DescEspecie = "Anchoveta";
@@ -280,6 +285,7 @@ sap.ui.define([
                                             oModelForm.setProperty("/Tolvas", sBalanza);
                                             oModelForm.setProperty("/Fecha", sFecha);
                                             oModelForm.setProperty("/Descargas", oResp2);
+                                            oModelForm.setProperty("/Observacion", "");
                                             me.oRouter.navTo("DeclaracionJuradaDiaria");
 
                                             BusyIndicator.hide();

@@ -31,7 +31,7 @@
                                     <Label text="Ubicación de la planta" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input value="{FormModel>/UbicPlanta}" type="Text" enabled="false" visible="true" width="auto" valueStateText="Invalid entry" maxLength="0" />
+                                    <Input value="{FormModel>/UbicPlanta}" type="Text" enabled="true" visible="true" width="auto" valueStateText="Invalid entry" maxLength="0" />
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -212,7 +212,7 @@
                                 span="XL1 L1 M3" />
                         </layoutData>
                     </Label>
-                    <TextArea  width="100%">
+                    <TextArea value="{FormModel>/Observacion}" width="100%">
                         <layoutData>
                             <layout:GridData
                                 span="XL11 L11 M9" />

@@ -635,6 +635,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 this.byId("idHora").setValue("");
                 this.byId("idDescr").setText("");
                 this.byId("idPlantaIni").setValue("");
+
+                this.getView().getModel("RegistroTolvasModel").setProperty('/', []);
             },
             exportarExcel: function (event) {
 				var aCols, oRowBinding, oSettings, oSheet, oTable;

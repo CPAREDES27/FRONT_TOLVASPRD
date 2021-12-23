@@ -24,6 +24,7 @@ sap.ui.define([
 		return BaseController.extend("com.tasa.tolvas.declaracionjuradatolvas.controller.DeclaracionJuradaDiariaPesaje", {
 			handleRouteMatched: function (oEvent) {
 				var oModelForm = this.getOwnerComponent().getModel("FormModel");
+				var oView = this.getView();
 				console.log(oModelForm);
 				var sAppId = "App60f18d59421c8929c54cd9bf";
 				console.log(oEvent);
@@ -57,6 +58,13 @@ sap.ui.define([
 					this.getView().bindObject(oPath);
 				}
 				
+				// Limitar el número de filas en la tabla
+				var oTableDescargas = oView.byId("tblDescargas");
+				let listDescargas = oModelForm.getProperty("/Descargas");
+				if (listDescargas.length < 10) {
+					oTableDescargas.setVisibleRowCount(listDescargas.length);
+				}
+
 				/*BusyIndicator.show(0);
 				var oModel = this.getOwnerComponent().getModel("FilterModel");
 				let sTableName = "";
@@ -392,14 +400,22 @@ sap.ui.define([
 				oGlobalBusyDialog.open();
 				var centro = this.getOwnerComponent().getModel("FormModel").oData.CentroPDF;
 				var fecha = this.getOwnerComponent().getModel("FormModel").oData.sFechaPDF;
+				var tolva = this.getOwnerComponent().getModel("FormModel").oData.Tolvas;
+				var observacion = this.getOwnerComponent().getModel("FormModel").oData.Observacion;
+				var ubicacion = this.getOwnerComponent().getModel("FormModel").oData.UbicPlanta;
+				var descargas = this.getOwnerComponent().getModel("FormModel").oData.Descargas;
 				console.log(centro);
 				console.log(fecha);
 			
 				var body={
-					"centro": centro,
-					"fecha": fecha
+					centro: centro,
+					fecha: fecha,
+					tolva: tolva,
+					ubicacion: ubicacion,
+					observacion: observacion,
+					descargas: descargas
 				  }
-				 fetch(`${mainUrlServices}tolvas/pdfdeclaracionjurada`,
+				 fetch(`${mainUrlServices}tolvas/pdfdeclaracionjurada2`,
 				{
 					method: 'POST',
 					body: JSON.stringify(body)
