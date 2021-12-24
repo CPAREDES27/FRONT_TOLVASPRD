@@ -24,7 +24,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 	BusyIndicator
 ) {
 	"use strict";
-
+	const HOST = "https://tasaqas.launchpad.cfapps.us10.hana.ondemand.com";
 	return BaseController.extend("com.tasa.tolvas.registrotolvas.controller.EdicionRegistroTolva", {
 		handleRouteMatched: function (oEvent) {
 			// var sAppId = "App60f18d59421c8929c54cd9bf";
@@ -388,7 +388,62 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			return this.oDialog;
 		},
 
+		onSearchHelp:function(oEvent){
+			let sIdInput = oEvent.getSource().getId(),
+			oModel = this.getView().getModel(),
+			nameComponent="busqembarcaciones",
+			idComponent="busqembarcaciones",
+			urlComponent=HOST+"/9acc820a-22dc-4d66-8d69-bed5b2789d3c.AyudasBusqueda.busqembarcaciones-1.0.0",
+			oView = this.getView(),
+			oInput = this.getView().byId(sIdInput);
+			oModel.setProperty("/input",oInput);
 
+			if(!this.DialogComponent){
+				this.DialogComponent = new sap.m.Dialog({
+					title:"Búsqueda de embarcaciones",
+					icon:"sap-icon://search",
+					state:"Information",
+					endButton:new sap.m.Button({
+						icon:"sap-icon://decline",
+						text:"Cerrar",
+						type:"Reject",
+						press:function(oEvent){
+							this.onCloseDialog(oEvent);
+						}.bind(this)
+					})
+				});
+				oView.addDependent(this.DialogComponent);
+				oModel.setProperty("/idDialogComp",this.DialogComponent.getId());
+			}
+
+			let comCreateOk = function(oEvent){
+				BusyIndicator.hide();
+			};
+
+			
+			if(this.DialogComponent.getContent().length===0){
+				BusyIndicator.show(0);
+				let oComponent = new sap.ui.core.ComponentContainer({
+					id:idComponent,
+					name:nameComponent,
+					url:urlComponent,
+					settings:{},
+					componentData:{},
+					propagateModel:true,
+					componentCreated:comCreateOk,
+					height:'100%',
+					// manifest:true,
+					async:false
+				});
+
+				this.DialogComponent.addContent(oComponent);
+			}
+			
+			this.DialogComponent.open();
+		},
+		onCloseDialog:function(oEvent){
+			oEvent.getSource().getParent().close();
+		}
 
 	});
 }, /* bExport= */ true);

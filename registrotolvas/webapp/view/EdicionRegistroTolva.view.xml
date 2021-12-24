@@ -42,12 +42,7 @@
                                     <Label text="Embarcación" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input id="embarcacion" value="{EditRegistroTolvasModel>CDEMB}" showValueHelp="true" valueHelpRequest="onAbrirAyudaEmbarcacion" width="80%" valueStateText="Invalid entry"/>
-                                    <Text text="{EditRegistroTolvasModel>NMEMB}" visible="true" width="auto" hAlign="Begin">
-                                        <layoutData>
-                                            <layout:GridData span="XL6 L6 M6 S12" />
-                                        </layoutData>
-                                    </Text>
+                                    <Input id="embarcacion" value="{/help/CDEMB}" description="{/help/NMEMB}"  placeholder="Seleccione embarcación" width="30%" showValueHelp="true"  valueHelpRequest="onSearchHelp"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">

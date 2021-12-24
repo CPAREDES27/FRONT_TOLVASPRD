@@ -74,6 +74,10 @@
                     "bundleName": "com.tasa.tolvas.registrotolvas.i18n.i18n"
                 }
             },
+            "":{
+                "type": "sap.ui.model.json.JSONModel",
+                "preload":true
+            },
             "Planta":{
                 "type": "sap.ui.model.json.JSONModel",
                 "preload":true
