@@ -1144,6 +1144,11 @@ function(
 			aCols = this.createColumnConfig();
 			aProducts = this.getView().getModel("DescargaTolvaModel").getProperty('/data');
 
+			// Dar formato a algunos datos
+			aProducts.forEach(product=>{
+				product.FECCONMOV = Formatter.formatDateExport(product.FECCONMOV)
+			});
+
 			oSettings = {
 				
 				workbook: { 

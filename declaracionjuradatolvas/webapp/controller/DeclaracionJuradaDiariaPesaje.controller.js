@@ -431,6 +431,7 @@ sap.ui.define([
 				
 			},
 			showPDF:  function(data){
+				this._PDFViewer = null;
 				var base64EncodedPDF = data;
 				var decodedPdfContent = atob(base64EncodedPDF);
 				var byteArray = new Uint8Array(decodedPdfContent.length)
