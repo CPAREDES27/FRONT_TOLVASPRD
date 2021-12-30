@@ -406,15 +406,28 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                     parametro5: ""
                 };
 
-                const balanzas = await fetch(`${mainUrlServices}General/ConsultaGeneral`,{
+                let balanzas = await fetch(`${mainUrlServices}General/ConsultaGeneral`,{
                     method: 'POST',
                     body: JSON.stringify(consultaBalanzas)
                 }).then(resp => resp.json()).then(data=>data.data).catch(error => console.log(error));
 
-                const puntosDescarga = await fetch(`${mainUrlServices}General/ConsultaGeneral`,{
+                let puntosDescarga = await fetch(`${mainUrlServices}General/ConsultaGeneral`,{
                     method: 'POST',
                     body: JSON.stringify(consultaPuntosDescarga)
                 }).then(resp => resp.json()).then(data=>data.data).catch(error => console.log(error));
+
+                // Agregar un ítem vacío al inicio de la lista
+                balanzas.unshift({
+                    CDBAL: "",
+                    DSBAL: "",
+                    INBAL: ""
+                });
+
+                puntosDescarga.unshift({
+                    CDPDG: "",
+                    CDTPD: "",
+                    DSPDG: ""
+                });
 
                 if(balanzas){
                     oComboModel.setProperty("/Balanzas", balanzas);
