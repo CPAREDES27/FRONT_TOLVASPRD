@@ -156,6 +156,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		},
 
 		onPressSave: function (oEvent) {
+			BusyIndicator.show(0);
 			let oModel = this.getView().getModel("EditRegistroTolvasModel");
 			let sCodEmb = oModel.getProperty("/CDEMB");
 			let sNumDescarga = oModel.getProperty("/NRDES");
@@ -172,7 +173,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					MessageBox.success("Se actualizaron los datos correctamente", {
 						title: "Exito",                                     // default
 						onClose: function () {
-							BusyIndicator.show(0);
+							BusyIndicator.hide();
 							this.sendMailNotif();
 						}.bind(this),                                      // default
 						styleClass: "",                                     // default

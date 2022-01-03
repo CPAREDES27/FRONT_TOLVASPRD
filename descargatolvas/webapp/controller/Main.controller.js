@@ -564,8 +564,15 @@ function(
 				
 				console.log(data);
 				
-				MessageBox.success(data.w_mensaje);
-					oGlobalBusyDialog.close();
+				MessageBox.success(data.w_mensaje, {
+					onclose: function(oAction) {
+						if (oAction === "OK") {
+							// Refrescar tabla
+							this._onButtonSearchPress();
+						}
+					}
+				})
+					oGlobalBusyDialog.close();				
 				
 			  }).catch(error => console.log(error)
 			  );
