@@ -66,6 +66,10 @@ modules:
       - comtasatolvaslibrarymarea.zip
       name: comtasatolvaslibrarymarea
       target-path: resources/
+    - artifacts:
+      - comtasaregistrodtolvas.zip
+      name: comtasaregistrodtolvas
+      target-path: resources/
 - name: comtasatolvasregistrotolvas
   type: html5
   path: registrotolvas
@@ -119,6 +123,16 @@ modules:
 - name: comtasatolvaslibrarymarea
   type: html5
   path: librarymarea
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comtasaregistrodtolvas
+  type: html5
+  path: registrodtolvas
   build-parameters:
     build-result: dist
     builder: custom

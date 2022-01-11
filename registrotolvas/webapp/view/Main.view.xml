@@ -5,10 +5,10 @@
     xmlns:core="sap.ui.core" 
     xmlns:t="sap.ui.table"
     xmlns:layout="sap.ui.layout">
-    
-		<App id="app">
-			<pages>
-				<Page id="page" title="{i18n>title}" showFooter="true" showNavButton="false">
+    <Shell >
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>title}" showFooter="true" showNavButton="false">
                     <content>
                         <form:Form width="100%" editable="true" visible="true">
                             <form:title>
@@ -31,45 +31,45 @@
                                                             valueState="Information"
                                                             valueStateText="Ingrese un texto"
                                                             suggestionRows="{Planta>/listaPlanta}">
-												    <suggestionColumns>
-													
-													<Column
-														hAlign="Begin"
-														popinDisplay="Inline"
-														demandPopin="true"
-														minScreenWidth="Tablet">
-														<Label text="Centro"/>
-													</Column>
-													<Column
-														hAlign="End"
-														popinDisplay="Inline"
-														demandPopin="true"
-														minScreenWidth="Tablet">
-														<Label text="Planta"/>
-													</Column>
-													<Column
-														hAlign="End"
-														popinDisplay="Inline"
-														demandPopin="true"
-														minScreenWidth="Tablet">
-														<Label text="Descripción"/>
-													</Column>
-												</suggestionColumns>
-												<suggestionRows>
-													<ColumnListItem>
-													<cells>
-														<Label text="{Planta>WERKS}"/>
-														<Label text="{Planta>CDPTA}"/>
-														<Label text="{Planta>DESCR}"/>
-														<Label text="{
-																parts:[{path:'Planta'},{path:'Centro'}],
-																type: 'sap.ui.model.type.Currency',
-																formatOptions: {showMeasure: true}
-																}"/>
-													</cells>
-													</ColumnListItem>
-												</suggestionRows>
-											</Input>
+                                                    <suggestionColumns>
+                                                    
+                                                    <Column
+                                                        hAlign="Begin"
+                                                        popinDisplay="Inline"
+                                                        demandPopin="true"
+                                                        minScreenWidth="Tablet">
+                                                        <Label text="Centro"/>
+                                                    </Column>
+                                                    <Column
+                                                        hAlign="End"
+                                                        popinDisplay="Inline"
+                                                        demandPopin="true"
+                                                        minScreenWidth="Tablet">
+                                                        <Label text="Planta"/>
+                                                    </Column>
+                                                    <Column
+                                                        hAlign="End"
+                                                        popinDisplay="Inline"
+                                                        demandPopin="true"
+                                                        minScreenWidth="Tablet">
+                                                        <Label text="Descripción"/>
+                                                    </Column>
+                                                </suggestionColumns>
+                                                <suggestionRows>
+                                                    <ColumnListItem>
+                                                    <cells>
+                                                        <Label text="{Planta>WERKS}"/>
+                                                        <Label text="{Planta>CDPTA}"/>
+                                                        <Label text="{Planta>DESCR}"/>
+                                                        <Label text="{
+                                                                parts:[{path:'Planta'},{path:'Centro'}],
+                                                                type: 'sap.ui.model.type.Currency',
+                                                                formatOptions: {showMeasure: true}
+                                                                }"/>
+                                                    </cells>
+                                                    </ColumnListItem>
+                                                </suggestionRows>
+                                            </Input>
                                                 <Text text="" id="idDescr" visible="true" width="auto" >
                                                 </Text>
                                             </form:fields>
@@ -80,7 +80,7 @@
                                             </form:label>
                                             <form:fields>
                                                 <DatePicker value="{FilterModel>/FechaInicioDescarga}" id="idFecha" width="auto" displayFormat="dd/MM/yyyy" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd" >
-                                                   
+                                                    
                                                 </DatePicker>
                                             </form:fields>
                                         </form:FormElement>
@@ -90,7 +90,7 @@
                                             </form:label>
                                             <form:fields>
                                                 <TimePicker value="{FilterModel>/HoraInicioDescarga}" id="idHora" valueFormat="HHmmss" displayFormat="HH:mm">
-                                                   
+                                                    
                                                 </TimePicker>
                                             </form:fields>
                                         </form:FormElement>
@@ -100,7 +100,7 @@
                                             </form:label>
                                             <form:fields>
                                                 <Input value="{FilterModel>/CantidadFilas}" id="idCant" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0">
-                                                   
+                                                    
                                                 </Input>
                                             </form:fields>
                                         </form:FormElement>
@@ -110,7 +110,7 @@
                                             </form:label>
                                             <form:fields>
                                             <Button text="Buscar" type="Emphasized" press="requestListaRegistroTolvas" />
-									        <Button text="Limpiar" press="onLimpiar" />
+                                            <Button text="Limpiar" press="onLimpiar" />
                                             </form:fields>
                                         </form:FormElement>
                                     </form:formElements>
@@ -134,11 +134,11 @@
                             busy="{FormSearchModel>/busyIndicatorRegistroTolvas}" >
                             <t:extension>
                                 <OverflowToolbar style="Clear">
-						                    <Title id="title" text=""/>
+                                            <Title id="title" text=""/>
                                             <ToolbarSpacer width=""/>
                                             <Button press="exportarExcel" text="Exportar" icon="sap-icon://excel-attachment" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
                                             <SearchField liveChange=".filterGlobally" placeholder="Búsqueda rápida" width="auto"/>
-					                    </OverflowToolbar>
+                                        </OverflowToolbar>
                             </t:extension>
                             <t:rowActionTemplate>
                                 <t:RowAction>
@@ -307,11 +307,8 @@
                             </content>
                         </OverflowToolbar>
                     </footer>
-                    <headerContent/>
-                    <subHeader/>
-                    <customHeader/>
                 </Page>
             </pages>
-		</App>
-
+        </App>
+    </Shell>
 </mvc:View>

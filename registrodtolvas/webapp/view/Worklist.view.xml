@@ -1,0 +1,500 @@
+<mvc:View
+    controllerName="com.tasa.registrodtolvas.controller.Worklist"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:semantic="sap.f.semantic"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:table="sap.ui.table">
+
+    <semantic:SemanticPage
+        id="page">
+
+        <semantic:titleHeading>
+            <Title
+                text="{i18n>worklistTitle}"
+                level="H2"/>
+        </semantic:titleHeading>
+
+        <semantic:headerContent>
+            <form:Form 
+                editable="true"
+                binding="{/datosSeleccion}">
+                <form:title>
+                    <core:Title icon="sap-icon://filter"  text="Datos de selección" level="Auto"/>
+                </form:title>
+                <form:formContainers>
+                    <form:FormContainer >
+                        <form:formElements>
+                            <form:FormElement label = "Centro">
+                                <form:fields>
+                                    <Input 
+                                        value="{WERKS}"
+                                        description="{DESCR}" 
+                                        change="multiInputPlanta" 
+                                        class="sapUiSmallMarginBottom"
+                                        id="idPlantaIni"
+                                        placeholder="Ingresar Centro..."
+                                        showSuggestion="true"
+                                        suggestionRows="{/plantas}"
+                                        suggestionItemSelected="onSuggestionItemSelected"
+                                        showTableSuggestionValueHelp="false"
+                                        valueState="Information"
+                                        valueStateText="Seleccione centro">
+                                        <suggestionColumns>
+                                            <Column
+                                                hAlign="Begin"
+                                                width="5rem"
+                                                popinDisplay="Inline"
+                                                demandPopin="true"
+                                                minScreenWidth="Tablet">
+                                                <Label text="Centro"/>
+                                            </Column>
+                                            <Column
+                                                hAlign="Begin"
+                                                width="5rem"
+                                                popinDisplay="Inline"
+                                                demandPopin="true"
+                                                minScreenWidth="Tablet">
+                                                <Label text="Planta"/>
+                                            </Column>
+                                            <Column
+                                                hAlign="Begin"
+                                                width="8rem"
+                                                popinDisplay="Inline"
+                                                demandPopin="true"
+                                                minScreenWidth="Tablet">
+                                                <Label text="Descripción"/>
+                                            </Column>
+                                            <Column
+                                                hAlign="Begin"
+                                                width="8rem"
+                                                popinDisplay="Inline"
+                                                demandPopin="true"
+                                                minScreenWidth="Tablet">
+                                                <Label text="R.U.C."/>
+                                            </Column>
+                                            <Column
+                                                hAlign="Begin"
+                                                popinDisplay="Inline"
+                                                width="20rem"
+                                                demandPopin="true"
+                                                minScreenWidth="Tablet">
+                                                <Label text="Descr. empresa"/>
+                                            </Column>
+                                            <Column
+                                                hAlign="Begin"
+                                                width="10rem"
+                                                popinDisplay="Inline"
+                                                demandPopin="true"
+                                                minScreenWidth="Tablet">
+                                                <Label text="Ind. propiedad"/>
+                                            </Column>
+                                            <Column
+                                                hAlign="Begin"
+                                                width="5rem"
+                                                popinDisplay="Inline"
+                                                demandPopin="true"
+                                                minScreenWidth="Tablet">
+                                                <Label text="Puerto"/>
+                                            </Column>
+                                            <Column
+                                                hAlign="Begin"
+                                                width="8rem"
+                                                popinDisplay="Inline"
+                                                demandPopin="true"
+                                                minScreenWidth="Tablet">
+                                                <Label text="Desc. puerto"/>
+                                            </Column>
+                                        </suggestionColumns>
+                                        <suggestionRows>
+                                            <ColumnListItem>
+                                            <cells>
+                                                <ObjectStatus 
+                                                    text="{WERKS}"
+                                                    state="Information"/>
+                                                <Text text="{CDPTA}"/>
+                                                <ObjectStatus 
+                                                    text="{DESCR}"
+                                                    state="Indication07"/>
+                                                <Text text="{STCD1}"/>
+                                                <Text text="{NAME1}"/>
+                                                <Text text="{
+                                                    path:'INPRP',
+                                                    formatter:'.formatter.setIndPropiedad'
+                                                }"/>
+                                                <Text text="{CDPTO}"/>
+                                                <Text text="{DSPTO}"/>
+                                            </cells>
+                                            </ColumnListItem>
+                                        </suggestionRows>
+                                    </Input>
+                                    <!-- <Text text="" id="idDescr"  width="auto" >
+                                    </Text> -->
+                                </form:fields>
+                            </form:FormElement>
+                            <form:FormElement label="Fecha inicio descarga" >
+                                <form:fields>
+                                    <DatePicker
+                                        value="{FIDES}" 
+                                        id="idFecha" 
+                                        displayFormat="dd/MM/yyyy" 
+                                        valueFormat="dd/MM/yyyy" />
+                                </form:fields>
+                            </form:FormElement>
+                            <form:FormElement label="Hora inicio descarga">
+                                <form:fields>
+                                    <TimePicker 
+                                        value="{HIDES}" 
+                                        id="idHora" 
+                                        valueFormat="HHmmss" 
+                                        displayFormat="HH:mm"/>
+                                </form:fields>
+                            </form:FormElement>
+                        </form:formElements>
+                    </form:FormContainer>
+                    <form:FormContainer >
+                        <form:formElements>
+                            <form:FormElement label="Cantidad de Filas">
+                                <form:fields>
+                                    <Input 
+                                        value="{CantidadFilas}" 
+                                        id="idCant" />
+                                </form:fields>
+                            </form:FormElement>
+                            <form:FormElement label="">
+                                <form:fields>
+                                    <Button text="Buscar" icon="sap-icon://search" type="Emphasized" press="onGetDataTable" />
+                                    <Button text="Limpiar" icon="sap-icon://clear-filter" type="Ghost" press="onLimpiar" />
+                                </form:fields>
+                            </form:FormElement>
+                        </form:formElements>
+                    </form:FormContainer>
+                </form:formContainers>
+                <form:layout>
+                    <form:ResponsiveGridLayout 
+                        adjustLabelSpan="false" 
+                        labelSpanL="3"
+                        labelSpanM="2" 
+                        columnsL="2" 
+                        columnsM="1"
+                        labelSpanS="12"/>
+                </form:layout>
+            </form:Form>
+        </semantic:headerContent>
+
+        <semantic:content>
+            <!-- <Table
+                id="table"
+                width="auto"
+                items="{
+                    path: '/tabla',
+                    events: {
+                        change: '.onDataChange'
+                    }
+                }"
+                noDataText="{worklistView>/tableNoDataText}"
+                busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+                growing="true"
+                growingScrollToLoad="true"
+                updateFinished=".onUpdateFinished">
+
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <Title
+                            text="{worklistView>/worklistTableTitle}"
+                            level="H3"/>
+                        <ToolbarSpacer />
+                        <Button press="onExportarExcel" type="Emphasized" text="Exportar" icon="sap-icon://excel-attachment"/>
+                        <SearchField
+                            id="searchField"
+                            tooltip="{i18n>worklistSearchTooltip}"
+                            liveChange=".onSearch">
+                            <layoutData>
+                                <OverflowToolbarLayoutData
+                                    maxWidth="200px"
+                                    priority="NeverOverflow"/>
+                            </layoutData>
+                        </SearchField>
+                    </OverflowToolbar>
+                </headerToolbar>
+
+                <columns>
+                    <Column width="10rem">
+                        <Text text="Número descarga" />
+                    </Column>
+                    <Column 
+                        width="6rem"
+                        minScreenWidth="Tablet"
+                        demandPopin="true">
+                        <Text text="Centro" />
+                    </Column>
+                    <Column 
+                        width="8rem"
+                        minScreenWidth="Tablet"
+                        demandPopin="true">
+                        <Text text="Ticket" />
+                    </Column>
+                    <Column 
+                        width="8rem"
+                        minScreenWidth="Tablet"
+                        demandPopin="true">
+                        <Text text="Código embarcación" />
+                    </Column>
+                    <Column 
+                        width="12rem"
+                        minScreenWidth="Tablet"
+                        demandPopin="true">
+                        <Text text="Nombre embarcación" />
+                    </Column>
+                    <Column 
+                        width="8rem"
+                        minScreenWidth="Tablet"
+                        demandPopin="true">
+                        <Text text="Matrícula" />
+                    </Column>
+                    <Column 
+                        hAlign="End"
+                        width="6rem"
+                        minScreenWidth="Tablet"
+                        demandPopin="true" >
+                        <Text text="CBOD" />
+                    </Column>
+                    <Column 
+                        width="6rem"
+                        minScreenWidth="Tablet"
+                        demandPopin="true">
+                        <Text text="Fecha inicio descarga" />
+                    </Column>
+                    <Column 
+                        width="6rem"
+                        minScreenWidth="Tablet"
+                        demandPopin="true">
+                        <Text text="Hora inicio descarga" />
+                    </Column>
+                    <Column 
+                        width="6rem"
+                        minScreenWidth="Tablet"
+                        demandPopin="true">
+                        <Text text="Fecha fin descarga" />
+                    </Column>
+                    <Column 
+                        width="6rem"
+                        minScreenWidth="Tablet"
+                        demandPopin="true">
+                        <Text text="Hora fin descarga" />
+                    </Column>
+                    <Column 
+                        hAlign="End" 
+                        width="6rem"
+                        minScreenWidth="Tablet"
+                        demandPopin="true">
+                        <Text text="Pesca descargada" />
+                    </Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem
+                        type="Detail"
+                        detailPress=".onPress">
+                        <cells>
+                            <ObjectStatus 
+                                text="{NRDES}"
+                                state="Information"/>
+                            <Text text="{WERKS}"/>
+                            <Text text="{TICKE}"/>
+                            <Text text="{CDEMB}"/>
+                            <Text text="{NMEMB}"/>
+                            <Text text="{MREMB}"/>
+                            <Text text="{
+                                    path:'CPPMS',
+                                    formatter: '.formatter.formatFloat'
+                                }"/>
+                            <Text text="{FIDES}"/>
+                            <Text text="{HIDES}"/>
+                            <Text text="{FFDES}"/>
+                            <Text text="{HFDES}"/>
+                            <Text text="{
+                                path:'CNPDS',
+                                formatter: '.formatter.formatFloat'
+                            }"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table> -->
+            <table:Table
+                id="table"
+                selectionMode="None"
+                rows="{/tabla}"
+                visibleRowCount="10"
+                rowsUpdated="onUpdateFinished"
+                enableColumnFreeze="true"
+                showColumnVisibilityMenu="true"
+                rowActionCount="1"
+                showNoData="true"
+                busy="{worklistView>/tableBusyDelay}" >
+                <table:extension>
+                    <OverflowToolbar style="Clear">
+                        <Title text="{worklistView>/worklistTableTitle}"/>
+                        <ToolbarSpacer />
+                        <Button press="onExportarExcel" type="Emphasized" text="Exportar" icon="sap-icon://excel-attachment"/>
+                        <SearchField 
+                            liveChange=".filterGlobally" 
+                            placeholder="Búsqueda rápida" 
+                            tooltip="{i18n>worklistSearchTooltip}">
+                        <layoutData>
+                                <OverflowToolbarLayoutData
+                                    maxWidth="200px"
+                                    priority="NeverOverflow"/>
+                            </layoutData>
+                        </SearchField>
+                    </OverflowToolbar>
+                </table:extension>
+                <!-- <table:rowActionTemplate>
+                    <table:RowAction>
+                        <table:items>
+                            <table:RowActionItem type="Custom" icon="sap-icon://edit" text="Editar" press=".onPress" />
+                        </table:items>
+                    </table:RowAction>                                    
+                </table:rowActionTemplate> -->
+                <table:columns>
+                    <table:Column
+                        width="auto" 
+                        filterProperty="NRDES" defaultFilterOperator="Contains" sortProperty="NRDES">
+                        <Label text="Número descarga" wrapping="true" textAlign="Left" width="100%"/>
+                        <table:template>
+                            <ObjectStatus 
+                                text="{NRDES}"
+                                state="Information"/>
+                        </table:template>
+                    </table:Column>
+                    <table:Column
+                        width="auto" 
+                        filterProperty="WERKS" defaultFilterOperator="Contains" sortProperty="WERKS">
+                        <Label text="Centro" textAlign="Left" width="100%"/>
+                        <table:template>
+                            <Text text="{
+                                    path:'CDPTA',
+                                    formatter: '.formatter.setCentro'
+                                }"/>
+                        </table:template>
+                    </table:Column>
+                    <table:Column
+                        width="auto" 
+                        filterProperty="TICKE" defaultFilterOperator="Contains" sortProperty="TICKE">
+                        <Label text="Ticket" textAlign="Left" wrapping="true" width="100%"/>
+                        <table:template>
+                            <Text text="{TICKE}"/>
+                        </table:template>
+                    </table:Column>
+                    <table:Column
+                        width="auto" 
+                        filterProperty="CDEMB" defaultFilterOperator="Contains" sortProperty="CDEMB">
+                        <Label text="Código embarcación" wrapping="true" textAlign="Left" width="100%"/>
+                        <table:template>
+                            <Text text="{CDEMB}"/>
+                        </table:template>
+                    </table:Column>
+                    <table:Column
+                        width="auto" 
+                        filterProperty="NMEMB" defaultFilterOperator="Contains" sortProperty="NMEMB">
+                        <Label text="Nombre embarcación" wrapping="true" textAlign="Left" width="100%"/>
+                        <table:template>
+                            <Text text="{NMEMB}"/>
+                        </table:template>
+                    </table:Column>
+                    <table:Column
+                        width="auto" 
+                        filterProperty="MREMB" defaultFilterOperator="Contains" sortProperty="MREMB">
+                        <Label text="Matrícula" textAlign="Left" width="100%"/>
+                        <table:template>
+                            <Text text="{MREMB}"/> 
+                        </table:template>
+                    </table:Column>
+                    <table:Column
+                        width="auto" hAlign="Right" 
+                        filterProperty="CBOD" defaultFilterOperator="EQ" sortProperty="CBOD">
+                        <Label text="CBOD" textAlign="Right" width="100%"/>
+                        <table:template>
+                            <Text text="{
+                                path: 'CPPMS',
+                                formatter: '.formatter.formatFloat'
+                            }"/> 
+                        </table:template>
+                    </table:Column>
+                    <table:Column
+                        width="auto" 
+                        filterProperty="FIDES" defaultFilterOperator="Contains" sortProperty="FIDES">
+                        <Label text="Fecha inicio descarga" textAlign="Left" wrapping="true" width="100%"/>
+                        <table:template>
+                            <Text text="{FIDES}"/>  
+                        </table:template>
+                    </table:Column>
+                    <table:Column
+                        width="auto" 
+                        filterProperty="HIDES" defaultFilterOperator="Contains" sortProperty="HIDES">
+                        <Label text="Hora inicio descarga" textAlign="Left" wrapping="true" width="100%" />
+                        <table:template>
+                            <Text text="{
+                                    path: 'HIDES',
+                                    type: 'sap.ui.model.type.Time',
+                                    formatOptions: {
+                                        source: {   
+                                            pattern: 'HH:mm:ss'
+                                        },
+                                        pattern: 'HH:mm'
+                                    }
+                                }" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column
+                        width="auto" 
+                        filterProperty="FFDES" defaultFilterOperator="Contains" sortProperty="FFDES">
+                        <Label text="Fecha fin descarga" textAlign="Left" wrapping="true" width="100%" />
+                        <table:template>
+                            <Text text="{FFDES}"/>
+                        </table:template>
+                    </table:Column>
+                    <table:Column 
+                        width="auto" 
+                        filterProperty="HFDES" defaultFilterOperator="Contains" sortProperty="HFDES">
+                        <Label text="Hora fin descarga" textAlign="Left" wrapping="true" width="100%"/>
+                        <table:template>
+                            <Text text="{
+                                    path: 'HFDES',
+                                    type: 'sap.ui.model.type.Time',
+                                    formatOptions: {
+                                        source: {   
+                                            pattern: 'HH:mm:ss'
+                                        },
+                                        pattern: 'HH:mm'
+                                    }
+                                }"/>
+                        </table:template>
+                    </table:Column>
+                    <table:Column
+                        width="auto" hAlign="Right" 
+                        filterProperty="CNPDS" defaultFilterOperator="EQ" sortProperty="CNPDS">
+                        <Label text="Pesca descargada" wrapping="true" textAlign="Right" width="100%" />
+                        <table:template>
+                            <Text text="{
+                                path: 'CNPDS',
+                                formatter: '.formatter.formatFloat'
+                            }"/>
+                        </table:template>
+                    </table:Column>
+
+                    <table:Column width="4rem" hAlign="Center" >
+                        <Label text="" visible="false" />
+                        <table:template>
+                           <Button icon="sap-icon://edit" type="Transparent" visible="{=${NRMAR}>0?false:true}" press=".onPress" tooltip="Hacer click para editar este registro" />
+                        </table:template>
+                    </table:Column>
+
+                </table:columns>
+            </table:Table>
+        </semantic:content>
+
+    </semantic:SemanticPage>
+
+</mvc:View>
