@@ -54,8 +54,8 @@
                                                 <Label text="Embarcación" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                            
-                                                <Input id="embarcacion" value="{FormModel>/Embarcacion}" change="onChangeEmba" description="{FormModel>/DescEmba}" showValueHelp="true" valueHelpRequest="onOpenEmba" width="100%" valueStateText="Invalid entry"/>
+                                                <Input id="inputId0_R" value="{FormModel>/Embarcacion}" description="{/help/NMEMB} {/help/MREMB}" showValueHelp="true"  valueHelpRequest="onShowEmbarcaciones"/>
+                                                <!-- <Input id="embarcacion" value="{FormModel>/Embarcacion}" change="onChangeEmba" description="{FormModel>/DescEmba}" showValueHelp="true" valueHelpRequest="onOpenEmba" width="100%" valueStateText="Invalid entry"/> -->
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -87,7 +87,7 @@
                                                 <Label text="Ticket" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input id="ticket" liveChange="onChangeInput" value="{FormModel>/Ticket}" type="Number" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                <Input id="ticket" liveChange="onChangeInput" value="{FormModel>/Ticket}" type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -118,7 +118,13 @@
                                                 <Label text="Fecha inicio descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <DateTimePicker id="dtpIniDesc" value="{FormModel>/FechIniDesc}" valueFormat="yyyyMMdd HH:mm" displayFormat="dd/MM/yyyy HH:mm" visible="true" width="auto" />
+                                                <DatePicker id="dtpIniDesc" value="{FormModel>/FechIniDesc}" valueFormat="yyyyMMdd" displayFormat="dd/MM/yyyy" visible="true" width="auto"/>
+                                                <TimePicker
+                                                value="{FormModel>/HoraIniDesc}"
+                                                id="TP1"
+                                                valueFormat="HH:mm"
+                                                displayFormat="HH:mm"/>
+                                                <!-- <DateTimePicker id="dtpIniDesc" value="{FormModel>/FechIniDesc}" valueFormat="yyyyMMdd HH:mm" displayFormat="dd/MM/yyyy HH:mm" visible="true" width="auto" /> -->
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -126,7 +132,13 @@
                                                 <Label text="Fecha fin descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <DateTimePicker id="dtpFinDesc" value="{FormModel>/FechFinDesc}" valueFormat="yyyyMMdd HH:mm" displayFormat="dd/MM/yyyy HH:mm" visible="true" width="auto" />
+                                             <DatePicker id="dtpFinDesc" value="{FormModel>/FechFinDesc}" valueFormat="yyyyMMdd" displayFormat="dd/MM/yyyy" visible="true" width="auto"/>
+                                                <TimePicker
+                                                value="{FormModel>/HoraFinDesc}"
+                                                id="TP2"
+                                                valueFormat="HH:mm"
+                                                displayFormat="HH:mm"/>
+                                                <!-- <DateTimePicker id="dtpFinDesc" value="{FormModel>/FechFinDesc}" valueFormat="yyyyMMdd HH:mm" displayFormat="dd/MM/yyyy HH:mm" visible="true" width="auto" /> -->
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -142,8 +154,25 @@
                                 </form:FormContainer>
                             </form:formContainers>
                             <form:layout>
-                                <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
-                            </form:layout>
+					<form:ResponsiveGridLayout
+						adjustLabelSpan="true"
+						breakpointL="1024"
+						breakpointM="600"
+						breakpointXL="1440"
+						columnsL="2"
+						columnsM="2"
+						columnsXL="-1"
+						emptySpanL="0"
+						emptySpanM="0"
+						emptySpanS="0"
+						emptySpanXL="-1"
+						labelSpanL="4"
+						labelSpanM="3"
+						labelSpanS="12"
+						labelSpanXL="-1"
+						singleContainerFullSize="true"
+					/>
+				</form:layout>
                         </form:Form>
                     </content>
                     <footer>

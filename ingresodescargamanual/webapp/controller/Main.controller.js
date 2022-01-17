@@ -4,18 +4,22 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     "sap/ui/core/routing/History",
     "sap/ui/core/BusyIndicator",
     "sap/ui/model/json/JSONModel",
-], function (BaseController,
-    MessageBox,
+    "sap/ui/core/Fragment",
+    "./BaseController",
+], function (Controller,MessageBox,
     //    Utilities, 
     History,
     BusyIndicator,
-    JSONModel
+    JSONModel,
+    Fragment,
+    BaseController
 ) {
     "use strict";
 
     const mainUrlServices = 'https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/';
     var popUp="";
     var popEmb="";
+    var oGlobalBusyDialog = new sap.m.BusyDialog();
     return BaseController.extend("com.tasa.tolvas.ingresodescargamanual.controller.Main", {
         handleRouteMatched: function (oEvent) {
             var sAppId = "App60f18d59421c8929c54cd9bf";
@@ -82,7 +86,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                         valueLow:'0012'
                     }
                 ],
-                p_user: "FGARCIA",
+                p_user: this.userOperation,
                 rowcount: "200"
             }
             let url = "https://flota-approuterqas.cfapps.us10.hana.ondemand.com/api/tolvas/registrotolvas_listar";
@@ -111,7 +115,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                         valueLow:"0012"
                     }
                 ],
-                p_user: "FGARCIA",
+                p_user: this.userOperation,
                 rowcount: "200"
             }
             let url = "https://flota-approuterqas.cfapps.us10.hana.ondemand.com/api/tolvas/registrotolvas_listar";
@@ -157,6 +161,42 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
             this.loadInitData();
         },
+        onAfterRendering: async function(){
+			this.userOperation =await this._getCurrentUser();
+			this.objetoHelp =  this._getHelpSearch();
+			this.parameter= this.objetoHelp[0].parameter;
+			this.url= this.objetoHelp[0].url;
+			console.log(this.parameter)
+			console.log(this.url)
+			console.log(this.userOperation);
+			this.callConstantes();
+		},
+
+		callConstantes: function(){
+			oGlobalBusyDialog.open();
+			var body={
+				"nombreConsulta": "CONSGENCONST",
+				"p_user": this.userOperation,
+				"parametro1": this.parameter,
+				"parametro2": "",
+				"parametro3": "",
+				"parametro4": "",
+				"parametro5": ""
+			}
+			fetch(`${this.onLocation()}General/ConsultaGeneral/`,
+				  {
+					  method: 'POST',
+					  body: JSON.stringify(body)
+				  })
+				  .then(resp => resp.json()).then(data => {
+					
+					console.log(data.data);
+					this.HOST_HELP=this.url+data.data[0].LOW;
+					console.log(this.HOST_HELP);
+						oGlobalBusyDialog.close();
+				  }).catch(error => console.log(error)
+			);
+		},
         getModel : function (sName) {
 			return this.getView().getModel(sName);
 		},
@@ -182,7 +222,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
             const bodyAyudaBusqueda = {
                 "nombreAyuda": "BSQPLANTAS",
-                "p_user": this.getCurrentUser()
+                "p_user": this.userOperation
             };
 
             fetch(`${mainUrlServices}General/AyudasBusqueda/`,
@@ -353,7 +393,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 oModel.setProperty("/DescEmba", descEmba);
                 oModel.setProperty("/Matricula", objeto.MREMB);
                 oModel.refresh();
-                this.getView().byId("embarcacion").setValueState("None");
+                this.getView().byId("inputId0_R").setValueState("None");
                 this.getDialog().close();
             }
 
@@ -382,13 +422,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 var oModel = this.getOwnerComponent().getModel("FormModel");
                 oModel.setProperty("/CentroPlanta", objeto.WERKS);
                 oModel.setProperty("/Planta", objeto.CDPTA);
-                oModel.setProperty("/DescPlanta", objeto.NAME1);
+                oModel.setProperty("/DescPlanta", objeto.DESCR);
                 oModel.refresh();
 
                 // Cargar balanzas y puntos de descarga relacionados al centro
                 const consultaPuntosDescarga = {
                     nombreConsulta: "CONSGENPUNTDES",
-                    p_user: "FGARCIA",
+                    p_user: this.userOperation,
                     parametro1: objeto.CDPTA,
                     parametro2: "",
                     parametro3: "",
@@ -398,7 +438,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
                 const consultaBalanzas = {
                     nombreConsulta: "CONSGENBALANZA",
-                    p_user: "FGARCIA",
+                    p_user: this.userOperation,
                     parametro1: objeto.CDPTA,
                     parametro2: "",
                     parametro3: "",
@@ -452,7 +492,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         /*onLimpiar: function(){
             let oComboModel = this.getOwnerComponent().getModel("ComboModel");
             this.byId("centro").setValue("");
-            this.byId("embarcacion").setValue("");
+            this.byId("inputId0_R").setValue("");
             this.byId("cbxBalanza").setValue("");
             this.byId("cbxPuntoDesc").setValue("");
             this.byId("ticket").setValue("");
@@ -489,7 +529,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             var pescDesc = oModel.setProperty("/PescDesc","");
             var iniDesc = oModel.setProperty("/FechIniDesc","");
             var finDesc = oModel.setProperty("/FechFinDesc","");
-            
+            this.byId("inputId0_R").setDescription("");
+            oModel.setProperty("/HoraFinDesc","");
+            oModel.setProperty("/HoraIniDesc","");
             // Limpiar selectores
             oComboModel.setProperty("/Balanzas", []);
             oComboModel.setProperty("/PtsDesc", []);
@@ -500,14 +542,17 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             var centro = oModel.getProperty("/CentroPlanta");
             var planta = oModel.getProperty("/Planta");
             var embarcacion = oModel.getProperty("/Embarcacion");
-            var matricula = oModel.getProperty("/Matricula");
+            // var matricula = this.byId("inputId0_R").getDescription().split(" ")[1];
+            var matricula = this.getView().getModel().getProperty("/help/MREMB");
             var balanza = oModel.getProperty("/Balanza");
             var puntoDesc = oModel.getProperty("/PuntoDesc");
             var ticket = oModel.getProperty("/Ticket");
             var especie = oModel.getProperty("/Especie");
             var pescDesc = oModel.getProperty("/PescDesc");
             var iniDesc = oModel.getProperty("/FechIniDesc");
+            var iniHora = oModel.getProperty("/HoraIniDesc");
             var finDesc = oModel.getProperty("/FechFinDesc");
+            var finHora = oModel.getProperty("/HoraFinDesc");
 
             var bOk = true;
 
@@ -518,7 +563,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
             if (!embarcacion) {
                 bOk = false;
-                this.getView().byId("embarcacion").setValueState("Error");
+                this.getView().byId("inputId0_R").setValueState("Error");
             }
 
             if (!balanza) {
@@ -550,16 +595,19 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             var horaIniDesc = null;
             console.log("iniDesc: ", iniDesc);
             if (iniDesc) {
-                fechaIniDesc = iniDesc.split(" ")[0];
-                horaIniDesc = iniDesc.split(" ")[1];
+                fechaIniDesc =iniDesc;
             }
-
+            if(iniHora){
+                horaIniDesc = iniHora;
+            }
             var fechFinDesc = null;
             var horaFinDesc = null;
             console.log("finDesc: ", finDesc);
             if (finDesc) {
-                fechFinDesc = finDesc.split(" ")[0];
-                horaFinDesc = finDesc.split(" ")[1];
+                fechFinDesc = finDesc;
+            }
+            if(finHora){
+                horaFinDesc = finHora;
             }
 
 
@@ -579,10 +627,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                     HIDES: horaIniDesc,
                     FFDES: fechFinDesc,
                     HFDES: horaFinDesc,
-                    ESDES: "S",
+                    ESDES: "N",
                     SALDO: pescDesc,
                     MREMB: matricula,
-                    ATMOD: this.getCurrentUser()
+                    ATMOD: this.userOperation
                 };
                 tmpStr_des.push(obj);
 
@@ -592,7 +640,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                         "CDMIN",
                         "DSMIN"
                     ],
-                    "p_user": this.getCurrentUser(),
+                    "p_user": this.userOperation,
                     "str_des": tmpStr_des
                 };
 
@@ -668,14 +716,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             }
             if (idControl.includes("pescDesc")) {
                 input.setValueState("None");
-            }if (idControl.includes("embarcacion")) {
+            }if (idControl.includes("inputId0_R")) {
                 input.setValueState("None");
             }
             
 
         },
         onChangeEmba: function(){
-            var embarca = this.byId("embarcacion").getValue();
+            var embarca = this.byId("inputId0_R").getValue();
             if(embarca!="" || embarca != null){
                 this.getView().byId('embarcacion').setValueState(); 
             }else{
@@ -700,9 +748,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             }
         },
 
-        getCurrentUser: function () {
-            return "FGARCIA";
-        },
+        
         onSelectEmba: function(evt){
             var objeto = evt.getParameter("rowContext").getObject();
             if (objeto) {
@@ -969,10 +1015,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             console.log(indices);
         
             var data = this.getView().getModel("consultaMareas").oData.embarcaciones[indices].CDEMB;
-            if (this.currentInputEmba.includes("embarcacion")) {
-                this.byId("embarcacion").setValue(data);
-            }else if(this.currentInputEmba.includes("embarcacion")){
-                this.byId("embarcacion").setValue(data);
+            if (this.currentInputEmba.includes("inputId0_R")) {
+                this.byId("inputId0_R").setValue(data);
+            }else if(this.currentInputEmba.includes("inputId0_R")){
+                this.byId("inputId0_R").setValue(data);
             }
             this.onCerrarEmba();
             
@@ -999,5 +1045,49 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             sap.ui.getCore().byId("indicadorPropiedad").setValue("");
             sap.ui.getCore().byId("idDescArmador").setValue("");
         },		
+        onShowEmbarcaciones: async function(oEvent){
+            let sIdInput = oEvent.getSource().getId(),
+            oView = this.getView(),
+            oModel = this.getModel(),
+            sUrl =this.HOST_HELP+".AyudasBusqueda.busqembarcaciones-1.0.0",
+            nameComponent = "busqembarcaciones",
+            idComponent = "busqembarcaciones",
+            oInput = this.getView().byId(sIdInput);
+            oModel.setProperty("/input",oInput);
+
+            if(!this.DialogComponents){
+                this.DialogComponents = await Fragment.load({
+                    name:"com.tasa.tolvas.ingresodescargamanual.view.fragments.BusqEmbarcaciones",
+                    controller:this
+                });
+                oView.addDependent(this.DialogComponents);
+            }
+            oModel.setProperty("/idDialogComp",this.DialogComponents.getId());
+            
+            let compCreateOk = function(){
+                BusyIndicator.hide()
+            }
+            if(this.DialogComponents.getContent().length===0){
+                BusyIndicator.show(0);
+                const oContainer = new sap.ui.core.ComponentContainer({
+                    id: idComponent,
+                    name: nameComponent,
+                    url: sUrl,
+                    settings: {},
+                    componentData: {},
+                    propagateModel: true,
+                    componentCreated: compCreateOk,
+                    height: '100%',
+                    // manifest: true,
+                    async: false
+                });
+                this.DialogComponents.addContent(oContainer);
+            }
+
+            this.DialogComponents.open();
+        },
+		onCloseDialog:function(oEvent){
+			oEvent.getSource().getParent().close();
+		}
     });
 }, /* bExport= */ true);

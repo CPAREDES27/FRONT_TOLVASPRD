@@ -50,7 +50,7 @@
                                     <Label text="Matrícula" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Text text="{EditRegistroTolvasModel>MREMB}" visible="true" width="auto" />
+                                    <Text text="{/help/MREMB}" visible="true" width="auto" />
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">

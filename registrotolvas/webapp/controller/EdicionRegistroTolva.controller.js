@@ -158,7 +158,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		onPressSave: function (oEvent) {
 			BusyIndicator.show(0);
 			let oModel = this.getView().getModel("EditRegistroTolvasModel");
-			let sCodEmb = oModel.getProperty("/CDEMB");
+			let sCodEmb = this.byId("embarcacion").getValue();
 			let sNumDescarga = oModel.getProperty("/NRDES");
 			
 			let oReq = [

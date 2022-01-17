@@ -405,7 +405,7 @@ function(
 					control:"MULTIINPUT",
 					key:"NRDES",
 					valueHigh: idNumeroDescargaFin,
-					valueLow:idFechaPrdIni
+					valueLow:idNumeroDescargaIni
 				});
 			}
 			if(idNumeroDescargaIni && !idNumeroDescargaFin){

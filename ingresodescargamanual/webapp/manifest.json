@@ -69,6 +69,10 @@
                 "settings": {
                     "bundleName": "com.tasa.tolvas.ingresodescargamanual.i18n.i18n"
                 }
+            },
+            "": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
             }
         },
         "resources": {
