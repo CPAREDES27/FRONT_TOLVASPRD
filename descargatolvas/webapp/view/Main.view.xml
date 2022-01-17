@@ -185,8 +185,8 @@
                                                         <Label text="Matrícula de Embarcación" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <Input type="Text" id="idEmbarcacion1" showValueHelp="true" enabled="true" visible="true" width="100%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>	
-                                                        <Input type="Text" id="idEmbarcacion2" showValueHelp="true" enabled="true" visible="true" width="100%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>	
+                                                        <Input type="Text" id="idEmbarcacion1" showValueHelp="true" enabled="true" visible="true" width="100%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpOnly="true" valueHelpRequest="onOpenEmba"/>	
+                                                        <Input type="Text" id="idEmbarcacion2" showValueHelp="true" enabled="true" visible="true" width="100%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpOnly="true" valueHelpRequest="onOpenEmba"/>	
                                                     </form:fields>
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">

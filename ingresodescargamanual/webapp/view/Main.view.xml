@@ -54,7 +54,7 @@
                                                 <Label text="Embarcación" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input id="inputId0_R" value="{FormModel>/Embarcacion}" description="{/help/NMEMB} {/help/MREMB}" showValueHelp="true"  valueHelpRequest="onShowEmbarcaciones"/>
+                                                <Input id="inputId0_R" value="{FormModel>/Embarcacion}" description="{/help/NMEMB} {/help/MREMB}" showValueHelp="true" valueHelpOnly="true"  valueHelpRequest="onShowEmbarcaciones"/>
                                                 <!-- <Input id="embarcacion" value="{FormModel>/Embarcacion}" change="onChangeEmba" description="{FormModel>/DescEmba}" showValueHelp="true" valueHelpRequest="onOpenEmba" width="100%" valueStateText="Invalid entry"/> -->
                                             </form:fields>
                                         </form:FormElement>
