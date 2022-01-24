@@ -19,7 +19,21 @@ sap.ui.define([
     var EdmType = exportLibrary.EdmType;
     
     return BaseController.extend("com.tasa.registrodtolvas.controller.Worklist", {
-
+        dataTableKeys: [
+            'NRDES',
+            'WERKS',
+            'TICKE',
+            'CDEMB',
+            'NMEMB',
+            'MREMB',
+            'CPPMS',
+            'FIDES',
+            'HIDES',
+            'FFDES',
+            'HFDES',
+            'HFDES',
+            'CNPDS'
+        ],
         formatter: formatter,
 
         /* =========================================================== */
@@ -160,6 +174,125 @@ sap.ui.define([
         /**
          * Method for get data to table
          */
+         createColumnConfig: function () {
+            return [
+                {
+                    label: 'Número descarga',
+                    property: 'NRDES',
+                    type: EdmType.String,
+                    scale: 2
+                },
+                {
+                    label: 'Centro',
+                    property: 'CDPTA',
+                    type: EdmType.String,
+                    scale: 2
+                },
+                {
+                    label: 'Ticket',
+                    property: 'TICKE',
+                    type: EdmType.String,
+                    scale: 2
+                },
+                {
+                    label: 'Código embarcación',
+                    property: 'CDEMB',
+                    type: EdmType.String,
+                    scale: 2
+                },
+                {
+                    label: 'Nombre embarcación',
+                    property: 'NMEMB',
+                    type: EdmType.String,
+                    scale: 2
+                },
+                {
+                    label: 'Matrícula',
+                    property: 'MREMB',
+                    type: EdmType.String,
+                    scale: 2
+                },
+                {
+                    label: 'CBOD',
+                    property: 'CPPMS',
+                    type: EdmType.String,
+                    scale: 2
+                },
+                {
+                    label: 'Fecha inicio descarga',
+                    property: 'FIDES',
+                    type: EdmType.String,
+                    scale: 2
+                },
+                {
+                    label: 'Hora inicio descarga',
+                    property: 'HIDES',
+                    type: EdmType.String,
+                    scale: 2
+                },
+                {
+                    label: 'Fecha fin descarga',
+                    property: 'FFDES',
+                    type: EdmType.String,
+                    scale: 2
+                },
+                {
+                    label: 'Hora fin descarga',
+                    property: 'HFDES',
+                    type: EdmType.String,
+                    scale: 2
+                },
+                {
+                    label: 'Pesca descargada',
+                    property: 'CNPDS',
+                    type: EdmType.String,
+                    scale: 2
+                },
+                {
+                    label: 'Moneda',
+                    property: 'WAERS',
+                    type: EdmType.String,
+                    scale: 2
+                },
+                {
+                    label: 'Estado',
+                    property: 'ESPMRDESC',
+                    type: EdmType.String,
+                    scale: 2
+                }
+            ];
+        },
+         onExport: function () {
+            var aCols, aProducts, oSettings, oSheet;
+
+            aCols = this.createColumnConfig();
+            console.log(this.getView().getModel());
+            aProducts = this.getView().getModel().getProperty('/tabla');
+
+            oSettings = {
+
+                workbook: {
+                    columns: aCols,
+                    context: {
+                        application: 'Debug Test Application',
+                        version: '1.95.0',
+                        title: 'Some random title',
+                        modifiedBy: 'John Doe',
+                        metaSheetName: 'Custom metadata'
+                    }
+
+                },
+                dataSource: aProducts,
+                fileName: "REPORTE REGISTRO DE TOLVAS"
+            };
+
+            oSheet = new Spreadsheet(oSettings);
+            oSheet.build()
+                .then(function () {
+                    MessageToast.show('El Archivo ha sido exportado correctamente');
+                })
+                .finally(oSheet.destroy);
+        },
         onGetDataTable: async function () {
             let oModel = this.getModel(),
             oUser = oModel.getProperty("/user"),
@@ -197,9 +330,16 @@ sap.ui.define([
                 }
             },
             oDataTable = await this.getDataService(oService);
+           
+            console.log(oDataTable);
             if(oDataTable){
                 let aDataTable = oDataTable.data;
+
                 if(aDataTable.length > 0){
+                    for(var i=0;i<aDataTable.length;i++){
+                        aDataTable[i].CPPMS =String(aDataTable[i].CNPDS);
+                        aDataTable[i].CNPDS =String(aDataTable[i].CNPDS);
+                    }
                     oModel.setProperty("/tabla",aDataTable);
                     oModel.setProperty("/service",oService);
                 }else{
@@ -262,10 +402,10 @@ sap.ui.define([
         _applySearch: function(aTableSearchState) {
             var oTable = this.byId("table"),
                 oViewModel = this.getModel("worklistView");
-            oTable.getBinding("items").filter(aTableSearchState, "Application");
+            oTable.getBinding("tabla").filter(aTableSearchState, "Application");
             // changes the noDataText of the list in case there are no filter results
             if (aTableSearchState.length !== 0) {
-                oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
+                oViewModel.setProperty("/tabla", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
             }
         },
 
@@ -325,7 +465,72 @@ sap.ui.define([
             });
 
             return aCols;
-        }
+        },
+        onSearch: function (oEvent) {
+            // add filter for search
+            var aFilters = [];
+            var sQuery = oEvent.getSource().getValue();
+            if (sQuery && sQuery.length > 0) {
+                var filter = new Filter([
+                    new Filter("NRDES", FilterOperator.Contains, sQuery),
+                    new Filter("WERKS", FilterOperator.Contains, sQuery),
+                    new Filter("TICKE", FilterOperator.Contains, sQuery),
+                    new Filter("CDEMB", FilterOperator.Contains, sQuery),
+                    new Filter("NMEMB", FilterOperator.Contains, sQuery),
+                    new Filter("MREMB", FilterOperator.Contains, sQuery),
+                    new Filter("CPPMS", FilterOperator.Contains, sQuery),
+                    //new Filter("PRCMX", FilterOperator.Contains, sQuery),
+                    //new Filter("PRCTP", FilterOperator.Contains, sQuery),
+                    //new Filter("PRVMN", FilterOperator.Contains, sQuery),
+                    //new Filter("PRVTP", FilterOperator.Contains, sQuery),
+                    new Filter("FIDES", FilterOperator.Contains, sQuery),
+                    new Filter("HIDES", FilterOperator.Contains, sQuery),
+                    new Filter("FFDES", FilterOperator.Contains, sQuery),
+                    new Filter("HFDES", FilterOperator.Contains, sQuery),
+                    new Filter("CNPDS", FilterOperator.Contains, sQuery)
+                    
+                ]);
+                aFilters.push(filter);
+            }
+
+            // update list binding
+            var oList = this.byId("table");
+            var oBinding = oList.getBinding("rows");
+            oBinding.filter(aFilters, "Application");
+        },
+        filterGlobally: function (oEvent) {
+            let sQuery = oEvent.getSource().getValue();
+            const table = this.byId('table');
+            const tableItemsBinding = table.getBinding('rows');
+            const dataTable = tableItemsBinding.oList;
+            let filters = [];
+
+            this.dataTableKeys.forEach(k => {
+                const typeValue = typeof dataTable[0][k];
+                let vOperator = null;
+
+                switch (typeValue) {
+                    case 'string':
+                        vOperator = FilterOperator.Contains;
+                        break;
+                    case 'number':
+                        vOperator = FilterOperator.EQ;
+                        break;
+                }
+
+                const filter = new Filter(k, vOperator, sQuery);
+                filters.push(filter);
+            });
+
+            const oFilters = new Filter({
+                filters: filters
+            });
+
+            /**
+             * Actualizar tabla
+             */
+            tableItemsBinding.filter(oFilters, "Application");
+        },
 
     });
 });

@@ -443,7 +443,9 @@ sap.ui.define([
 				if(!this._PDFViewer){
 					this._PDFViewer = new sap.m.PDFViewer({
 						width:"auto",
-						source:_pdfurl // my blob url
+						source:_pdfurl,
+						title: "Declaración Jurada de Tolvas",
+						showDownloadButton:false // my blob url
 					});
 					jQuery.sap.addUrlWhitelist("blob"); // register blob url as whitelist
 			   }

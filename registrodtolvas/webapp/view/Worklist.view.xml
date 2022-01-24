@@ -337,9 +337,9 @@
                     <OverflowToolbar style="Clear">
                         <Title text="{worklistView>/worklistTableTitle}"/>
                         <ToolbarSpacer />
-                        <Button press="onExportarExcel" type="Emphasized" text="Exportar" icon="sap-icon://excel-attachment"/>
+                        <Button press="onExport" type="Ghost" text="Exportar" icon="sap-icon://excel-attachment"/>
                         <SearchField 
-                            liveChange=".filterGlobally" 
+                            liveChange="onSearch" 
                             placeholder="Búsqueda rápida" 
                             tooltip="{i18n>worklistSearchTooltip}">
                         <layoutData>

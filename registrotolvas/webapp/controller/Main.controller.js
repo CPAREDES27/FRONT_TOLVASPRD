@@ -430,7 +430,38 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                         oModel.setProperty("/IndProp", data[0].data);
                     });
             },
+            onSearch: function (oEvent) {
+				// add filter for search
+				var aFilters = [];
+				var sQuery = oEvent.getSource().getValue();
+				if (sQuery && sQuery.length > 0) {
+					var filter = new Filter([
+						new Filter("NRDES", FilterOperator.Contains, sQuery),
+						new Filter("WERKS", FilterOperator.Contains, sQuery),
+						new Filter("TICKE", FilterOperator.Contains, sQuery),
+						new Filter("CDEMB", FilterOperator.Contains, sQuery),
+						new Filter("NMEMB", FilterOperator.Contains, sQuery),
+						new Filter("MREMB", FilterOperator.Contains, sQuery),
+						new Filter("CPPMS", FilterOperator.Contains, sQuery),
+						//new Filter("PRCMX", FilterOperator.Contains, sQuery),
+						//new Filter("PRCTP", FilterOperator.Contains, sQuery),
+						//new Filter("PRVMN", FilterOperator.Contains, sQuery),
+						//new Filter("PRVTP", FilterOperator.Contains, sQuery),
+						new Filter("FIDES", FilterOperator.Contains, sQuery),
+						new Filter("HIDES", FilterOperator.Contains, sQuery),
+						new Filter("FFDES", FilterOperator.Contains, sQuery),
+                        new Filter("HFDES", FilterOperator.Contains, sQuery),
+                        new Filter("CNPDS", FilterOperator.Contains, sQuery)
 
+					]);
+					aFilters.push(filter);
+				}
+
+				// update list binding
+				var oList = this.byId("table");
+				var oBinding = oList.getBinding("rows");
+				oBinding.filter(aFilters, "Application");
+			},
             filterGlobally: function (oEvent) {
 				let sQuery = oEvent.getSource().getValue();
 				const table = this.byId('tableData');
