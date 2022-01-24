@@ -28,7 +28,7 @@
     "sap.ui": {
         "technology": "UI5",
         "icons": {
-            "icon": "",
+            "icon": "sap-icon://BusinessSuiteInAppSymbols/icon-railcar",
             "favIcon": "",
             "phone": "",
             "phone@2": "",

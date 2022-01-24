@@ -22,7 +22,7 @@
                             <content>
                                 <form:Form width="100%" editable="true" visible="true" binding="{FormSearchModel>/SupplierCollection/0/}">
                                     <form:title>
-                                        <core:Title text="Datos de selección" level="Auto"/>
+                                        <core:Title text="Datos de selección" level="Auto" icon="sap-icon://filter"/>
                                     </form:title>
                                     <form:formContainers>
                                         <form:FormContainer visible="true">
