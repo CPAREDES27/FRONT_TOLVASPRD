@@ -541,8 +541,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             var oModel = this.getOwnerComponent().getModel("FormModel");
             var centro = oModel.getProperty("/CentroPlanta");
             var planta = oModel.getProperty("/Planta");
-            var embarcacion = oModel.getProperty("/Embarcacion");
-            // var matricula = this.byId("inputId0_R").getDescription().split(" ")[1];
+            var embarcacion =  oModel.getProperty("/Embarcacion");
             var matricula = this.getView().getModel().getProperty("/help/MREMB");
             var balanza = oModel.getProperty("/Balanza");
             var puntoDesc = oModel.getProperty("/PuntoDesc");
@@ -555,6 +554,32 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             var finHora = oModel.getProperty("/HoraFinDesc");
 
             var bOk = true;
+
+            if (!iniDesc) {
+                bOk = false;
+                this.getView().byId("dtpIniDesc").setValueState("Error");
+            }else{
+                this.getView().byId("dtpIniDesc").setValueState();
+            }
+            if (!finDesc) {
+                bOk = false;
+                this.getView().byId("dtpFinDesc").setValueState("Error");
+            }else{
+                this.getView().byId("dtpFinDesc").setValueState();
+            }
+
+            if (!finHora) {
+                bOk = false;
+                this.getView().byId("TP2").setValueState("Error");
+            }else{
+                this.getView().byId("TP2").setValueState();
+            }
+            if (!iniHora) {
+                bOk = false;
+                this.getView().byId("TP1").setValueState("Error");
+            }else{
+                this.getView().byId("TP1").setValueState();
+            }
 
             if (!centro) {
                 bOk = false;
@@ -615,7 +640,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
                 var tmpStr_des = [];
                 var obj = {
-                    TICKE: this.formatoCeros(ticket),
+                    TICKE: ticket.padStart(8,"0"),
                     CDBAL: balanza,
                     CDTPC: "I",
                     CDPTA: planta,
@@ -684,23 +709,15 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
         },
 
-        formatoCeros: function (numero) {
-            if (!isNaN(numero)) {
-                var strNumero = numero.toString();
-                if (strNumero.length < 8) {
-                    var ceros = "";
-                    var diffStr = 8 - strNumero.length;
-                    for (let index = 0; index < diffStr; index++) {
-                        ceros += "0";
-                    }
-                    return ceros + "" + strNumero;
-                } else {
-                    return numero;
-                }
-            } else {
-                return "00000000";
-            }
-        },
+        zeroFill: function( number, width )
+		{
+			width -= number.toString().length;
+			if ( width > 0 )
+			{
+				return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
+			}
+			return number + ""; // siempre devuelve tipo cadena
+		},
 
         onChangeInput: function (evt) {
             var idControl = evt.getSource().getId();
@@ -717,6 +734,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             if (idControl.includes("pescDesc")) {
                 input.setValueState("None");
             }if (idControl.includes("inputId0_R")) {
+                input.setValueState("None");
+            }if (idControl.includes("TP1")) {
+                input.setValueState("None");
+            }if (idControl.includes("TP2")) {
+                input.setValueState("None");
+            }if (idControl.includes("dtpIniDesc")) {
+                input.setValueState("None");
+            }if (idControl.includes("dtpFinDesc")) {
                 input.setValueState("None");
             }
             

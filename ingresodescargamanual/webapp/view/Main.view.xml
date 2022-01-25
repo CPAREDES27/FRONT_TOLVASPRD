@@ -118,9 +118,10 @@
                                                 <Label text="Fecha inicio descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <DatePicker id="dtpIniDesc" value="{FormModel>/FechIniDesc}" valueFormat="yyyyMMdd" displayFormat="dd/MM/yyyy" visible="true" width="auto"/>
+                                                <DatePicker id="dtpIniDesc"   change="onChangeInput"  value="{FormModel>/FechIniDesc}" valueFormat="yyyyMMdd" displayFormat="dd/MM/yyyy" visible="true" width="auto"/>
                                                 <TimePicker
                                                 value="{FormModel>/HoraIniDesc}"
+                                                change="onChangeInput"   
                                                 id="TP1"
                                                 valueFormat="HH:mm"
                                                 displayFormat="HH:mm"/>
@@ -132,9 +133,9 @@
                                                 <Label text="Fecha fin descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                             <DatePicker id="dtpFinDesc" value="{FormModel>/FechFinDesc}" valueFormat="yyyyMMdd" displayFormat="dd/MM/yyyy" visible="true" width="auto"/>
+                                             <DatePicker id="dtpFinDesc"  change="onChangeInput"  value="{FormModel>/FechFinDesc}" valueFormat="yyyyMMdd" displayFormat="dd/MM/yyyy" visible="true" width="auto"/>
                                                 <TimePicker
-                                                value="{FormModel>/HoraFinDesc}"
+                                                value="{FormModel>/HoraFinDesc}"  change="onChangeInput" 
                                                 id="TP2"
                                                 valueFormat="HH:mm"
                                                 displayFormat="HH:mm"/>
@@ -146,7 +147,7 @@
                                                 <Label text="Pesca descargada" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input id="pescDesc" change="onChangeDecimals" type="Number" width="auto" value="{FormModel>/PescDesc}" />
+                                                <Input id="pescDesc"  liveChange="onChangeInput" change="onChangeDecimals" type="Number" width="auto" value="{FormModel>/PescDesc}" />
                                             </form:fields>
                                         </form:FormElement>
                                     </form:formElements>
