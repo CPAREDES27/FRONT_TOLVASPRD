@@ -337,7 +337,7 @@ sap.ui.define([
 
                 if(aDataTable.length > 0){
                     for(var i=0;i<aDataTable.length;i++){
-                        aDataTable[i].CPPMS =String(aDataTable[i].CNPDS);
+                        aDataTable[i].CPPMS =String(aDataTable[i].CPPMS);
                         aDataTable[i].CNPDS =String(aDataTable[i].CNPDS);
                     }
                     oModel.setProperty("/tabla",aDataTable);
