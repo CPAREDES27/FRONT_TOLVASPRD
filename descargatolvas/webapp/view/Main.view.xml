@@ -182,11 +182,11 @@
 
                                                 <form:FormElement visible="true">
                                                     <form:label>
-                                                        <Label text="Matrícula de Embarcación" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        <Label text="Matrícula de embarcación" design="Bold" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <Input type="Text" id="idEmbarcacion1" showValueHelp="true" enabled="true" visible="true" width="100%" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpOnly="true" valueHelpRequest="onOpenEmba"/>	
-                                                        <Input type="Text" id="idEmbarcacion2" showValueHelp="true" enabled="true" visible="true" width="100%" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpOnly="true" valueHelpRequest="onOpenEmba"/>	
+                                                    <Input id="inputId0_M" placeholder="Seleccione embarcación" showValueHelp="true" 	valueHelpOnly="true" valueHelpRequest="onShowEmbarcaciones"/>
+                                                    <Input id="inputId1_M" placeholder="Seleccione embarcación" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="onShowEmbarcaciones"/>
                                                     </form:fields>
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">

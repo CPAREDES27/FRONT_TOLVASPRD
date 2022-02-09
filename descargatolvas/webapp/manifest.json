@@ -76,6 +76,10 @@
             "DescargaTolvaModel":{
                 "type": "sap.ui.model.json.JSONModel",
                 "preload":true
+            },
+            "":{
+                "type": "sap.ui.model.json.JSONModel",
+                "preload":true
             }
             
         },

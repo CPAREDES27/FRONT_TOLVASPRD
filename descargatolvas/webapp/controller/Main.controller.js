@@ -13,7 +13,8 @@ sap.ui.define([
 	'sap/ui/export/library',
 	'sap/ui/export/Spreadsheet',
 	"sap/ui/core/util/ExportTypeCSV",
-    "sap/ui/core/util/Export"
+    "sap/ui/core/util/Export",
+	"sap/ui/core/Fragment",
 ],
 /**
  * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -33,7 +34,8 @@ function(
 	exportLibrary, 
 	Spreadsheet,
 	ExportTypeCSV,
-	Export) {
+	Export,
+	Fragment) {
     "use strict";
 	var oGlobalBusyDialog = new sap.m.BusyDialog();
 	var EdmType = exportLibrary.EdmType;
@@ -175,10 +177,13 @@ function(
 			this.byId("idFechaPrdRange").setValue("");
 			this.byId("idNumeroDescargaIni").setValue("");
 			this.byId("idNumeroDescargaFin").setValue("");
-			this.byId("idEmbarcacion1").setValue("");
-			this.byId("idEmbarcacion2").setValue("");
+			this.byId("inputId0_M").setValue("");
+			this.byId("inputId1_M").setValue("");
 			this.byId("idClaseManejoIni").setValue("");
 			this.byId("idClaseManejoFin").setValue("");
+			this.byId("idCant").setValue("200");
+			this.getView().getModel("DescargaTolvaModel").setProperty("/data",{});
+			this.byId("title").setText("Lista de registros: 0");
 		},
 		createColumnConfig: function() {
 			return [
@@ -311,8 +316,8 @@ function(
 			var idFechaPrdFin=this.byId("idFechaPrdRange").getSecondDateValue();
 			var idNumeroDescargaIni=this.byId("idNumeroDescargaIni").getValue();
 			var idNumeroDescargaFin=this.byId("idNumeroDescargaFin").getValue();
-			var idEmbarcacion1=this.byId("idEmbarcacion1").getValue();
-			var idEmbarcacion2=this.byId("idEmbarcacion2").getValue();
+			var idEmbarcacion1=this.byId("inputId0_M").getValue();
+			var idEmbarcacion2=this.byId("inputId1_M").getValue();
 			var idClaseManejoIni=this.byId("idClaseManejoIni").getSelectedKey();
 			var idClaseManejoFin=this.byId("idClaseManejoFin").getSelectedKey();
 			var idCant=this.byId("idCant").getValue();
@@ -715,12 +720,130 @@ function(
                     this.getView().setModel(new JSONModel(data[0]), "ClaseMensajeModel")
                 }, this) )
         },
-        
-        onAfterRendering: function() {
-            console.log("onAfterRendering Main");
-            this.bus.publish("flexible", "Master");
-        },
+		onLocation:function(){
 
+			var oRouter = window.location.origin;
+	
+			console.log(oRouter)
+	
+			var service="";
+	
+			if(oRouter.indexOf("localhost") !== -1){
+	
+				service='https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/'
+	
+			}
+	
+			if(oRouter.indexOf("tasadev")!== -1){
+	
+				service='https://cf-nodejs-cheerful-bat-js.cfapps.us10.hana.ondemand.com/api/'
+	
+			}
+	
+			if(oRouter.indexOf("tasaprd")!==-1){
+	
+				service='https://cf-nodejs-prd.cfapps.us10.hana.ondemand.com/api/'
+	
+			}
+	
+			if(oRouter.indexOf("tasaqas")!==-1){
+	
+				service='https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/'
+	
+			}
+	
+			console.log(service);
+	
+			return service;
+	
+		},
+        _getHelpSearch:  function(){
+			var oRouter = window.location.origin;
+			var service=[];
+			if(oRouter.indexOf("localhost") !== -1){
+				service.push({
+					url:"https://tasaqas.launchpad.cfapps.us10.hana.ondemand.com/",
+					parameter:"IDH4_QAS"
+				})
+			}
+			if(oRouter.indexOf("tasadev")!== -1){
+				service.push({
+					url:"https://tasadev.launchpad.cfapps.us10.hana.ondemand.com/",
+					parameter:"IDH4_DEV"
+				})
+			}
+			if(oRouter.indexOf("tasaprd")!==-1){
+				service.push({
+					url:"https://tasaprd.launchpad.cfapps.us10.hana.ondemand.com/",
+					parameter:"IDH4_PRD"
+				})
+			}
+			if(oRouter.indexOf("tasaqas")!==-1){
+				service.push({
+					url:"https://tasaqas.launchpad.cfapps.us10.hana.ondemand.com/",
+					parameter:"IDH4_QAS"
+				})
+			}
+			return service;
+		},
+		onAfterRendering: async function () {
+			this._getCurrentUser();
+			console.log("onAfterRendering Main");
+            this.bus.publish("flexible", "Master");
+			this.objetoHelp = this._getHelpSearch();
+			this.parameter = this.objetoHelp[0].parameter;
+			this.url = this.objetoHelp[0].url;
+			console.log(this.parameter)
+			console.log(this.url)
+			this.callConstantes();
+		},
+
+		callConstantes: function () {
+			oGlobalBusyDialog.open();
+			var body = {
+				"nombreConsulta": "CONSGENCONST",
+				"p_user": this.userOperation,
+				"parametro1": this.parameter,
+				"parametro2": "",
+				"parametro3": "",
+				"parametro4": "",
+				"parametro5": ""
+			}
+			fetch(`${this.onLocation()}General/ConsultaGeneral/`,
+				{
+					method: 'POST',
+					body: JSON.stringify(body)
+				})
+				.then(resp => resp.json()).then(data => {
+
+					console.log(data.data);
+					this.HOST_HELP = this.url + data.data[0].LOW;
+					console.log(this.HOST_HELP);
+					oGlobalBusyDialog.close();
+				}).catch(error => console.log(error)
+				);
+		},
+		_getCurrentUser: async function () {
+			let oUshell = sap.ushell,
+				oUser = {};
+			if (oUshell) {
+				let oUserInfo = await sap.ushell.Container.getServiceAsync("UserInfo");
+				let sEmail = oUserInfo.getEmail().toUpperCase(),
+					sName = sEmail.split("@")[0],
+					sDominio = sEmail.split("@")[1];
+				if (sDominio === "XTERNAL.BIZ") sName = "FGARCIA";
+				oUser = {
+					name: sName
+				}
+			} else {
+				oUser = {
+					name: "FGARCIA"
+				}
+			}
+
+			this.usuario = oUser.name;
+			console.log(this.usuario);
+		},
 		//Embarcacion
 
 
@@ -991,11 +1114,11 @@ function(
 		
 			var data = this.getView().getModel("consultaMareas").oData.embarcaciones[indices].MREMB;
 			var detalle = this.getView().getModel("consultaMareas").oData.embarcaciones[indices].NMEMB;
-			if (this.currentInputEmba.includes("idEmbarcacion1")) {
-				this.byId("idEmbarcacion1").setValue(data);
+			if (this.currentInputEmba.includes("inputId0_M")) {
+				this.byId("inputId0_M").setValue(data);
 				
-			}else if(this.currentInputEmba.includes("idEmbarcacion2")){
-				this.byId("idEmbarcacion2").setValue(data);
+			}else if(this.currentInputEmba.includes("inputId1_M")){
+				this.byId("inputId1_M").setValue(data);
 			}
 			this.onCerrarEmba();
 			
@@ -1179,7 +1302,52 @@ function(
 					MessageToast.show('El Archivo ha sido exportado correctamente');
 				})
 				.finally(oSheet.destroy);
-		}
+		},
+		onShowEmbarcaciones: async function (oEvent) {
+			let sIdInput = oEvent.getSource().getId(),
+				oView = this.getView(),
+				oModel = this.getModel(),
+				sUrl = this.HOST_HELP + ".AyudasBusqueda.busqembarcaciones-1.0.0",
+				nameComponent = "busqembarcaciones",
+				idComponent = "busqembarcaciones",
+				oInput = this.getView().byId(sIdInput);
+			oModel.setProperty("/input", oInput);
+
+			if (!this.DialogComponents) {
+				this.DialogComponents = await Fragment.load({
+					name: "com.tasa.tolvas.descargatolvas.view.fragments.BusqEmbarcaciones",
+					controller: this
+				});
+				oView.addDependent(this.DialogComponents);
+			}
+			oModel.setProperty("/idDialogComp", this.DialogComponents.getId());
+
+			let compCreateOk = function () {
+				BusyIndicator.hide()
+			}
+			if (this.DialogComponents.getContent().length === 0) {
+				BusyIndicator.show(0);
+				const oContainer = new sap.ui.core.ComponentContainer({
+					id: idComponent,
+					name: nameComponent,
+					url: sUrl,
+					settings: {},
+					componentData: {},
+					propagateModel: true,
+					componentCreated: compCreateOk,
+					height: '100%',
+					// manifest: true,
+					async: false
+				});
+				this.DialogComponents.addContent(oContainer);
+			}
+
+			this.DialogComponents.open();
+		},
+
+		onCloseDialog: function (oEvent) {
+			oEvent.getSource().getParent().close();
+		},
 
 	});
 }, /* bExport= */ true);

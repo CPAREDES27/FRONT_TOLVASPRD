@@ -225,7 +225,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 "p_user": this.userOperation
             };
 
-            fetch(`${mainUrlServices}General/AyudasBusqueda/`,
+            fetch(`${this.onLocation()}General/AyudasBusqueda/`,
                 {
                     method: 'POST',
                     body: JSON.stringify(bodyAyudaBusqueda)
@@ -258,7 +258,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 ]
             };
 
-            fetch(`${mainUrlServices}dominios/Listar`,
+            fetch(`${this.onLocation()}dominios/Listar`,
                 {
                     method: 'POST',
                     body: JSON.stringify(bodyDominios)
@@ -275,7 +275,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 nombreAyuda: "BSQESPEC"
             };
 
-            fetch(`${mainUrlServices}General/AyudasBusqueda/`,{
+            fetch(`${this.onLocation()}General/AyudasBusqueda/`,{
                 method: 'POST',
                 body: JSON.stringify(ayudaBusqEspecies)
             }).then(resp => resp.json()).then(data => {
@@ -372,7 +372,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 "p_user": "BUSQEMB"
             };
 
-            fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+            fetch(`${this.onLocation()}embarcacion/ConsultarEmbarcacion/`,
                 {
                     method: 'POST',
                     body: JSON.stringify(body)
@@ -446,12 +446,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                     parametro5: ""
                 };
 
-                let balanzas = await fetch(`${mainUrlServices}General/ConsultaGeneral`,{
+                let balanzas = await fetch(`${this.onLocation()}General/ConsultaGeneral`,{
                     method: 'POST',
                     body: JSON.stringify(consultaBalanzas)
                 }).then(resp => resp.json()).then(data=>data.data).catch(error => console.log(error));
 
-                let puntosDescarga = await fetch(`${mainUrlServices}General/ConsultaGeneral`,{
+                let puntosDescarga = await fetch(`${this.onLocation()}General/ConsultaGeneral`,{
                     method: 'POST',
                     body: JSON.stringify(consultaPuntosDescarga)
                 }).then(resp => resp.json()).then(data=>data.data).catch(error => console.log(error));
@@ -669,7 +669,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                     "str_des": tmpStr_des
                 };
 
-                fetch(`${mainUrlServices}tolvas/ingresodescargamanual_guardar`,
+                fetch(`${this.onLocation()}tolvas/ingresodescargamanual_guardar`,
                     {
                         method: 'POST',
                         body: JSON.stringify(body)
@@ -878,7 +878,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 //"p_pag": "1" //por defecto la primera parte
             };
 
-            fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+            fetch(`${this.onLocation()}embarcacion/ConsultarEmbarcacion/`,
                 {
                     method: 'POST',
                     body: JSON.stringify(body)
@@ -980,7 +980,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 "p_pag": this.currentPage
             };
 
-            fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+            fetch(`${this.onLocation()}embarcacion/ConsultarEmbarcacion/`,
                 {
                     method: 'POST',
                     body: JSON.stringify(body)
@@ -1011,7 +1011,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         },
         loadEmbarcacionFragment: async function(){
             //Iniciar los controles del fragment
-            let listaPropiedad = await fetch(`${mainUrlServices}dominios/Listar`, {
+            let listaPropiedad = await fetch(`${this.onLocation()}dominios/Listar`, {
                 method: 'POST',
                 body: JSON.stringify({
                     dominios: [
