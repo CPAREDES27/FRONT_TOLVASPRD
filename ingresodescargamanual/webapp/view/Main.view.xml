@@ -87,7 +87,7 @@
                                                 <Label text="Ticket" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input id="ticket" liveChange="onChangeInput" value="{FormModel>/Ticket}" type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                <Input id="ticket" liveChange="onChangeInput"  value="{FormModel>/Ticket}" type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="" maxLength="0"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -118,7 +118,7 @@
                                                 <Label text="Fecha inicio descarga" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <DatePicker id="dtpIniDesc"   change="onChangeInput"  value="{FormModel>/FechIniDesc}" valueFormat="yyyyMMdd" displayFormat="dd/MM/yyyy" visible="true" width="auto"/>
+                                                <DatePicker id="dtpIniDesc" valueState="" valueStateText="Fecha no válida" change="onChangeInput"  value="{FormModel>/FechIniDesc}" valueFormat="dd/MM/yyyy" displayFormat="dd/MM/yyyy" visible="true" width="auto" maxLength="10"/>
                                                 <TimePicker
                                                 value="{FormModel>/HoraIniDesc}"
                                                 change="onChangeInput"   

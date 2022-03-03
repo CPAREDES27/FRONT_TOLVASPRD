@@ -140,6 +140,7 @@
                                                             id="idFechaInicioRange"
                                                             delimiter="-"
                                                             width="100%"
+                                                           
                                                             displayFormat="dd/MM/yyyy"
                                                             secondDateValue="" />
                                                         <!--<DatePicker id="idFechaIni"  width="auto" displayFormat="dd/MM/yyyy" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd" />
@@ -383,16 +384,7 @@
                                             width="8rem">
                                             <Label text="Fecha producción" textAlign="Left" wrapping="true" width="100%" />
                                                 <t:template>
-                                                    <Text text="{
-                                                        path: 'DescargaTolvaModel>FECCONMOV',
-                                                        type: 'sap.ui.model.type.Date',
-                                                        formatOptions: {
-                                                            pattern: 'dd/MM/yyyy',
-                                                            source: {
-                                                                pattern: 'yyyyMMdd'
-                                                            }
-                                                        }
-                                                    }"/>
+                                                    <Text text="{DescargaTolvaModel>FECCONMOV}"/>
                                             </t:template>
                                         </t:Column>
                                         <t:Column

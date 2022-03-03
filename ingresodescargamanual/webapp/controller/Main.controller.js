@@ -5,14 +5,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     "sap/ui/core/BusyIndicator",
     "sap/ui/model/json/JSONModel",
     "sap/ui/core/Fragment",
-    "./BaseController",
+    "./BaseController"
 ], function (Controller,MessageBox,
     //    Utilities, 
     History,
     BusyIndicator,
     JSONModel,
     Fragment,
-    BaseController
+    BaseController,
 ) {
     "use strict";
 
@@ -158,7 +158,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                     }
                 }.bind(this)
             });
-
+           
             this.loadInitData();
         },
         onAfterRendering: async function(){
@@ -536,6 +536,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             oComboModel.setProperty("/Balanzas", []);
             oComboModel.setProperty("/PtsDesc", []);
         },
+        
         onGuardar: function () {
             BusyIndicator.show(0);
             var oModel = this.getOwnerComponent().getModel("FormModel");
@@ -552,8 +553,17 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             var iniHora = oModel.getProperty("/HoraIniDesc");
             var finDesc = oModel.getProperty("/FechFinDesc");
             var finHora = oModel.getProperty("/HoraFinDesc");
-
-            var bOk = true;
+            console.log(iniDesc);
+            BusyIndicator.hide();
+            // var bOk = true;
+            console.log(this.existeFecha(iniDesc));
+            if(!this.existeFecha(iniDesc)){
+              MessageBox.error("Ingrese un formato de fecha correcto");
+              this.getView().byId("dtpIniDesc").setValueState("Error");
+              BusyIndicator.hide();
+              return false;
+            }
+            
 
             if (!iniDesc) {
                 bOk = false;
@@ -718,10 +728,23 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			}
 			return number + ""; // siempre devuelve tipo cadena
 		},
+         existeFecha: function(fecha) {
+            var fechaf = fecha.split("/");
+            var d = fechaf[0];
+            var m = fechaf[1];
+            var y = fechaf[2];
+            return m > 0 && m < 13 && y > 0 && y < 32768 && d > 0 && d <= (new Date(y, m, 0)).getDate();
+        },
 
         onChangeInput: function (evt) {
             var idControl = evt.getSource().getId();
             var input = this.getView().byId(idControl);
+            console.log(input.mProperties.value);
+            
+           
+           
+
+
             if (idControl.includes("centro")) {
                 input.setValueState("Information");
             }

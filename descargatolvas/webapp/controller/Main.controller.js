@@ -554,9 +554,14 @@ function(
 			var dato = evnt.getSource().getBindingContext("DescargaTolvaModel").getPath().split("/")[2];
 			var NRDES=this.getView().getModel("DescargaTolvaModel").oData.data[dato].NRDES;
 			var TPROG=this.getView().getModel("DescargaTolvaModel").oData.data[dato].TPROG;
+			var generar = false;
+			var anular = false;
+
+		
+
 			var body={
-				"p_anul": TPROG ==='G'?true:false,
-				"p_crea": TPROG === 'A'?true:false,
+				"p_anul": TPROG ==='A'?"X":"",
+				"p_crea": TPROG === 'G'?"X":"",
 				"p_nrdes": NRDES,
 				"p_user": "FGARCIA"
 			}
