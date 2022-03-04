@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="com.tasa.registrodtolvas.controller.Worklist"
+    controllerName="tasa.com.pe.fl.pescaregistrodtolvas.controller.Worklist"
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:semantic="sap.f.semantic"

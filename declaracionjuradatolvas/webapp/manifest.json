@@ -1,7 +1,7 @@
 {
     "_version": "1.32.0",
     "sap.app": {
-        "id": "com.tasa.tolvas.declaracionjuradatolvas",
+        "id": "tasa.com.pe.fl.pesca.tolvas.declaracionjuradatolvas",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
@@ -46,7 +46,7 @@
     "sap.ui5": {
         "flexEnabled": false,
         "rootView": {
-            "viewName": "com.tasa.tolvas.declaracionjuradatolvas.view.Main",
+            "viewName": "tasa.com.pe.fl.pesca.tolvas.declaracionjuradatolvas.view.Main",
             "type": "XML",
             "async": true,
             "id": "Main"
@@ -67,7 +67,7 @@
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
-                    "bundleName": "com.tasa.tolvas.declaracionjuradatolvas.i18n.i18n"
+                    "bundleName": "tasa.com.pe.fl.pesca.tolvas.declaracionjuradatolvas.i18n.i18n"
                 }
             }
         },
@@ -83,7 +83,7 @@
                 "routerClass": "sap.m.routing.Router",
                 "viewType": "XML",
                 "async": true,
-                "viewPath": "com.tasa.tolvas.declaracionjuradatolvas.view",
+                "viewPath": "tasa.com.pe.fl.pesca.tolvas.declaracionjuradatolvas.view",
                 "controlAggregation": "pages",
                 "controlId": "app",
                 "clearControlAggregation": false
@@ -131,6 +131,6 @@
     },
     "sap.cloud": {
         "public": true,
-        "service": "bussinesssolution"
+        "service": "tolvas"
     }
 }

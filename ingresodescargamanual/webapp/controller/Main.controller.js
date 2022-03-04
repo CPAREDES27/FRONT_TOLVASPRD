@@ -20,7 +20,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     var popUp="";
     var popEmb="";
     var oGlobalBusyDialog = new sap.m.BusyDialog();
-    return BaseController.extend("com.tasa.tolvas.ingresodescargamanual.controller.Main", {
+    return BaseController.extend("tasa.com.pe.fl.pesca.tolvas.ingresodescargamanual.controller.Main", {
         handleRouteMatched: function (oEvent) {
             var sAppId = "App60f18d59421c8929c54cd9bf";
 
@@ -409,7 +409,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
         getDialog: function () {
             if (!this.oDialog) {
-                this.oDialog = sap.ui.xmlfragment("com.tasa.tolvas.ingresodescargamanual.view.Embarcacion", this);
+                this.oDialog = sap.ui.xmlfragment("tasa.com.pe.fl.pesca.tolvas.ingresodescargamanual.view.Embarcacion", this);
                 this.getView().addDependent(this.oDialog);
             }
             return this.oDialog;
@@ -1022,7 +1022,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         },
         getDialog: function(){
             if (!this.oDialog) {
-                this.oDialog = sap.ui.xmlfragment("com.tasa.tolvas.ingresodescargamanual.view.Embarcacion", this);
+                this.oDialog = sap.ui.xmlfragment("tasa.com.pe.fl.pesca.tolvas.ingresodescargamanual.view.Embarcacion", this);
                 this.getView().addDependent(this.oDialog);
             }
             return this.oDialog;
@@ -1105,7 +1105,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
             if(!this.DialogComponents){
                 this.DialogComponents = await Fragment.load({
-                    name:"com.tasa.tolvas.ingresodescargamanual.view.fragments.BusqEmbarcaciones",
+                    name:"tasa.com.pe.fl.pesca.tolvas.ingresodescargamanual.view.fragments.BusqEmbarcaciones",
                     controller:this
                 });
                 oView.addDependent(this.DialogComponents);

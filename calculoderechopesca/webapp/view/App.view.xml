@@ -1,4 +1,4 @@
-<mvc:View controllerName="com.tasa.tolvas.calculoderechopesca.controller.App" 
+<mvc:View controllerName="tasa.com.pe.fl.pesca.tolvas.calculoderechopesca.controller.App" 
     displayBlock="true"
     xmlns:mvc="sap.ui.core.mvc" 
     xmlns="sap.m">

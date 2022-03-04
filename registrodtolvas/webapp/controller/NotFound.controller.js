@@ -3,7 +3,7 @@ sap.ui.define([
 ], function (BaseController) {
     "use strict";
 
-    return BaseController.extend("com.tasa.registrodtolvas.controller.NotFound", {
+    return BaseController.extend("tasa.com.pe.fl.pescaregistrodtolvas.controller.NotFound", {
 
         /**
          * Navigates to the worklist when the link is pressed

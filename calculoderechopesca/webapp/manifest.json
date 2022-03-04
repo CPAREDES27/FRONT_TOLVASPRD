@@ -1,7 +1,7 @@
 {
     "_version": "1.32.0",
     "sap.app": {
-        "id": "com.tasa.tolvas.calculoderechopesca",
+        "id": "tasa.com.pe.fl.pesca.tolvas.calculoderechopesca",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
@@ -46,7 +46,7 @@
     "sap.ui5": {
         "flexEnabled": false,
         "rootView": {
-            "viewName": "com.tasa.tolvas.calculoderechopesca.view.App",
+            "viewName": "tasa.com.pe.fl.pesca.tolvas.calculoderechopesca.view.App",
             "type": "XML",
             "id": ""
         },
@@ -69,7 +69,7 @@
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
-                    "bundleName": "com.tasa.tolvas.calculoderechopesca.i18n.i18n"
+                    "bundleName": "tasa.com.pe.fl.pesca.tolvas.calculoderechopesca.i18n.i18n"
                 }
             }
         },
@@ -84,7 +84,7 @@
             "config": {
                 "routerClass": "sap.m.routing.Router",
                 "viewType": "XML",
-                "viewPath": "com.tasa.tolvas.calculoderechopesca.view",
+                "viewPath": "tasa.com.pe.fl.pesca.tolvas.calculoderechopesca.view",
                 "controlAggregation": "pages"
             },
             "routes": [
@@ -192,6 +192,6 @@
     },
     "sap.cloud": {
         "public": true,
-        "service": "bussinesssolution"
+        "service": "tolvas"
     }
 }

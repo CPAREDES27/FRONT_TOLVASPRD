@@ -13,7 +13,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     History) {
 	"use strict";
 
-	return BaseController.extend("com.tasa.tolvas.descargatolvas.controller.NuevaDescargaTolva", {
+	return BaseController.extend("tasa.com.pe.fl.pesca.tolvas.descargatolvas.controller.NuevaDescargaTolva", {
 		handleRouteMatched: function(oEvent) {
 			var sAppId = "App60f18d59421c8929c54cd9bf";
 

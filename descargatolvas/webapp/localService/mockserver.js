@@ -7,7 +7,7 @@ sap.ui.define([
     "use strict";
 
     var oMockServer,
-        _sAppPath = "com.tasa.tolvas.descargatolvas/",
+        _sAppPath = "tasa.com.pe.fl.pesca.tolvas.descargatolvas/",
         _sJsonFilesPath = _sAppPath + "localService/mockdata";
 
     var oMockServerInterface = {

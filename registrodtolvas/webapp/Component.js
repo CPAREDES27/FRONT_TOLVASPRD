@@ -6,7 +6,7 @@ sap.ui.define([
 ], function (UIComponent, Device, models, ErrorHandler) {
     "use strict";
 
-    return UIComponent.extend("com.tasa.registrodtolvas.Component", {
+    return UIComponent.extend("tasa.com.pe.fl.pescaregistrodtolvas.Component", {
 
         metadata : {
             manifest: "json"

@@ -7,7 +7,7 @@ sap.ui.define([
 ], function (Controller, UIComponent,BusyIndicator,Log,MessageBox) {
     "use strict";
 
-    return Controller.extend("com.tasa.registrodtolvas.controller.BaseController", {
+    return Controller.extend("tasa.com.pe.fl.pescaregistrodtolvas.controller.BaseController", {
         /**
          * Convenience method for accessing the router.
          * @public

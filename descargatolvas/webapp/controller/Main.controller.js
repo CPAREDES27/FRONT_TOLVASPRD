@@ -40,7 +40,7 @@ function(
 	var oGlobalBusyDialog = new sap.m.BusyDialog();
 	var EdmType = exportLibrary.EdmType;
 	const mainUrlServices = 'https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/';
-    return BaseController.extend("com.tasa.tolvas.descargatolvas.controller.Main", {
+    return BaseController.extend("tasa.com.pe.fl.pesca.tolvas.descargatolvas.controller.Main", {
 		handleRouteMatched: function(oEvent) {
 			var sAppId = "App60f18d59421c8929c54cd9bf";
 
@@ -692,7 +692,7 @@ function(
             // var oChildContainer = this.byId("myChildContainer");
 			// this.getOwnerComponent().runAsOwner(function () {
 			// 	sap.ui.component({
-			// 		name: "com.tasa.tolvas.librarymarea", //Our child component
+			// 		name: "tasa.com.pe.fl.pesca.tolvas.librarymarea", //Our child component
 			// 		id: "MyChildComponent",
 			// 		manifestFirst: true,
 			// 		async: true
@@ -1077,7 +1077,7 @@ function(
 		},
 		getDialog: function(){
 			if (!this.oDialog) {
-				this.oDialog = sap.ui.xmlfragment("com.tasa.tolvas.descargatolvas.view.Embarcacion", this);
+				this.oDialog = sap.ui.xmlfragment("tasa.com.pe.fl.pesca.tolvas.descargatolvas.view.Embarcacion", this);
 				this.getView().addDependent(this.oDialog);
 			}
 			return this.oDialog;
@@ -1320,7 +1320,7 @@ function(
 
 			if (!this.DialogComponents) {
 				this.DialogComponents = await Fragment.load({
-					name: "com.tasa.tolvas.descargatolvas.view.fragments.BusqEmbarcaciones",
+					name: "tasa.com.pe.fl.pesca.tolvas.descargatolvas.view.fragments.BusqEmbarcaciones",
 					controller: this
 				});
 				oView.addDependent(this.DialogComponents);

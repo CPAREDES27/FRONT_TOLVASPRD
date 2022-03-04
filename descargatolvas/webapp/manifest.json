@@ -1,7 +1,7 @@
 {
     "_version": "1.32.0",
     "sap.app": {
-        "id": "com.tasa.tolvas.descargatolvas",
+        "id": "tasa.com.pe.fl.pesca.tolvas.descargatolvas",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
@@ -46,7 +46,7 @@
     "sap.ui5": {
         "flexEnabled": false,
         "rootView": {
-            "viewName": "com.tasa.tolvas.descargatolvas.view.App",
+            "viewName": "tasa.com.pe.fl.pesca.tolvas.descargatolvas.view.App",
             "type": "XML",
             "async": true
         },
@@ -66,7 +66,7 @@
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
-                    "bundleName": "com.tasa.tolvas.descargatolvas.i18n.i18n"
+                    "bundleName": "tasa.com.pe.fl.pesca.tolvas.descargatolvas.i18n.i18n"
                 }
             },
             "Planta":{
@@ -95,7 +95,7 @@
                 "routerClass": "sap.m.routing.Router",
                 "viewType": "XML",
                 "async": true,
-                "viewPath": "com.tasa.tolvas.descargatolvas.view",
+                "viewPath": "tasa.com.pe.fl.pesca.tolvas.descargatolvas.view",
                 "controlAggregation": "pages",
                 "controlId": "app",
                 "clearControlAggregation": false,
@@ -141,6 +141,6 @@
     },
     "sap.cloud": {
         "public": true,
-        "service": "bussinesssolution"
+        "service": "tolvas"
     }
 }

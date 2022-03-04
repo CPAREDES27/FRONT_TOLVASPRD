@@ -21,7 +21,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     ) {
     "use strict";
 
-    return BaseController.extend("com.tasa.tolvas.calculoderechopesca.controller.NuevaDeclaracionJurada", {
+    return BaseController.extend("tasa.com.pe.fl.pesca.tolvas.calculoderechopesca.controller.NuevaDeclaracionJurada", {
         handleRouteMatched: function (oEvent) {
             var sAppId = "App60f18d59421c8929c54cd9bf";
 
@@ -138,7 +138,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
             if (responseDerechoPesca) {
                 if (!this.formIngresarDetalle) {
                     this.formIngresarDetalle = await Fragment.load({
-                        name: 'com.tasa.tolvas.calculoderechopesca.controller.DerechoPescaTabla',
+                        name: 'tasa.com.pe.fl.pesca.tolvas.calculoderechopesca.controller.DerechoPescaTabla',
                         controller: this
                     }).then(dialog => {
                         oView.addDependent(dialog);

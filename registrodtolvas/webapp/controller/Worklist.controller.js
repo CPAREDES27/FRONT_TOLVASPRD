@@ -18,7 +18,7 @@ sap.ui.define([
     
     var EdmType = exportLibrary.EdmType;
     
-    return BaseController.extend("com.tasa.registrodtolvas.controller.Worklist", {
+    return BaseController.extend("tasa.com.pe.fl.pescaregistrodtolvas.controller.Worklist", {
         dataTableKeys: [
             'NRDES',
             'WERKS',

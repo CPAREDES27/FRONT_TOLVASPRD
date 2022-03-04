@@ -12,7 +12,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     JSONModel) {
 	"use strict";
 
-	return BaseController.extend("com.tasa.tolvas.calculoderechopesca.controller.DerechoPescaTabla", {
+	return BaseController.extend("tasa.com.pe.fl.pesca.tolvas.calculoderechopesca.controller.DerechoPescaTabla", {
 		handleRouteMatched: function(oEvent) {
             let sTableName = "ZV_FLDC1",
                 aField = ["MJAHR", "RDPCA", "NRPOS", "CDPAG", "CDEMB", "CDMMA", "PSCHI", "PSOTR", "JURCA", "MNPAG", "DEDUC", "DEDUA", "INTER", "SUBTO", "NMEMB", "MREMB", "CDEMP", "MANDT"],

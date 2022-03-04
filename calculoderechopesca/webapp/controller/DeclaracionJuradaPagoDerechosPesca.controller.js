@@ -14,7 +14,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
     History) {
 	"use strict";
 	var oGlobalBusyDialog = new sap.m.BusyDialog();
-	return BaseController.extend("com.tasa.tolvas.calculoderechopesca.controller.DeclaracionJuradaPagoDerechosPesca", {
+	return BaseController.extend("tasa.com.pe.fl.pesca.tolvas.calculoderechopesca.controller.DeclaracionJuradaPagoDerechosPesca", {
 		handleRouteMatched: function(oEvent) {
 			oGlobalBusyDialog.open();
 			var sAppId = "App60f18d59421c8929c54cd9bf";

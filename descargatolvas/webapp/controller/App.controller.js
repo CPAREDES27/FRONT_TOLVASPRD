@@ -3,7 +3,7 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller"
 ], function (JSONModel, Controller) {
 	"use strict";
-	return Controller.extend("com.tasa.tolvas.descargatolvas.controller.App", {
+	return Controller.extend("tasa.com.pe.fl.pesca.tolvas.descargatolvas.controller.App", {
 		onInit: function () {
 			// this.oRouter = this.getOwnerComponent().getRouter();
 			// this.oRouter.attachRouteMatched(this.onRouteMatched, this);

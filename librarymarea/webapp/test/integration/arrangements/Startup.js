@@ -3,7 +3,7 @@ sap.ui.define([
 ], function (Opa5) {
 	"use strict";
 
-	return Opa5.extend("com.tasa.tolvas.librarymarea.test.integration.arrangements.Startup", {
+	return Opa5.extend("tasa.com.pe.fl.pesca.tolvas.librarymarea.test.integration.arrangements.Startup", {
 
 		iStartMyApp: function (oOptionsParameter) {
 			var oOptions = oOptionsParameter || {};
@@ -14,7 +14,7 @@ sap.ui.define([
 			// start the app UI component
 			this.iStartMyUIComponent({
 				componentConfig: {
-					name: "com.tasa.tolvas.librarymarea",
+					name: "tasa.com.pe.fl.pesca.tolvas.librarymarea",
 					async: true
 				},
 				hash: oOptions.hash,

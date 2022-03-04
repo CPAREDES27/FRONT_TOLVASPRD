@@ -1,4 +1,4 @@
-<mvc:View controllerName="com.tasa.tolvas.calculoderechopesca.controller.NuevaDeclaracionJurada" 
+<mvc:View controllerName="tasa.com.pe.fl.pesca.tolvas.calculoderechopesca.controller.NuevaDeclaracionJurada" 
     xmlns:mvc="sap.ui.core.mvc" 
     xmlns="sap.m" 
     xmlns:form="sap.ui.layout.form" 

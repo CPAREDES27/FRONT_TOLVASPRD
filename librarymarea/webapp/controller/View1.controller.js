@@ -7,7 +7,7 @@ sap.ui.define([
 	function (Controller) {
 		"use strict";
 
-		return Controller.extend("com.tasa.tolvas.librarymarea.controller.View1", {
+		return Controller.extend("tasa.com.pe.fl.pesca.tolvas.librarymarea.controller.View1", {
 			onInit: function () {
 
 			}

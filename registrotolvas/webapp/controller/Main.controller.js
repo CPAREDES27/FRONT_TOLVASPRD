@@ -30,7 +30,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
         var EdmType = exportLibrary.EdmType;
         var oGlobalBusyDialog = new sap.m.BusyDialog();
         const mainUrlServices = 'https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/';
-        return BaseController.extend("com.tasa.tolvas.registrotolvas.controller.Main", {
+        return BaseController.extend("tasa.com.pe.fl.pesca.tolvas.registrotolvas.controller.Main", {
            
             dataTableKeys: [
 				'NRDES',

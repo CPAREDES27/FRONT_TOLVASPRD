@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="com.tasa.tolvas.calculoderechopesca.controller.Main"
+    controllerName="tasa.com.pe.fl.pesca.tolvas.calculoderechopesca.controller.Main"
     displayBlock="true"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"

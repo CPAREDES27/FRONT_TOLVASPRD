@@ -20,7 +20,7 @@ sap.ui.define([
 
         const mainUrlServices = 'https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/';
 
-        return BaseController.extend("com.tasa.tolvas.declaracionjuradatolvas.controller.Main", {
+        return BaseController.extend("tasa.com.pe.fl.pesca.tolvas.declaracionjuradatolvas.controller.Main", {
 
             handleRouteMatched: function (oEvent) {
                 var sAppId = "App60f18d59421c8929c54cd9bf";

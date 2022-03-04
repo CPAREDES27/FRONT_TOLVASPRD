@@ -1,7 +1,7 @@
 {
     "_version": "1.32.0",
     "sap.app": {
-        "id": "com.tasa.registrodtolvas",
+        "id": "tasa.com.pe.fl.pescaregistrodtolvas",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
@@ -59,7 +59,7 @@
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
-                    "bundleName": "com.tasa.registrodtolvas.i18n.i18n"
+                    "bundleName": "tasa.com.pe.fl.pescaregistrodtolvas.i18n.i18n"
                 }
             },
             "": {
@@ -73,7 +73,7 @@
             "config": {
                 "routerClass": "sap.m.routing.Router",
                 "viewType": "XML",
-                "viewPath": "com.tasa.registrodtolvas.view",
+                "viewPath": "tasa.com.pe.fl.pescaregistrodtolvas.view",
                 "controlId": "app",
                 "controlAggregation": "pages",
                 "bypassed": {
@@ -123,7 +123,7 @@
             }
         },
         "rootView": {
-            "viewName": "com.tasa.registrodtolvas.view.App",
+            "viewName": "tasa.com.pe.fl.pescaregistrodtolvas.view.App",
             "type": "XML",
             "async": true,
             "id": "app"
@@ -131,6 +131,6 @@
     },
     "sap.cloud": {
         "public": true,
-        "service": "bussinesssolution"
+        "service": "tolvas"
     }
 }

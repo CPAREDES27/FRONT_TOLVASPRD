@@ -9,7 +9,7 @@ sap.ui.define([
 	let navigationWithContext = {
 
 	};
-	return UIComponent.extend("com.tasa.tolvas.registrotolvas.Component", {
+	return UIComponent.extend("tasa.com.pe.fl.pesca.tolvas.registrotolvas.Component", {
 
 		metadata: {
 			manifest: "json"

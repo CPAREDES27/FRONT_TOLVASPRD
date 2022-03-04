@@ -7,7 +7,7 @@ sap.ui.define([
 
 	Opa5.extendConfig({
 		arrangements: new Startup(),
-		viewNamespace: "com.tasa.tolvas.calculoderechopesca.view.",
+		viewNamespace: "tasa.com.pe.fl.pesca.tolvas.calculoderechopesca.view.",
 		autoWait: true
 	});
 });

@@ -18,7 +18,7 @@ sap.ui.define([
     MessagePopoverItem) {
     "use strict";
 
-    return BaseController.extend("com.tasa.registrodtolvas.controller.Object", {
+    return BaseController.extend("tasa.com.pe.fl.pescaregistrodtolvas.controller.Object", {
 
         formatter: formatter,
 
@@ -80,7 +80,7 @@ sap.ui.define([
 
 			if(!this.DialogComponent){
 				this.DialogComponent = await Fragment.load({
-                    name: "com.tasa.registrodtolvas.view.fragments.BusqEmbarcaciones",
+                    name: "tasa.com.pe.fl.pescaregistrodtolvas.view.fragments.BusqEmbarcaciones",
                     controller: this
                 });
 				oView.addDependent(this.DialogComponent);

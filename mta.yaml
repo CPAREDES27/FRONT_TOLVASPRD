@@ -20,15 +20,15 @@ modules:
     content:
       instance:
         destinations:
-        - Name: bussinesssolution_tolvas_html_repo_host
+        - Name: tolvas_tolvas_html_repo_host
           ServiceInstanceName: tolvas-html5-app-host-service
           ServiceKeyName: tolvas_html_repo_host-key
-          sap.cloud.service: bussinesssolution
+          sap.cloud.service: tolvas
         - Authentication: OAuth2UserTokenExchange
-          Name: bussinesssolution_uaa_tolvas
+          Name: tolvas_uaa_tolvas
           ServiceInstanceName: tolvas-xsuaa-service
           ServiceKeyName: uaa_tolvas-key
-          sap.cloud.service: bussinesssolution
+          sap.cloud.service: tolvas
         existing_destinations_policy: ignore
   build-parameters:
     no-source: true

@@ -21,7 +21,7 @@ sap.ui.define([
 		"use strict";
 		const mainUrlServices = 'https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/';
 		var oGlobalBusyDialog = new sap.m.BusyDialog();
-		return BaseController.extend("com.tasa.tolvas.declaracionjuradatolvas.controller.DeclaracionJuradaDiariaPesaje", {
+		return BaseController.extend("tasa.com.pe.fl.pesca.tolvas.declaracionjuradatolvas.controller.DeclaracionJuradaDiariaPesaje", {
 			handleRouteMatched: function (oEvent) {
 				var oModelForm = this.getOwnerComponent().getModel("FormModel");
 				var oView = this.getView();

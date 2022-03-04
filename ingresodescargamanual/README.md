@@ -10,7 +10,7 @@
 |**Service URL**<br>N/A
 |**Module Name**<br>ingresodescargamanual|
 |**Application Title**<br>Ingreso descarga manual|
-|**Namespace**<br>com.tasa.tolvas|
+|**Namespace**<br>tasa.com.pe.fl.pescatolvas|
 |**UI5 Theme**<br>sap_fiori_3|
 |**UI5 Version**<br>Latest|
 |**Enable Code Assist Libraries**<br>False|

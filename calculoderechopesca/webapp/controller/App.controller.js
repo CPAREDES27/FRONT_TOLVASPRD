@@ -3,7 +3,7 @@ sap.ui.define([
 ], function (Controller) {
 	"use strict";
 
-	return Controller.extend("com.tasa.tolvas.calculoderechopesca.controller.App", {
+	return Controller.extend("tasa.com.pe.fl.pesca.tolvas.calculoderechopesca.controller.App", {
 		onInit: function () {
 
 		}

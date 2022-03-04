@@ -16,7 +16,7 @@ sap.ui.define([
     
     var LayoutType = library.LayoutType;
 
-	return UIComponent.extend("com.tasa.tolvas.descargatolvas.Component", {
+	return UIComponent.extend("tasa.com.pe.fl.pesca.tolvas.descargatolvas.Component", {
 
 		metadata: {
 			manifest: "json"

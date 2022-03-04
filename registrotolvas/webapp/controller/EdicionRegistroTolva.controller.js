@@ -25,7 +25,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 ) {
 	"use strict";
 	const HOST = "https://tasaqas.launchpad.cfapps.us10.hana.ondemand.com";
-	return BaseController.extend("com.tasa.tolvas.registrotolvas.controller.EdicionRegistroTolva", {
+	return BaseController.extend("tasa.com.pe.fl.pesca.tolvas.registrotolvas.controller.EdicionRegistroTolva", {
 		handleRouteMatched: function (oEvent) {
 			// var sAppId = "App60f18d59421c8929c54cd9bf";
 
@@ -383,7 +383,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		getDialog: function () {
 			if (!this.oDialog) {
-				this.oDialog = sap.ui.xmlfragment("com.tasa.tolvas.registrotolvas.view.Embarcacion", this);
+				this.oDialog = sap.ui.xmlfragment("tasa.com.pe.fl.pesca.tolvas.registrotolvas.view.Embarcacion", this);
 				this.getView().addDependent(this.oDialog);
 			}
 			return this.oDialog;

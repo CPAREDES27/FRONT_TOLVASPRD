@@ -5,7 +5,7 @@ sap.ui.define([
 ], function (Controller, UIComponent, mobileLibrary) {
 	"use strict";
 
-	return Controller.extend("com.tasa.tolvas.ingresodescargamanual.BaseController", {
+	return Controller.extend("tasa.com.pe.fl.pesca.tolvas.ingresodescargamanual.BaseController", {
 		/**
 		 * Convenience method for accessing the router.
 		 * @public

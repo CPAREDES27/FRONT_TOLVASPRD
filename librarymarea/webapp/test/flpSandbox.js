@@ -61,7 +61,7 @@ sap.ui.define([
 								},
 								"resolutionResult": {
 									"applicationType": "SAPUI5",
-									"additionalInformation": "SAPUI5.Component=com.tasa.tolvas.librarymarea",
+									"additionalInformation": "SAPUI5.Component=tasa.com.pe.fl.pesca.tolvas.librarymarea",
 									"url": sap.ui.require.toUrl("com/tasa/tolvas/librarymarea")
 								}
 							}

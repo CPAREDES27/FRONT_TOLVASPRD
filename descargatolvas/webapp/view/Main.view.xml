@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="com.tasa.tolvas.descargatolvas.controller.Main"
+    controllerName="tasa.com.pe.fl.pesca.tolvas.descargatolvas.controller.Main"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:form="sap.ui.layout.form"
     xmlns:core="sap.ui.core"
@@ -297,7 +297,7 @@
                                                     <core:Icon src="sap-icon://color-fill" 
                                                         color="{
                                                             path: 'DescargaTolvaModel>CMIN',
-                                                            formatter: 'com.tasa.tolvas.descargatolvas.controller.formatter.iconColorClaseMensaje'
+                                                            formatter: 'tasa.com.pe.fl.pesca.tolvas.descargatolvas.controller.formatter.iconColorClaseMensaje'
                                                         }">
                                                     </core:Icon>                                                    
                                                 <!-- </HBox> -->
@@ -311,7 +311,7 @@
                                             <t:template>
                                                 <Text text="{
                                                             path: 'DescargaTolvaModel>TPROG',
-                                                            formatter: 'com.tasa.tolvas.descargatolvas.controller.formatter.textColumnPrograma'
+                                                            formatter: 'tasa.com.pe.fl.pesca.tolvas.descargatolvas.controller.formatter.textColumnPrograma'
                                                         }"/>
                                                 <!-- <Input value="{
                                                         path: 'DescargaTolvaModel>TPROG',
@@ -353,7 +353,7 @@
                                             <t:template>
                                                 <core:Icon src="{
                                                     path: 'DescargaTolvaModel>DOC_MFBF',
-                                                    formatter: 'com.tasa.tolvas.descargatolvas.controller.formatter.showCheckedIcon'
+                                                    formatter: 'tasa.com.pe.fl.pesca.tolvas.descargatolvas.controller.formatter.showCheckedIcon'
                                                 }">
                                                 </core:Icon> 
                                             </t:template>
@@ -364,7 +364,7 @@
                                             <t:template>
                                                 <core:Icon src="{
                                                     path: 'DescargaTolvaModel>DOC_MB1B',
-                                                    formatter: 'com.tasa.tolvas.descargatolvas.controller.formatter.showCheckedIcon'
+                                                    formatter: 'tasa.com.pe.fl.pesca.tolvas.descargatolvas.controller.formatter.showCheckedIcon'
                                                 }">
                                                 </core:Icon> 
                                             </t:template>
@@ -375,7 +375,7 @@
                                             <t:template>
                                                 <core:Icon src="{
                                                     path: 'DescargaTolvaModel>DOC_MIGO',
-                                                    formatter: 'com.tasa.tolvas.descargatolvas.controller.formatter.showCheckedIcon'
+                                                    formatter: 'tasa.com.pe.fl.pesca.tolvas.descargatolvas.controller.formatter.showCheckedIcon'
                                                 }">
                                                 </core:Icon> 
                                             </t:template>
@@ -599,7 +599,7 @@
                                                                 <form:fields>
                                                                     <Text text="{
                                                             path: 'DescargaTolvaModel>TPROG',
-                                                            formatter: 'com.tasa.tolvas.descargatolvas.controller.formatter.textColumnPrograma'
+                                                            formatter: 'tasa.com.pe.fl.pesca.tolvas.descargatolvas.controller.formatter.textColumnPrograma'
                                                         }" width="auto"/>
                                                                 </form:fields>
                                                             </form:FormElement>
